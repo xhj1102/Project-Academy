@@ -28,9 +28,9 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
+import cn.liutils.api.client.model.IItemModel;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.liutils.api.debug.IItemRenderInfProvider;
-import cn.weaponmod.api.client.IItemModel;
 
 /**
  * 物品模型的渲染器。提供了大量的设置功能以辅助位置调整。
