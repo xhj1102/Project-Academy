@@ -16,7 +16,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.input.Keyboard;
 
 import cn.liutils.api.client.register.IKeyProcess;
-import cn.weaponmod.client.command.Command_SetMode;
+import cn.liutils.api.debug.command.Command_SetMode;
 
 /**
  * 跟武器位置调试有关的键位处理。

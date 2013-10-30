@@ -20,6 +20,8 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
+import cn.liutils.api.debug.command.Command_GetRenderInf;
+import cn.liutils.api.debug.command.Command_SetMode;
 import cn.liutils.core.proxy.LICommonProxy;
 import cn.liutils.core.proxy.LIGeneralProps;
 import cn.liutils.core.register.LIPacketHandler;
@@ -29,14 +31,12 @@ import cn.liutils.core.register.LIPacketHandler;
  * @author WeAthFolD
  */
 @Mod(modid = "LIutils", name = "LIUtils", version = LIUtilsMod.VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, 
-clientPacketHandlerSpec = @SidedPacketHandler(channels = { LIGeneralProps.NET_CHANNEL_CLIENT }, packetHandler = LIPacketHandler.class), 
-serverPacketHandlerSpec = @SidedPacketHandler(channels = { LIGeneralProps.NET_CHANNEL_SERVER }, packetHandler = LIPacketHandler.class))
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class LIUtilsMod {
 	
 	public static final String VERSION = "0.0.0dev";
 	
-	public static final String DEPENDENCY = "required-after:Weaponry@" + VERSION;
+	public static final String DEPENDENCY = "required-after:LIutils@" + VERSION;
 	
 	/**
 	 * 日志
@@ -46,7 +46,7 @@ public class LIUtilsMod {
 	@SidedProxy(serverSide = "cn.liutils.core.proxy.LICommonProxy", clientSide = "cn.liutils.core.proxy.LIClientProxy")
 	public static LICommonProxy proxy;
 	
-	public static final boolean DEBUG = false; //请在编译时设置为false
+	public static final boolean DEBUG = true; //请在编译时设置为false
 	
 	/**
 	 * 预加载（设置、世界生成、注册Event）
@@ -91,6 +91,8 @@ public class LIUtilsMod {
 	@EventHandler()
 	public void serverStarting(FMLServerStartingEvent event) {
 		CommandHandler cm = (CommandHandler) event.getServer().getCommandManager();
+		cm.registerCommand(new Command_SetMode());
+		cm.registerCommand(new Command_GetRenderInf());
 	}
 	
 }
