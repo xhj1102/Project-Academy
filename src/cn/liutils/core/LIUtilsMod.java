@@ -24,7 +24,7 @@ import cn.liutils.api.debug.command.Command_GetRenderInf;
 import cn.liutils.api.debug.command.Command_SetMode;
 import cn.liutils.core.proxy.LICommonProxy;
 import cn.liutils.core.proxy.LIGeneralProps;
-import cn.liutils.core.register.LIPacketHandler;
+import cn.liutils.core.register.LIDummyPacketHandler;
 
 /**
  * LIUtils mod的主注册类。

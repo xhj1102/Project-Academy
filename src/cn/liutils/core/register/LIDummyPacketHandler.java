@@ -23,13 +23,13 @@ import cpw.mods.fml.common.network.Player;
  * @author WeAthFolD
  *
  */
-public abstract class LIPacketHandler implements IPacketHandler {
+public abstract class LIDummyPacketHandler implements IPacketHandler {
 
 	private static HashMap<Byte, IChannelProcess> channels = new HashMap();
 
 	protected final String server, client;
 	
-	public LIPacketHandler(String s1, String s2) {
+	public LIDummyPacketHandler(String s1, String s2) {
 		server = s1;
 		client = s2;
 	}
