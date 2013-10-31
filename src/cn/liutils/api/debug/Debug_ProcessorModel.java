@@ -7,7 +7,6 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IItemRenderer;
 import cn.liutils.api.client.render.RenderModelItem;
 import cn.liutils.api.debug.KeyMoving.EnumKey;
-import cn.weaponmod.api.client.render.RenderModelBulletWeapon;
 
 /**
  * @author WeAthFolD
@@ -23,7 +22,7 @@ public class Debug_ProcessorModel<T extends RenderModelItem> implements
 	// 4: invOffset XY && invScale
 	@Override
 	public boolean isProcessAvailable(IItemRenderer render, int mode) {
-		return render instanceof RenderModelItem && !(render instanceof RenderModelBulletWeapon);
+		return render instanceof RenderModelItem;
 	}
 
 	@Override

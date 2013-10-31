@@ -22,20 +22,20 @@ public class LIGeneralRegistry {
 		ConfigHandler.loadConfigurableClass(conf, cl);
 	}
 	
-	public static int getItemId(String name, int cat) {
-		return ConfigHandler.getItemId(name, cat);
+	public static int getItemId(Config conf, String name, int cat) {
+		return ConfigHandler.getItemId(conf, name, cat);
 	}
 	
-	public static int getBlockId(String name, int cat) {
-		return ConfigHandler.getBlockId(name, cat);
+	public static int getBlockId(Config conf, String name, int cat) {
+		return ConfigHandler.getBlockId(conf, name, cat);
 	}
 	
-	public static int getFixedBlockId(String name, int def) {
-		return ConfigHandler.getFixedBlockId(name, def);
+	public static int getFixedBlockId(Config conf, String name, int def) {
+		return ConfigHandler.getFixedBlockId(conf, name, def);
 	}
 	
-	public static int getFixedBlockId(String name, int def, int max) {
-		return ConfigHandler.getFixedBlockId(name, def, max);
+	public static int getFixedBlockId(Config conf, String name, int def, int max) {
+		return ConfigHandler.getFixedBlockId(conf, name, def, max);
 	}
 
 }

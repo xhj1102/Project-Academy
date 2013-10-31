@@ -3,6 +3,8 @@ package cn.misaka.core;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import cn.liutils.core.register.Config;
+
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -23,15 +25,17 @@ public class AcademyMod {
 	public static AcademyMod instance;
 
 	public static Logger log = Logger.getLogger("AcademyCraft");
+	
+	public static Config config;
 
 	@SidedProxy(clientSide = "cn.misaka.core.proxy.ClientProxy", serverSide = "cn.misaka.core.proxy.Proxy")
 	public static cn.misaka.core.proxy.Proxy proxy;
 
 	@EventHandler()
 	public void preLoad(FMLPreInitializationEvent event) {
+		config = new Config(event.getSuggestedConfigurationFile());
 		setMetadata(event.getModMetadata());
 		log.setParent(FMLLog.getLogger());
-
 	}
 
 	@EventHandler()

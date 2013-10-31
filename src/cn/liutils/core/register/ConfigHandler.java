@@ -16,12 +16,10 @@ package cn.liutils.core.register;
 
 import java.lang.reflect.Field;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.liutils.api.register.Configurable;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Property;
+import cn.liutils.api.register.Configurable;
 
 /**
  * 
@@ -33,7 +31,6 @@ import net.minecraftforge.common.Property;
 public class ConfigHandler {
 
 	private static final int BLOCK_BEGIN = 400;
-	private static Config config;
 
 	/**
 	 * 加载一个含有可设置参数的类。
@@ -86,8 +83,7 @@ public class ConfigHandler {
 	 * @see cn.lambdacraft.core.proxy.GeneralProps
 	 * @return 获取的ID
 	 */
-	public static int getItemId(String name, int cat) {
-		config = CBCMod.config;
+	public static int getItemId(Config config, String name, int cat) {
 		try {
 			return config.getItemID(name, getEmptyItemId(cat)) - 256;
 		} catch (Exception e) {
@@ -106,8 +102,7 @@ public class ConfigHandler {
 	 * @see cn.lambdacraft.core.proxy.GeneralProps
 	 * @return 获取的ID
 	 */
-	public static int getBlockId(String name, int cat) {
-		config = CBCMod.config;
+	public static int getBlockId(Config config, String name, int cat) {
 		try {
 			return config.GetBlockID(name, getEmptyBlockId(cat));
 		} catch (Exception e) {
@@ -116,8 +111,7 @@ public class ConfigHandler {
 		return -1;
 	}
 	
-	public static int getFixedBlockId(String name, int def) {
-		config = CBCMod.config;
+	public static int getFixedBlockId(Config config, String name, int def) {
 		try {
 			return config.GetBlockID(name, def);
 		} catch (Exception e) {
@@ -126,8 +120,7 @@ public class ConfigHandler {
 		return -1;
 	}
 	
-	public static int getFixedBlockId(String name, int def, int max) {
-		config = CBCMod.config;
+	public static int getFixedBlockId(Config config, String name, int def, int max) {
 		try {
 			int id =  config.getSpecialBlockID(name, def);
 			if(id >= max)

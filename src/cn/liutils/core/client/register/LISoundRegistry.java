@@ -16,10 +16,10 @@ package cn.liutils.core.client.register;
 
 import java.util.HashSet;
 
+import cn.liutils.core.LIUtilsMod;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import cn.lambdacraft.core.CBCMod;
 
 import net.minecraft.client.audio.SoundPoolEntry;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
@@ -45,7 +45,7 @@ public class LISoundRegistry {
  		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		CBCMod.log.fine("LambdaCraft successfully loaded " + pathSounds.size() + " sound files");
+		LIUtilsMod.log.fine("LIUtils successfully loaded " + pathSounds.size() + " sound files");
 	}
 
 	/**

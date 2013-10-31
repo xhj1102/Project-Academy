@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 
 public class MisakaBaseItem extends Item {
+	
 	private String name;
 
 	public MisakaBaseItem(int aId, String aName) {
@@ -22,7 +23,6 @@ public class MisakaBaseItem extends Item {
 	public void registerIcons(IconRegister par1IconRegister) {
 		if (!isBase())
 			this.itemIcon = par1IconRegister.registerIcon("academy:" + name);
-
 	}
 
 }
