@@ -9,6 +9,7 @@ import net.minecraft.command.CommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -38,15 +39,15 @@ public class LIUtilsMod {
 	
 	public static final String DEPENDENCY = "required-after:LIutils@" + VERSION;
 	
-	/**
-	 * 日志
-	 */
-	public static Logger log = Logger.getLogger("LIUtils");
+	public static final boolean DEBUG = true; //请在编译时设置为false
+	
+	@Instance("LIutils")
+	public static LIUtilsMod instance;
 	
 	@SidedProxy(serverSide = "cn.liutils.core.proxy.LICommonProxy", clientSide = "cn.liutils.core.proxy.LIClientProxy")
 	public static LICommonProxy proxy;
 	
-	public static final boolean DEBUG = true; //请在编译时设置为false
+	public static Logger log = Logger.getLogger("LIUtils");
 	
 	/**
 	 * 预加载（设置、世界生成、注册Event）
@@ -76,10 +77,10 @@ public class LIUtilsMod {
 	/**
 	 * 加载后（保存设置）
 	 * 
-	 * @param Init
+	 * @param event
 	 */
 	@EventHandler()
-	public void postInit(FMLPostInitializationEvent Init) {
+	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit();
 	}
 	

@@ -34,7 +34,7 @@ public class LIClientProxy extends LICommonProxy {
 	
 	@Override
 	public void preInit() {
-		TickRegistry.registerTickHandler(new LIKeyProcess(), Side.CLIENT);
+		
 		MinecraftForge.EVENT_BUS.register(new LISoundRegistry());
 		TickRegistry.registerTickHandler(clientTickHandler, Side.CLIENT);
 		
@@ -51,5 +51,7 @@ public class LIClientProxy extends LICommonProxy {
 	}
 	
 	@Override
-	public void postInit() {}
+	public void postInit() {
+		TickRegistry.registerTickHandler(new LIKeyProcess(), Side.CLIENT);
+	}
 }
