@@ -3,6 +3,8 @@
  */
 package cn.misaka.ability.system;
 
+import java.util.ArrayList;
+
 /**
  * 一种能力系。
  * @author WeAthFolD
@@ -10,11 +12,6 @@ package cn.misaka.ability.system;
  */
 public class AbilityClass {
 
-	/**
-	 * 
-	 */
-	public AbilityClass() {
-		// TODO Auto-generated constructor stub
-	}
+	public static ArrayList<AbilityComponent> components = new ArrayList();
 
 }
