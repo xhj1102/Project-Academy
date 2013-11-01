@@ -23,7 +23,7 @@ public class AbilityDataSyncer implements IChannelProcess {
 	}
 	
 	public static void sendPacketFromServer(EntityPlayer player, EnumDataType type) {
-		ByteArrayOutputStream bos = ;
+		//ByteArrayOutputStream bos = ;
 		//TODO:SIMPLE只发送有无能力[boolean]、类型[short], FULL加发送计算力点数[int], LEVEL4加发送技能设定[待加入]
 	}
 	

@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 import cn.liutils.core.register.Config;
+import cn.misaka.core.proxy.AMGeneralProps;
+import cn.misaka.core.network.AMPacketHandler;
 
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -15,9 +17,12 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
 @Mod(modid = "AcademyCraft", name = "AcademyCraft Core", version = AcademyMod.VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false,
+clientPacketHandlerSpec = @SidedPacketHandler(channels = { AMGeneralProps.NET_CHANNEL_CLIENT }, packetHandler = AMPacketHandler.class), 
+serverPacketHandlerSpec = @SidedPacketHandler(channels = { AMGeneralProps.NET_CHANNEL_SERVER }, packetHandler = AMPacketHandler.class))
 public class AcademyMod {
 	public static final String VERSION = "no-run";
 
@@ -55,7 +60,7 @@ public class AcademyMod {
 	private void setMetadata(ModMetadata aModMetadata) {
 		aModMetadata.description = "[put the desc of your mod on here]";
 		aModMetadata.logoFile = "";
-		aModMetadata.authorList = Arrays.asList("LambdcraftTeam");
+		aModMetadata.authorList = Arrays.asList("Lambda Innovation");
 		aModMetadata.url = "";
 	}
 }

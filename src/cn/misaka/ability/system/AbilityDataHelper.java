@@ -29,9 +29,6 @@ public class AbilityDataHelper {
 		setBoolean(nbt, "activated", b);
 	}
 	
-	
-	
-	
 	private static final String PREFIX = "am_";
 	
 	private static void setBoolean(NBTTagCompound tag, String str, boolean b) {
