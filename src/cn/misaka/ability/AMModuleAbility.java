@@ -5,9 +5,10 @@ package cn.misaka.ability;
 
 import net.minecraft.command.CommandHandler;
 import cn.liutils.core.register.Config;
-import cn.misaka.ability.process.AbilityTickHandler;
+import cn.misaka.ability.command.CommandAim;
 import cn.misaka.ability.proxy.CommonProxy;
 import cn.misaka.ability.register.AbilityItems;
+import cn.misaka.ability.system.ServerAbilityMain;
 import cn.misaka.core.AcademyMod;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -43,8 +44,8 @@ public class AMModuleAbility {
 	
 	@EventHandler()
 	public void init(FMLInitializationEvent event) {
-		TickRegistry.registerTickHandler(new AbilityTickHandler(), Side.SERVER);
-		TickRegistry.registerTickHandler(new AbilityTickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new ServerAbilityMain(), Side.SERVER);
+		TickRegistry.registerTickHandler(new ServerAbilityMain(), Side.CLIENT);
 	}
 	
 	@EventHandler()
@@ -55,6 +56,7 @@ public class AMModuleAbility {
 	@EventHandler()
 	public void serverStarting(FMLServerStartingEvent event) {
 		CommandHandler cm = (CommandHandler) event.getServer().getCommandManager();
+		cm.registerCommand(new CommandAim());
 	}
 	
 }

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.liutils.api.entity.EntityVoid;
 import cn.liutils.api.util.EntityUtils;
+import cn.misaka.ability.system.AbilityDataHelper;
 import cn.misaka.core.item.MisakaBaseItem;
 
 /**
@@ -29,8 +30,8 @@ public class ItemAbilityVoid extends MisakaBaseItem {
 	}
 	
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean holding) {
-		if(!holding) {
-			EntityPlayer player = (EntityPlayer) entity;
+		EntityPlayer player = (EntityPlayer) entity;
+		if(!holding || AbilityDataHelper.playerHasAbility(player)) {
 			if(slot >= 0)
 				player.inventory.mainInventory[slot] = null;
 		}

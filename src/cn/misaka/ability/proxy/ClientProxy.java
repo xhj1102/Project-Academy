@@ -3,7 +3,7 @@
  */
 package cn.misaka.ability.proxy;
 
-import cn.misaka.ability.client.process.AbilityClientTickHandler;
+import cn.misaka.ability.client.system.ClientAbilityMain;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
@@ -16,7 +16,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit() {
 		super.preInit();
-		TickRegistry.registerTickHandler(new AbilityClientTickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new ClientAbilityMain(), Side.CLIENT);
 	}
 	
 	@Override

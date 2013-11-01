@@ -1,7 +1,7 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client.process;
+package cn.misaka.ability.client.system;
 
 import java.util.EnumSet;
 
@@ -18,18 +18,23 @@ import cpw.mods.fml.common.TickType;
  * @author WeAthFolD
  *
  */
-public class AbilityClientTickHandler implements ITickHandler {
+public class ClientAbilityMain implements ITickHandler {
 
-
-	public AbilityClientTickHandler() { }
+	Minecraft mc = Minecraft.getMinecraft();
+	EntityPlayer player;
+	
+	public ClientAbilityMain() { }
 
 	/* (non-Javadoc)
 	 * @see cpw.mods.fml.common.ITickHandler#tickStart(java.util.EnumSet, java.lang.Object[])
 	 */
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityPlayer player = mc.thePlayer;
+		if(player != null) {
+			player = mc.thePlayer; 
+			return;
+		}
+		
 		if(type.contains(TickType.CLIENT)) {
 			onClientTick();
 		} else if(type.contains(TickType.RENDER)) {

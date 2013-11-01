@@ -1,7 +1,7 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.process;
+package cn.misaka.ability.system;
 
 import java.util.EnumSet;
 
@@ -14,12 +14,12 @@ import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
 /**
- * Ability Module的TickHandler。
+ * Ability Module的处理核心。
  * 目前功能：voidItem的处理
  * @author WeAthFolD
  *
  */
-public class AbilityTickHandler implements ITickHandler {
+public class ServerAbilityMain implements ITickHandler {
 
 	/* (non-Javadoc)
 	 * @see cpw.mods.fml.common.ITickHandler#tickStart(java.util.EnumSet, java.lang.Object[])
@@ -47,12 +47,14 @@ public class AbilityTickHandler implements ITickHandler {
 	}
 	
 	private void onPlayerTick(EntityPlayer player) {
-		if(true) {
+		if(AbilityDataHelper.playerHasAbility(player)) {
+			System.out.println("Has ability");
 			ItemStack is = player.getCurrentEquippedItem();
 			if(is == null) {
 				player.setCurrentItemOrArmor(0, new ItemStack(AbilityItems.abilityVoid));
 			}
 		} 
+		System.out.println("Does not have ability");
 	}
 
 	/* (non-Javadoc)
