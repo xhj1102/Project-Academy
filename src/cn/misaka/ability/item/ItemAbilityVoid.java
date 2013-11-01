@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 import cn.liutils.api.entity.EntityVoid;
 import cn.liutils.api.util.EntityUtils;
 import cn.misaka.ability.system.AbilityDataHelper;
+import cn.misaka.ability.system.PlayerAbilityData;
+import cn.misaka.ability.system.ServerAbilityMain;
 import cn.misaka.core.item.MisakaBaseItem;
 
 /**
@@ -31,7 +33,12 @@ public class ItemAbilityVoid extends MisakaBaseItem {
 	
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean holding) {
 		EntityPlayer player = (EntityPlayer) entity;
-		if(!holding || AbilityDataHelper.playerHasAbility(player)) {
+		//System.out.println("AbilityVoid activate in " + world.isRemote);
+		PlayerAbilityData data = ServerAbilityMain.getPlayerData(player);
+		boolean b = !holding;
+		if(data != null)
+			b = b || !data.isActivated || !data.isAvailable;
+		if(b) {
 			if(slot >= 0)
 				player.inventory.mainInventory[slot] = null;
 		}

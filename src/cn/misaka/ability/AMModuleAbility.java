@@ -40,17 +40,21 @@ public class AMModuleAbility {
 	public void preInit(FMLPreInitializationEvent event) {
 		Config config = AcademyMod.config;
 		AbilityItems.init(config);
+		
+		proxy.preInit();
 	}
 	
 	@EventHandler()
 	public void init(FMLInitializationEvent event) {
 		TickRegistry.registerTickHandler(new ServerAbilityMain(), Side.SERVER);
 		TickRegistry.registerTickHandler(new ServerAbilityMain(), Side.CLIENT);
+		
+		proxy.init();
 	}
 	
 	@EventHandler()
 	public void postInit(FMLPostInitializationEvent event) {
-		
+		proxy.postInit();
 	}
 	
 	@EventHandler()

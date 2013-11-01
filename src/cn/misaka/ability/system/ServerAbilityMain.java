@@ -4,6 +4,7 @@
 package cn.misaka.ability.system;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 
 import cn.misaka.ability.register.AbilityItems;
 
@@ -19,11 +20,28 @@ import cpw.mods.fml.common.TickType;
  * @author WeAthFolD
  *
  */
-public class ServerAbilityMain implements ITickHandler {
+public final class ServerAbilityMain implements ITickHandler {
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.ITickHandler#tickStart(java.util.EnumSet, java.lang.Object[])
-	 */
+	private static HashMap<EntityPlayer, PlayerAbilityData> dataMap = new HashMap();
+	
+	public String getLabel() {
+		return "AcademyCraft-Ability TickHandler";
+	}
+	
+	public static void forceUpdate(EntityPlayer player) {
+		PlayerAbilityData data = dataMap.get(player);
+		if(data != null)
+			data.updateInformation();
+	}
+	
+	public static PlayerAbilityData getPlayerData(EntityPlayer player) {
+		return dataMap.get(player);
+	}
+	
+	public static void resetPlayerData(EntityPlayer player, PlayerAbilityData data) {
+		dataMap.put(player, data);
+	}
+	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
 		EntityPlayer player = (EntityPlayer) tickData[0];
@@ -31,38 +49,36 @@ public class ServerAbilityMain implements ITickHandler {
 			onPlayerTick(player);
 	}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.ITickHandler#tickEnd(java.util.EnumSet, java.lang.Object[])
-	 */
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 	}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.ITickHandler#ticks()
-	 */
 	@Override
 	public EnumSet<TickType> ticks() {
 		return EnumSet.of(TickType.PLAYER);
 	}
 	
 	private void onPlayerTick(EntityPlayer player) {
-		if(AbilityDataHelper.playerHasAbility(player)) {
-			System.out.println("Has ability");
-			ItemStack is = player.getCurrentEquippedItem();
-			if(is == null) {
-				player.setCurrentItemOrArmor(0, new ItemStack(AbilityItems.abilityVoid));
+		PlayerAbilityData data = dataMap.get(player);
+		
+		if(data == null) {
+			if(AbilityDataHelper.playerHasAbility(player)) {
+				dataMap.put(player, new PlayerAbilityData(player));
 			}
-		} 
-		System.out.println("Does not have ability");
+		} else {
+			System.out.println("pDataTick " + (player.worldObj.isRemote ? "_CLIENT" : "_SERVER") + " : " + data.isAvailable + " " + data.level);
+			if(data.isActivated) { //在这里执行玩家的各种能力操作
+				ItemStack is = player.getCurrentEquippedItem();
+				if(is == null) {
+					player.setCurrentItemOrArmor(0, new ItemStack(AbilityItems.abilityVoid));
+				}
+			}
+			
+			if(!data.isAvailable) {
+				dataMap.remove(player);
+			}
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.ITickHandler#getLabel()
-	 */
-	@Override
-	public String getLabel() {
-		return "AcademyCraft-Ability TickHandler";
-	}
 
 }
