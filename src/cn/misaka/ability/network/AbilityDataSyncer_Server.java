@@ -22,12 +22,13 @@ import cn.misaka.core.network.AMPacketHandler;
 import cn.misaka.core.proxy.AMGeneralProps;
 
 /**
+ * 负责从Server到Client的数据同步。
  * @author WeAthFolD
  * 
  */
 public class AbilityDataSyncer_Server implements IChannelProcess {
 
-	private static final byte CHANNEL = AMGeneralProps.NET_ID_ABILITY_SYNC;
+	private static final byte CHANNEL = AMGeneralProps.NET_ID_ABILITY_SYNC_SERVER;
 
 	public enum EnumDataType {
 		SIMPLE, FULL, LEVEL4;
@@ -35,7 +36,6 @@ public class AbilityDataSyncer_Server implements IChannelProcess {
 
 	public static void sendPacketFromServer(EntityPlayer player,
 			EnumDataType type) {
-		// ByteArrayOutputStream bos = ;
 		// TODO:SIMPLE只发送有无能力[boolean]、是否激活[boolean],FULL加发送计算力点数[int]、能力类别[short]；
 		// LEVEL4加发送技能设定[待加入]
 		

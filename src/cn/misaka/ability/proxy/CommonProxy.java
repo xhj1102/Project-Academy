@@ -16,7 +16,7 @@ public class CommonProxy {
 	public void preInit() {}
 	
 	public void init() {
-		AMPacketHandler.addChannel(AMGeneralProps.NET_ID_ABILITY_SYNC, new AbilityDataSyncer_Server());
+		AMPacketHandler.addChannel(AMGeneralProps.NET_ID_ABILITY_SYNC_SERVER, new AbilityDataSyncer_Server());
 	}
 	
 	public void postInit() {}
