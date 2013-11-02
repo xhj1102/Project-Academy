@@ -34,7 +34,7 @@ public class ItemAbilityVoid extends MisakaBaseItem {
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean holding) {
 		EntityPlayer player = (EntityPlayer) entity;
 		//System.out.println("AbilityVoid activate in " + world.isRemote);
-		PlayerAbilityData data = ServerAbilityMain.getPlayerData(player);
+		PlayerAbilityData data = ServerAbilityMain.getAbilityData(player);
 		boolean b = !holding;
 		if(data != null)
 			b = b || !data.isActivated || !data.isAvailable;

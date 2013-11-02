@@ -31,10 +31,11 @@ public class KeyAbilityControl implements IKeyProcess {
 	 */
 	@Override
 	public void onKeyDown(int keyCode, boolean tickEnd) {
+		if(tickEnd) return;
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityPlayer player = mc.thePlayer;
 		if(player != null) {
-			if(mc.currentScreen != null)
+			if(mc.currentScreen == null)
 				AbilityControlSyncer.syncControl(player, keyID, true);
 			else AbilityControlSyncer.syncStop(player);
 		}
@@ -45,10 +46,11 @@ public class KeyAbilityControl implements IKeyProcess {
 	 */
 	@Override
 	public void onKeyUp(int keyCode, boolean tickEnd) {
+		if(tickEnd) return;
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityPlayer player = mc.thePlayer;
 		if(player != null) {
-			if(mc.currentScreen != null)
+			if(mc.currentScreen == null)
 				AbilityControlSyncer.syncControl(player, keyID, false);
 			else AbilityControlSyncer.syncStop(player);
 		}

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 
+import cn.misaka.ability.ability.test.AbilityClassTest;
 import cn.misaka.ability.register.AbilityItems;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +30,7 @@ public final class ServerAbilityMain implements ITickHandler {
 	
 	static {
 		//TODO: 在这里添加所有的能力类别。
+		abilityClasses.add(new AbilityClassTest());
 	}
 	
 	public String getLabel() {
@@ -41,16 +43,16 @@ public final class ServerAbilityMain implements ITickHandler {
 			data.updateInformation();
 	}
 	
-	public static PlayerAbilityData getPlayerData(EntityPlayer player) {
-		return dataMap.get(player);
-	}
-	
 	public static void resetPlayerData(EntityPlayer player, PlayerAbilityData data) {
 		dataMap.put(player, data);
 	}
 	
 	public static AbilityClass getAbilityClass(EntityPlayer player) {
 		int index = getAbilityData(player).type;
+		return getAbilityClass(index);
+	}
+	
+	private static AbilityClass getAbilityClass(int index) {
 		return abilityClasses.size() > index ? abilityClasses.get(index) : null;
 	}
 	
@@ -97,7 +99,7 @@ public final class ServerAbilityMain implements ITickHandler {
 					}
 				}
 				
-				AbilityClass ac = abilityClasses.get(data.type);
+				AbilityClass ac = getAbilityClass(data.type);
 				if(ac != null) {
 					ac.onTick(player, world, data);
 				} else {
@@ -110,5 +112,4 @@ public final class ServerAbilityMain implements ITickHandler {
 			}
 		}
 	}
-
 }

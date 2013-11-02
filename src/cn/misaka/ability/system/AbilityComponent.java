@@ -49,5 +49,7 @@ public abstract class AbilityComponent {
 	 * @return
 	 */
 	public abstract AbilityRender getClientRender();
+	
+	public abstract String getComponentName();
 
 }

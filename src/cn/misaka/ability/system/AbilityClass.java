@@ -13,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 /**
- * 一种能力系。被ServerAbilityMain统一管理和调用，在这里进行一种能力的各种功能计算。
+ * 一种能力系。被ServerAbilityMain统一管理和调用，在这里进行一种能力系的各种功能计算。
  * @author WeAthFolD
  *
  */
@@ -56,12 +56,17 @@ public abstract class AbilityClass {
 		}
 	}
 	
+	public void resetPlayerStat(EntityPlayer player) {
+		ControlStat stat = controlStatus.get(player);
+		if(stat != null) stat.reset();
+	}
+	
 	public final void onTick(EntityPlayer player, World world, PlayerAbilityData data) {
 		ControlStat stat = controlStatus.get(player);
 		if(stat == null) return;
 		
 		stat.updateTick();
-		AbilityComponent comp = components.get(data.level);
+		AbilityComponent comp = getComponent(data.level);
 		if(comp == null) {
 			System.err.println("onTick() Didn't find the right component to the ability");
 			return;
@@ -81,16 +86,23 @@ public abstract class AbilityClass {
 			stat = new ControlStat();
 			controlStatus.put(player, stat);
 		}
-		AbilityComponent comp = components.get(data.level);
+		AbilityComponent comp = getComponent(data.level);
 		if(comp == null) {
 			System.err.println("onButtonStateChange() Didn't find the right component to the ability");
 			return;
 		}
-		if(isDown && !stat.keyDown[keyID])
+		System.out.println("STATECHANGE#" + world.isRemote + " : " + isDown);
+		if(isDown)
 			comp.onButtonDown(player, world, data, keyID, stat);
-		else if(!isDown && stat.keyDown[keyID])
+		else if(!isDown)
 			comp.onButtonUp(player, world, data, keyID, stat);
 		stat.setKeyStat(keyID, isDown);
 	}
+	
+	public final AbilityComponent getComponent(int level) {
+		return level < components.size() ? components.get(level) : null;
+	}
+	
+	public abstract String getAbilityName();
 	
 }

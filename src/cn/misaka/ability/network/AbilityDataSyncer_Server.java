@@ -41,7 +41,7 @@ public class AbilityDataSyncer_Server implements IChannelProcess {
 		
 		ByteArrayOutputStream bos = null;
 		DataOutputStream stream;
-		PlayerAbilityData data = ServerAbilityMain.getPlayerData(player);
+		PlayerAbilityData data = ServerAbilityMain.getAbilityData(player);
 		if (data == null) {
 			data = new PlayerAbilityData(player);
 			ServerAbilityMain.resetPlayerData(player, data);
@@ -71,7 +71,6 @@ public class AbilityDataSyncer_Server implements IChannelProcess {
 			packet.length = bos.size();
 
 			PacketDispatcher.sendPacketToPlayer(packet, (Player) player);
-			PacketDispatcher.sendPacketToAllPlayers(packet);
 		}
 	}
 
