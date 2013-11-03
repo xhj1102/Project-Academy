@@ -58,8 +58,8 @@ public class AbilityControlSyncer implements IChannelProcess {
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 
-		onControlChange(player, keyID, upDown);
-		PacketDispatcher.sendPacketToServer(packet);
+		if(onControlChange(player, keyID, upDown))
+			PacketDispatcher.sendPacketToServer(packet);
 	}
 
 	/**
@@ -81,21 +81,29 @@ public class AbilityControlSyncer implements IChannelProcess {
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 
-		resetControl(player);
-		PacketDispatcher.sendPacketToServer(packet);
+		if(resetControl(player))
+			PacketDispatcher.sendPacketToServer(packet);
 	}
 
-	private static void onControlChange(EntityPlayer player, int keyID,
+	private static boolean onControlChange(EntityPlayer player, int keyID,
 			boolean upDown) {
 		AbilityClass playerAbility = ServerAbilityMain.getAbilityClass(player);
 		PlayerAbilityData data = ServerAbilityMain.getAbilityData(player);
-		playerAbility.onButtonStateChange(player, player.worldObj, data, keyID, upDown);
+		if(ServerAbilityMain.isInUsingState(player)) {
+			playerAbility.onButtonStateChange(player, player.worldObj, data, keyID, upDown);
+			return true;
+		}
+		return false;
 	}
 
-	private static void resetControl(EntityPlayer player) {
+	private static boolean resetControl(EntityPlayer player) {
 		AbilityClass playerAbility = ServerAbilityMain.getAbilityClass(player);
-		PlayerAbilityData data = ServerAbilityMain.getAbilityData(player);
-		playerAbility.resetPlayerStat(player);
+		
+		if(ServerAbilityMain.isInUsingState(player)) {
+			playerAbility.resetPlayerStat(player);
+			return true;
+		}
+		return false;
 	}
 
 	/*

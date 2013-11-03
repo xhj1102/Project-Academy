@@ -18,8 +18,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class LIClientRegistry {
 
-	public static void addKey(KeyBinding key, boolean isRep, IKeyProcess process) {
-		LIKeyProcess.addKey(key, isRep, process);
+	public static void addKey(String s, int key, boolean isRep, IKeyProcess process) {
+		LIKeyProcess.addKey(s, key, isRep, process);
 	}
 	
 	public static void addSoundPath(String name) {

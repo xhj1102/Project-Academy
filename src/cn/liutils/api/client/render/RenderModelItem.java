@@ -186,7 +186,7 @@ public class RenderModelItem implements IItemRenderer, IItemRenderInfProvider {
 	}
 	
 	@Override
-	public final boolean handleRenderType(ItemStack item, ItemRenderType type) {
+	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 		switch (type) {
 		case EQUIPPED:
 		case EQUIPPED_FIRST_PERSON:
@@ -202,7 +202,7 @@ public class RenderModelItem implements IItemRenderer, IItemRenderInfProvider {
 	}
 
 	@Override
-	public final boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
+	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
 			ItemRendererHelper helper) {
 		switch (helper) {
 		case ENTITY_ROTATION:
@@ -216,7 +216,7 @@ public class RenderModelItem implements IItemRenderer, IItemRenderInfProvider {
 	}
 
 	@Override
-	public final void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		switch (type) {
 		case EQUIPPED:
 		case EQUIPPED_FIRST_PERSON:
@@ -325,12 +325,12 @@ public class RenderModelItem implements IItemRenderer, IItemRenderInfProvider {
 		return sb.append(")").toString();
 	}
 	
-	private void doTransformation(Vec3 vec3) {
+	protected void doTransformation(Vec3 vec3) {
 		if(vec3 != null)
 			GL11.glTranslated(vec3.xCoord, vec3.yCoord, vec3.zCoord);
 	}
 	
-	private void doRotation(Vec3 vec3) {
+	protected void doRotation(Vec3 vec3) {
 		if(vec3 != null) {
 			GL11.glRotated(vec3.yCoord, 0.0F, 1.0F, 0.0F);
 			GL11.glRotated(vec3.zCoord, 0.0F, 0.0F, 1.0F);

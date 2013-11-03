@@ -52,6 +52,15 @@ public final class ServerAbilityMain implements ITickHandler {
 		return getAbilityClass(index);
 	}
 	
+	public static AbilityComponent getActiveComponent(EntityPlayer player) {
+		PlayerAbilityData data = getAbilityData(player);
+		AbilityClass ac = getAbilityClass(data.type);
+		if(ac != null) {
+			return ac.getComponent(data.level);
+		}
+		return null;
+	}
+	
 	private static AbilityClass getAbilityClass(int index) {
 		return abilityClasses.size() > index ? abilityClasses.get(index) : null;
 	}
@@ -91,7 +100,7 @@ public final class ServerAbilityMain implements ITickHandler {
 			}
 		} else {
 			//System.out.println("pDataTick " + (player.worldObj.isRemote ? "_CLIENT" : "_SERVER") + " : " + data.isAvailable + " " + data.level);
-			if(data.isActivated) { //在这里执行玩家的各种能力操作
+			if(data.isAvailable && data.isActivated) { //在这里执行玩家的各种能力操作
 				if(world.isRemote) {
 					ItemStack is = player.getCurrentEquippedItem();
 					if(is == null) {
@@ -110,6 +119,17 @@ public final class ServerAbilityMain implements ITickHandler {
 			if(!data.isAvailable) {
 				dataMap.remove(player);
 			}
+		}
+	}
+	
+	public static boolean isInUsingState(EntityPlayer player) {
+		World world = player.worldObj;
+		if(world.isRemote) {
+			ItemStack is = player.getCurrentEquippedItem();
+			return is != null && is.itemID == AbilityItems.abilityVoid.itemID;
+		} else {
+			PlayerAbilityData data = getAbilityData(player);
+			return data.isAvailable && data.isActivated && player.getCurrentEquippedItem() == null;
 		}
 	}
 }

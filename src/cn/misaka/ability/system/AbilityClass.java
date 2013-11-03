@@ -91,7 +91,7 @@ public abstract class AbilityClass {
 			System.err.println("onButtonStateChange() Didn't find the right component to the ability");
 			return;
 		}
-		System.out.println("STATECHANGE#" + world.isRemote + " : " + isDown);
+		//System.out.println("STATECHANGE#" + world.isRemote + " : " + isDown);
 		if(isDown)
 			comp.onButtonDown(player, world, data, keyID, stat);
 		else if(!isDown)

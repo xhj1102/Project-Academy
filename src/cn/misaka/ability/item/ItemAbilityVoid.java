@@ -39,7 +39,7 @@ public class ItemAbilityVoid extends MisakaBaseItem {
 		if(data != null)
 			b = b || !data.isActivated || !data.isAvailable;
 		if(b) {
-			if(slot >= 0)
+			if(slot >= 0) 
 				player.inventory.mainInventory[slot] = null;
 		}
 	}

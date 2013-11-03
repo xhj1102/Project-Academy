@@ -41,12 +41,12 @@ public class LIClientProxy extends LICommonProxy {
 		if(LIUtilsMod.DEBUG) {
 			KeyMoving key = new KeyMoving();
 			key.addProcess(new Debug_ProcessorModel());
-			LIKeyProcess.addKey(new KeyBinding("up", Keyboard.KEY_UP), true, key);
-			LIKeyProcess.addKey(new KeyBinding("down", Keyboard.KEY_DOWN), true, key);
-			LIKeyProcess.addKey(new KeyBinding("left", Keyboard.KEY_LEFT), true, key);
-			LIKeyProcess.addKey(new KeyBinding("right", Keyboard.KEY_RIGHT), true, key);
-			LIKeyProcess.addKey(new KeyBinding("forward", Keyboard.KEY_NUMPAD8), true, key);
-			LIKeyProcess.addKey(new KeyBinding("back", Keyboard.KEY_NUMPAD2), true, key);
+			LIKeyProcess.addKey("debug_up", Keyboard.KEY_UP, true, key);
+			LIKeyProcess.addKey("debug_down", Keyboard.KEY_DOWN, true, key);
+			LIKeyProcess.addKey("debug_left", Keyboard.KEY_LEFT, true, key);
+			LIKeyProcess.addKey("debug_right", Keyboard.KEY_RIGHT, true, key);
+			LIKeyProcess.addKey("debug_forward", Keyboard.KEY_NUMPAD8, true, key);
+			LIKeyProcess.addKey("debug_back", Keyboard.KEY_NUMPAD2, true, key);
 		}
 	}
 	

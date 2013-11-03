@@ -16,7 +16,11 @@ package cn.liutils.core.client.register;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -35,36 +39,31 @@ import cpw.mods.fml.common.TickType;
  * @author WeAthFolD
  */
 public final class LIKeyProcess implements ITickHandler {
-
-	private static List<KeyBinding> bindings = new ArrayList();
-	private static List<IKeyProcess> processes = new ArrayList();
-	private static List<Boolean> repeats = new ArrayList();
-	
-	private KeyBinding[] bindingArray;
-	private IKeyProcess[] processArray;
-	private Boolean[] repeatArray;
-	private boolean[] keyDown;
 	
 	public static LIKeyProcess instance;
 	public static final int MOUSE_LEFT = -100, MOUSE_MIDDLE = -98, MOUSE_RIGHT = -99;
-
-	public LIKeyProcess() {
-		if (instance == null)
-			instance = this;
-		else throw new WrongUsageException("LIKeyProcess has been instantied twice!");
-		bindingArray = bindings.toArray(new KeyBinding[0]);
-		processArray = processes.toArray(new IKeyProcess[0]);
-		repeatArray = repeats.toArray(new Boolean[0]);
-		bindings = null;
-		processes = null;
-		repeats = null;
-		keyDown = new boolean[bindingArray.length];
-		System.gc();
+	
+	private static Set<LIKeyBinding> bindingSet = new HashSet();
+	//private static Map<KeyBinding, Integer> hackSet = new HashMap();
+	
+	public static class LIKeyBinding {
+		public int keyCode;
+		public boolean isRepeat;
+		public IKeyProcess process;
+		public boolean keyDown;
+		public String name;
+		
+		public LIKeyBinding(String n, int code, boolean repeat, IKeyProcess proc) {
+			name = n;
+			keyCode = code;
+			isRepeat = repeat;
+			process = proc;
+		}
 	}
 
 	@Override
 	public String getLabel() {
-		return "LambdaCraft Keys";
+		return "LIUtils Keys";
 	}
 	
     /**
@@ -87,14 +86,13 @@ public final class LIKeyProcess implements ITickHandler {
 
     private void keyTick(EnumSet<TickType> type, boolean tickEnd)
     {
-        for (int i = 0; i < bindingArray.length; i++)
+        for (LIKeyBinding kb : bindingSet)
         {
-            KeyBinding keyBinding = bindingArray[i];
-            int keyCode = keyBinding.keyCode;
+            int keyCode = kb.keyCode;
             boolean state = (keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : Keyboard.isKeyDown(keyCode));
-            if (state != keyDown[i] || (state && repeatArray[i]))
+            if (state != kb.keyDown || (state && kb.isRepeat))
             {
-            	IKeyProcess proc = processArray[i];
+            	IKeyProcess proc = kb.process;
             	
                 if (state)
                 {
@@ -106,7 +104,7 @@ public final class LIKeyProcess implements ITickHandler {
                 }
                 if (tickEnd)
                 {
-                    keyDown[i] = state;
+                    kb.keyDown = state;
                 }
             }
 
@@ -128,10 +126,32 @@ public final class LIKeyProcess implements ITickHandler {
 	 * @param process
 	 *            对应的处理类
 	 */
-	public static void addKey(KeyBinding key, boolean isRep, IKeyProcess process) {
-		bindings.add(key);
-		processes.add(process);
-		repeats.add(isRep);
+	public static LIKeyBinding addKey(String name, int keyCode, boolean isRep, IKeyProcess process) {
+		LIKeyBinding binding = new LIKeyBinding(name, keyCode, isRep, process);
+		bindingSet.add(binding);
+		return binding;
+	}
+	
+	/**
+	 * 用来临时禁用mc中的某个按键。
+	 * 多个类同时操作本方法会引起混乱，请谨慎使用。
+	 * @param kb
+	 */
+	public static void addKeyOverride(KeyBinding kb) {
+		kb.hash.removeObject(kb.keyCode);
+	}
+	
+	public static void removeKeyOverride(KeyBinding kb) {
+		if(!kb.hash.containsItem(kb.keyCode))
+			kb.hash.addKey(kb.keyCode, kb);
+	}
+	
+	public static LIKeyBinding getBindingByName(String s) {
+		for(LIKeyBinding kb : bindingSet) {
+			if(kb.name.equals(s))
+				return kb;
+		}
+		return null;
 	}
 
 }
