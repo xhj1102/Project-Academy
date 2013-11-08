@@ -4,8 +4,8 @@
 package cn.misaka.ability.command;
 
 import cn.liutils.api.command.LICommandBase;
-import cn.misaka.ability.network.AbilityDataSyncer_Server;
-import cn.misaka.ability.network.AbilityDataSyncer_Server.EnumDataType;
+import cn.misaka.ability.network.AbilityDataSyncer;
+import cn.misaka.ability.network.AbilityDataSyncer.EnumDataType;
 import cn.misaka.ability.system.AbilityDataHelper;
 import cn.misaka.ability.system.ServerAbilityMain;
 import net.minecraft.command.CommandBase;
@@ -69,7 +69,7 @@ public class CommandAim extends LICommandBase {
 		
 		if(typeToSend != null) {
 			ServerAbilityMain.forceUpdate(player); //←当做强制更新时的范本吧。
-			AbilityDataSyncer_Server.sendPacketFromServer(player, typeToSend);
+			AbilityDataSyncer.sendPacketFromServer(player, typeToSend);
 		}
 	}
 	

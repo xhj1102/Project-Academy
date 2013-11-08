@@ -12,9 +12,11 @@ import cn.liutils.core.LIUtilsMod;
 import cn.liutils.core.client.register.LIKeyProcess;
 import cn.misaka.ability.client.AbilityClientEventHandler;
 import cn.misaka.ability.client.keys.KeyAbilityControl;
+import cn.misaka.ability.client.keys.KeyAbilitySwitch;
 import cn.misaka.ability.client.render.RenderAbilityVoid;
 import cn.misaka.ability.client.system.ClientAbilityMain;
 import cn.misaka.ability.register.AbilityItems;
+import cn.misaka.core.client.props.AMClientProps;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
@@ -35,6 +37,7 @@ public class ClientProxy extends CommonProxy {
 		LIKeyProcess.addKey("abi1", LIKeyProcess.MOUSE_RIGHT, false, new KeyAbilityControl(1));
 		LIKeyProcess.addKey("abi2", Keyboard.KEY_R, false, new KeyAbilityControl(2));
 		LIKeyProcess.addKey("abi3", Keyboard.KEY_F, false, new KeyAbilityControl(3));
+		LIKeyProcess.addKey("switch", AMClientProps.KEY_MODESWITCH, false, new KeyAbilitySwitch());
 		
 		if(LIUtilsMod.DEBUG) {
 			//KeyMoving.addProcess(new Debug_AbilityVoid());

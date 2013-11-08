@@ -26,7 +26,7 @@ import cn.misaka.core.proxy.AMGeneralProps;
  * @author WeAthFolD
  * 
  */
-public class AbilityDataSyncer_Server implements IChannelProcess {
+public class AbilityDataSyncer implements IChannelProcess {
 
 	private static final byte CHANNEL = AMGeneralProps.NET_ID_ABILITY_SYNC_SERVER;
 
@@ -38,7 +38,18 @@ public class AbilityDataSyncer_Server implements IChannelProcess {
 			EnumDataType type) {
 		// TODO:SIMPLE只发送有无能力[boolean]、是否激活[boolean],FULL加发送计算力点数[int]、能力类别[short]；
 		// LEVEL4加发送技能设定[待加入]
-		
+		Packet250CustomPayload  packet = writePacket(player, type);
+		if(packet != null)
+			PacketDispatcher.sendPacketToPlayer(packet, (Player) player);
+	}
+	
+	public static void sendPacketFromClient(EntityPlayer player, EnumDataType type) {
+		Packet250CustomPayload  packet = writePacket(player, type);
+		if(packet != null)
+			PacketDispatcher.sendPacketToServer(packet);
+	}
+	
+	private static Packet250CustomPayload writePacket(EntityPlayer player, EnumDataType type) {
 		ByteArrayOutputStream bos = null;
 		DataOutputStream stream;
 		PlayerAbilityData data = ServerAbilityMain.getAbilityData(player);
@@ -66,12 +77,13 @@ public class AbilityDataSyncer_Server implements IChannelProcess {
 
 		if (bos != null) {
 			Packet250CustomPayload packet = new Packet250CustomPayload();
-			packet.channel = AMGeneralProps.NET_CHANNEL_CLIENT;
+			packet.channel = player.worldObj.isRemote ? AMGeneralProps.NET_CHANNEL_SERVER : 
+				AMGeneralProps.NET_CHANNEL_CLIENT;
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
-
-			PacketDispatcher.sendPacketToPlayer(packet, (Player) player);
+			return packet;
 		}
+		return null;
 	}
 
 	private static void writeSimple(PlayerAbilityData data,
