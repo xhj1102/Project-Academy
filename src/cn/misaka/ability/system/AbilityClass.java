@@ -10,6 +10,7 @@ import java.util.Map;
 import cn.misaka.ability.proxy.AbilityGeneralProps;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 /**
@@ -25,6 +26,11 @@ public abstract class AbilityClass {
 	
 	public static class ControlStat {
 		public static final int LENGTH = AbilityGeneralProps.MAX_KEYS;
+		
+		/**
+		 * 用来存储某种能力自身特殊信息的nbt，实时。(i.e.蓄力时间， 是否激活某种效果，……）
+		 */
+		public NBTTagCompound tag = new NBTTagCompound();
 		
 		public boolean[] keyDown = new boolean[LENGTH];
 		public int[] keyTick = new int[LENGTH];

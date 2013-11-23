@@ -26,6 +26,8 @@ import cn.liutils.api.util.selector.EntitySelectorPlayer;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -64,6 +66,12 @@ public class GenericUtils {
 			}
 		}
 		return set;
+	}
+	
+	public static NBTTagCompound loadCompound(ItemStack item) {
+		if(item.stackTagCompound == null)
+			item.stackTagCompound = new NBTTagCompound();
+		return item.stackTagCompound;
 	}
 	
 	/**
