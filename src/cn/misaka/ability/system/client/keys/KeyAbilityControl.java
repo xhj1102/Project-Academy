@@ -1,14 +1,14 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client.keys;
+package cn.misaka.ability.system.client.keys;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import cn.liutils.api.client.register.IKeyProcess;
-import cn.misaka.ability.network.AbilityControlSyncer;
+import cn.misaka.ability.system.network.AbilityControlSyncer;
 
 /**
  * @author WeAthFolD

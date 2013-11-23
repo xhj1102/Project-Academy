@@ -1,7 +1,7 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.network;
+package cn.misaka.ability.system.network;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

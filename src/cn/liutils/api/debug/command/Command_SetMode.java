@@ -9,7 +9,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 
 /**
  * @author WeAthFolD
@@ -62,7 +61,7 @@ public class Command_SetMode extends CommandBase {
 	public void processCommand(ICommandSender ics, String[] astring) {
 		if(astring.length == 0) {
 			ics.sendChatToPlayer(ChatMessageComponent.createFromText("Current Mode : " + EnumChatFormatting.RED + mode));
-			printProcessor(this.getCommandSenderAsPlayer(ics), activeProcessor);
+			printProcessor(CommandBase.getCommandSenderAsPlayer(ics), activeProcessor);
 		} else if(astring.length == 1) {
 			int num = Integer.valueOf(astring[0]);
 			if(num >= 0) {

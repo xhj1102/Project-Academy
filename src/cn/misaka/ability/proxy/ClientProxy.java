@@ -10,12 +10,12 @@ import org.lwjgl.input.Keyboard;
 
 import cn.liutils.core.LIUtilsMod;
 import cn.liutils.core.client.register.LIKeyProcess;
-import cn.misaka.ability.client.AbilityClientEventHandler;
-import cn.misaka.ability.client.keys.KeyAbilityControl;
-import cn.misaka.ability.client.keys.KeyAbilitySwitch;
-import cn.misaka.ability.client.render.RenderAbilityVoid;
-import cn.misaka.ability.client.system.ClientAbilityMain;
 import cn.misaka.ability.register.AbilityItems;
+import cn.misaka.ability.system.client.AbilityClientEventHandler;
+import cn.misaka.ability.system.client.keys.KeyAbilityControl;
+import cn.misaka.ability.system.client.keys.KeyAbilitySwitch;
+import cn.misaka.ability.system.client.render.RenderAbilityVoid;
+import cn.misaka.ability.system.client.system.ClientAbilityMain;
 import cn.misaka.core.client.props.AMClientProps;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;

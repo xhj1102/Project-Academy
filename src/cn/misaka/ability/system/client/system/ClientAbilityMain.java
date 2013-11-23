@@ -1,18 +1,18 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client.system;
+package cn.misaka.ability.system.client.system;
 
 import java.util.EnumSet;
 
 import cn.liutils.core.LIUtilsMod;
 import cn.liutils.core.client.register.LIKeyProcess;
-import cn.misaka.ability.client.AbilityClientEventHandler;
 import cn.misaka.ability.register.AbilityItems;
 import cn.misaka.ability.system.AbilityClass;
 import cn.misaka.ability.system.AbilityComponent;
 import cn.misaka.ability.system.PlayerAbilityData;
 import cn.misaka.ability.system.ServerAbilityMain;
+import cn.misaka.ability.system.client.AbilityClientEventHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

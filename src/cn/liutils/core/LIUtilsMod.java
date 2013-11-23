@@ -6,7 +6,7 @@ package cn.liutils.core;
 import java.util.logging.Logger;
 
 import net.minecraft.command.CommandHandler;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.entity.Entity;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -17,15 +17,12 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
-
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cn.liutils.api.debug.command.Command_GetRenderInf;
 import cn.liutils.api.debug.command.Command_SetMode;
+import cn.liutils.api.entity.EntityBlock;
 import cn.liutils.core.proxy.LICommonProxy;
 import cn.liutils.core.proxy.LIGeneralProps;
-import cn.liutils.core.register.LIDummyPacketHandler;
 
 /**
  * LIUtils mod的主注册类。
@@ -35,7 +32,7 @@ import cn.liutils.core.register.LIDummyPacketHandler;
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class LIUtilsMod {
 	
-	public static final String VERSION = "0.0.0dev";
+	public static final String VERSION = "1.2.0";
 	
 	public static final String DEPENDENCY = "required-after:LIutils@" + VERSION;
 	
@@ -72,6 +69,16 @@ public class LIUtilsMod {
 	@EventHandler()
 	public void init(FMLInitializationEvent Init) {
 		proxy.init();
+		
+		registerEntity(EntityBlock.class, "entity_block", LIGeneralProps.ENT_ID_BLOCK);
+	}
+	
+	private void registerEntity(Class<? extends Entity> cl, String name, int id) {
+		registerEntity(cl, name, id, 32, 3, true);
+	}
+	
+	private void registerEntity(Class<? extends Entity> cl, String name, int id, int trackRange, int freq, boolean updateVel) {
+		EntityRegistry.registerModEntity(cl, name, id, instance, trackRange, freq, updateVel);
 	}
 	
 	/**

@@ -28,7 +28,8 @@ public class EntityVoid extends Entity {
 		setDead();
 	}
 	
-    public void onUpdate()
+    @Override
+	public void onUpdate()
     {
     }
 

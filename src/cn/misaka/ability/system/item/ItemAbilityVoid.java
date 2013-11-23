@@ -1,7 +1,7 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.item;
+package cn.misaka.ability.system.item;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -9,8 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.liutils.api.entity.EntityVoid;
-import cn.liutils.api.util.EntityUtils;
-import cn.misaka.ability.system.AbilityDataHelper;
 import cn.misaka.ability.system.PlayerAbilityData;
 import cn.misaka.ability.system.ServerAbilityMain;
 import cn.misaka.core.item.MisakaBaseItem;
@@ -31,6 +29,7 @@ public class ItemAbilityVoid extends MisakaBaseItem {
 		setCreativeTab(CreativeTabs.tabMisc);
 	}
 	
+	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean holding) {
 		EntityPlayer player = (EntityPlayer) entity;
 		//System.out.println("AbilityVoid activate in " + world.isRemote);

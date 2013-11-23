@@ -41,7 +41,7 @@ public class Command_GetRenderInf extends CommandBase {
 	 */
 	@Override
 	public void processCommand(ICommandSender ics, String[] astring) {
-		EntityPlayer player = this.getCommandSenderAsPlayer(ics);
+		EntityPlayer player = CommandBase.getCommandSenderAsPlayer(ics);
 		if(player != null) {
 			ItemStack item = player.getCurrentEquippedItem();
 			if(item != null) {

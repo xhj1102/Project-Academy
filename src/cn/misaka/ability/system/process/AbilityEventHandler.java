@@ -1,10 +1,10 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.process;
+package cn.misaka.ability.system.process;
 
-import cn.misaka.ability.network.AbilityDataSyncer;
-import cn.misaka.ability.network.AbilityDataSyncer.EnumDataType;
+import cn.misaka.ability.system.network.AbilityDataSyncer;
+import cn.misaka.ability.system.network.AbilityDataSyncer.EnumDataType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;

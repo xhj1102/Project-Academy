@@ -6,7 +6,7 @@ package cn.misaka.ability.register;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cn.liutils.core.register.Config;
 import cn.liutils.core.register.ConfigHandler;
-import cn.misaka.ability.item.ItemAbilityVoid;
+import cn.misaka.ability.system.item.ItemAbilityVoid;
 
 /**
  * @author WeAthFolD

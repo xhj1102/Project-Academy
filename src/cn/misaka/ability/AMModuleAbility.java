@@ -5,10 +5,10 @@ package cn.misaka.ability;
 
 import net.minecraft.command.CommandHandler;
 import cn.liutils.core.register.Config;
-import cn.misaka.ability.command.CommandAim;
 import cn.misaka.ability.proxy.CommonProxy;
 import cn.misaka.ability.register.AbilityItems;
 import cn.misaka.ability.system.ServerAbilityMain;
+import cn.misaka.ability.system.command.CommandAim;
 import cn.misaka.core.AcademyMod;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;

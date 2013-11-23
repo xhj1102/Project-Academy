@@ -3,8 +3,9 @@
  */
 package cn.liutils.api.client;
 
-import net.minecraft.client.settings.KeyBinding;
 import cn.liutils.api.client.register.IKeyProcess;
+import cn.liutils.api.client.render.PlayerRenderHelper;
+import cn.liutils.api.entity.EntityPlayerRenderHelper;
 import cn.liutils.core.client.register.LIKeyProcess;
 import cn.liutils.core.client.register.LISoundRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -29,4 +30,10 @@ public class LIClientRegistry {
 	public static void addSoundWithVariety(String name, int cnt) {
 		LISoundRegistry.addSoundWithVariety(name, cnt);
 	}
+	
+	public static void addPlayerRenderingHelper(PlayerRenderHelper helper) {
+		EntityPlayerRenderHelper.addRenderHelper(helper);
+	}
+	
+	
 }

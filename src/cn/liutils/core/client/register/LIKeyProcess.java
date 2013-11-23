@@ -14,11 +14,9 @@
  */
 package cn.liutils.core.client.register;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +28,6 @@ import cn.liutils.api.client.register.IKeyProcess;
 
 
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.command.WrongUsageException;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -44,6 +41,7 @@ public final class LIKeyProcess implements ITickHandler {
 	public static final int MOUSE_LEFT = -100, MOUSE_MIDDLE = -98, MOUSE_RIGHT = -99;
 	
 	private static Set<LIKeyBinding> bindingSet = new HashSet();
+	private static Map<LIKeyBinding, KeyBinding> associates = new HashMap();
 	//private static Map<KeyBinding, Integer> hackSet = new HashMap();
 	
 	public static class LIKeyBinding {
@@ -107,7 +105,8 @@ public final class LIKeyProcess implements ITickHandler {
                     kb.keyDown = state;
                 }
             }
-
+            KeyBinding binding = associates.get(kb);
+            if(binding != null) kb.keyCode = binding.keyCode;
         }
     }
 
@@ -132,18 +131,24 @@ public final class LIKeyProcess implements ITickHandler {
 		return binding;
 	}
 	
+	public static LIKeyBinding addKey(KeyBinding b, boolean isRep, IKeyProcess process) {
+		LIKeyBinding bd = addKey(b.keyDescription, b.keyCode, isRep, process);
+		associates.put(bd, b);
+		return bd;
+	}
+	
 	/**
 	 * 用来临时禁用mc中的某个按键。
 	 * 多个类同时操作本方法会引起混乱，请谨慎使用。
 	 * @param kb
 	 */
 	public static void addKeyOverride(KeyBinding kb) {
-		kb.hash.removeObject(kb.keyCode);
+		KeyBinding.hash.removeObject(kb.keyCode);
 	}
 	
 	public static void removeKeyOverride(KeyBinding kb) {
-		if(!kb.hash.containsItem(kb.keyCode))
-			kb.hash.addKey(kb.keyCode, kb);
+		if(!KeyBinding.hash.containsItem(kb.keyCode))
+			KeyBinding.hash.addKey(kb.keyCode, kb);
 	}
 	
 	public static LIKeyBinding getBindingByName(String s) {

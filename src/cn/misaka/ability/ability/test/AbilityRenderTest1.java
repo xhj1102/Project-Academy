@@ -5,8 +5,8 @@ package cn.misaka.ability.ability.test;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import cn.misaka.ability.client.system.AbilityRender;
 import cn.misaka.ability.system.PlayerAbilityData;
+import cn.misaka.ability.system.client.system.AbilityRender;
 
 /**
  * @author WeAthFolD

@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import cn.liutils.api.register.IChannelProcess;
-import cn.liutils.core.proxy.LIGeneralProps;
-
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import cpw.mods.fml.common.network.IPacketHandler;

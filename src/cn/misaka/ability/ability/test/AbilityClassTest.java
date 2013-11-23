@@ -21,7 +21,7 @@ public class AbilityClassTest extends AbilityClass {
 
 	@Override
 	public String getAbilityName() {
-		return "Test Ability";
+		return "Test";
 	}
 
 }

@@ -71,7 +71,7 @@ public abstract class AbilityClass {
 			System.err.println("onTick() Didn't find the right component to the ability");
 			return;
 		}
-		for(int i = 0; i < stat.LENGTH; i++) {
+		for(int i = 0; i < ControlStat.LENGTH; i++) {
 			if(stat.keyDown[i]) {
 				comp.onButtonTick(player, world, data, i, stat.keyTick[i]);
 			}

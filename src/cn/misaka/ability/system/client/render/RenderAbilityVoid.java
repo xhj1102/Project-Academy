@@ -1,18 +1,15 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client.render;
+package cn.misaka.ability.system.client.render;
 
-import cn.liutils.api.client.render.RenderModelItem;
-import cn.misaka.ability.client.system.AbilityRender;
-import cn.misaka.ability.system.AbilityClass;
 import cn.misaka.ability.system.AbilityComponent;
 import cn.misaka.ability.system.PlayerAbilityData;
 import cn.misaka.ability.system.ServerAbilityMain;
+import cn.misaka.ability.system.client.system.AbilityRender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IItemRenderer;
 
 /**

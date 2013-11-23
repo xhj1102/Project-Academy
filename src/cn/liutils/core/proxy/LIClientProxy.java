@@ -5,11 +5,14 @@ package cn.liutils.core.proxy;
 
 import org.lwjgl.input.Keyboard;
 
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
+import cn.liutils.api.client.render.RenderEntityBlock;
+import cn.liutils.api.client.render.RenderPlayerHelper;
 import cn.liutils.api.client.render.RenderTrail;
 import cn.liutils.api.debug.Debug_ProcessorModel;
 import cn.liutils.api.debug.KeyMoving;
+import cn.liutils.api.entity.EntityBlock;
+import cn.liutils.api.entity.EntityPlayerRenderHelper;
 import cn.liutils.api.entity.EntityTrailFX;
 import cn.liutils.core.LIUtilsMod;
 import cn.liutils.core.client.register.LIClientTickHandler;
@@ -37,10 +40,12 @@ public class LIClientProxy extends LICommonProxy {
 		
 		MinecraftForge.EVENT_BUS.register(new LISoundRegistry());
 		TickRegistry.registerTickHandler(clientTickHandler, Side.CLIENT);
+		RenderingRegistry.registerEntityRenderingHandler(EntityPlayerRenderHelper.class, new RenderPlayerHelper());
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlock.class, new RenderEntityBlock());
 		
 		if(LIUtilsMod.DEBUG) {
 			KeyMoving key = new KeyMoving();
-			key.addProcess(new Debug_ProcessorModel());
+			KeyMoving.addProcess(new Debug_ProcessorModel());
 			LIKeyProcess.addKey("debug_up", Keyboard.KEY_UP, true, key);
 			LIKeyProcess.addKey("debug_down", Keyboard.KEY_DOWN, true, key);
 			LIKeyProcess.addKey("debug_left", Keyboard.KEY_LEFT, true, key);

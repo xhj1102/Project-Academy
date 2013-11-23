@@ -1,7 +1,7 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client.system;
+package cn.misaka.ability.system.client.system;
 
 import org.lwjgl.opengl.GL11;
 

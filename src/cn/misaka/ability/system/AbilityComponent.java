@@ -2,8 +2,8 @@ package cn.misaka.ability.system;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import cn.misaka.ability.client.system.AbilityRender;
 import cn.misaka.ability.system.AbilityClass.ControlStat;
+import cn.misaka.ability.system.client.system.AbilityRender;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

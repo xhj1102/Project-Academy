@@ -33,6 +33,7 @@ public final class ServerAbilityMain implements ITickHandler {
 		abilityClasses.add(new AbilityClassTest());
 	}
 	
+	@Override
 	public String getLabel() {
 		return "AcademyCraft-Ability TickHandler";
 	}

@@ -1,15 +1,15 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client.keys;
+package cn.misaka.ability.system.client.keys;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import cn.liutils.api.client.register.IKeyProcess;
-import cn.misaka.ability.network.AbilityDataSyncer;
-import cn.misaka.ability.network.AbilityDataSyncer.EnumDataType;
 import cn.misaka.ability.system.PlayerAbilityData;
 import cn.misaka.ability.system.ServerAbilityMain;
+import cn.misaka.ability.system.network.AbilityDataSyncer;
+import cn.misaka.ability.system.network.AbilityDataSyncer.EnumDataType;
 
 /**
  * @author WeAthFolD

@@ -3,8 +3,8 @@
  */
 package cn.misaka.ability.proxy;
 
-import cn.misaka.ability.network.AbilityControlSyncer;
-import cn.misaka.ability.network.AbilityDataSyncer;
+import cn.misaka.ability.system.network.AbilityControlSyncer;
+import cn.misaka.ability.system.network.AbilityDataSyncer;
 import cn.misaka.core.network.AMPacketHandler;
 import cn.misaka.core.proxy.AMGeneralProps;
 

@@ -1,17 +1,15 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.command;
+package cn.misaka.ability.system.command;
 
 import cn.liutils.api.command.LICommandBase;
-import cn.misaka.ability.network.AbilityDataSyncer;
-import cn.misaka.ability.network.AbilityDataSyncer.EnumDataType;
 import cn.misaka.ability.system.AbilityDataHelper;
 import cn.misaka.ability.system.ServerAbilityMain;
-import net.minecraft.command.CommandBase;
+import cn.misaka.ability.system.network.AbilityDataSyncer;
+import cn.misaka.ability.system.network.AbilityDataSyncer.EnumDataType;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
@@ -48,7 +46,7 @@ public class CommandAim extends LICommandBase {
 	 */
 	@Override
 	public void processCommand(ICommandSender ics, String[] strs) {
-		EntityPlayer player = this.getCommandSenderAsPlayer(ics);
+		EntityPlayer player = getCommandSenderAsPlayer(ics);
 		EnumDataType typeToSend = null;
 		if(player == null) return;
 		

@@ -1,22 +1,14 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client;
+package cn.misaka.ability.system.client;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import cn.liutils.api.client.util.RenderUtils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.ForgeSubscribe;
