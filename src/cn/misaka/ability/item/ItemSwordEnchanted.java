@@ -3,14 +3,19 @@
  */
 package cn.misaka.ability.item;
 
+import cn.liutils.api.util.GenericUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
@@ -21,38 +26,13 @@ import net.minecraft.world.World;
  *
  */
 public abstract class ItemSwordEnchanted extends ItemSword {
-	
-	int originID;
-	public final EnumToolMaterial theMaterial;
-	public final ItemSword theItem;
 
 	/**
 	 * @param par1
 	 * @param mat
 	 */
-	public ItemSwordEnchanted(int par1, EnumToolMaterial mat) {
-		super(par1, mat);
-		theMaterial = mat;
-		switch(mat) {
-		case EMERALD:
-			originID = Item.swordDiamond.itemID;
-			break;
-		case GOLD:
-			originID = Item.swordGold.itemID;
-			break;
-		case IRON:
-			originID = Item.swordIron.itemID;
-			break;
-		case STONE:
-			originID = Item.swordStone.itemID;
-			break;
-		case WOOD:
-			originID = Item.swordWood.itemID;
-			break;
-		default:
-			break;
-		}
-		theItem = (ItemSword) Item.itemsList[originID];
+	public ItemSwordEnchanted(int par1) {
+		super(par1, EnumToolMaterial.WOOD);
 	}
 	
     /**
@@ -65,9 +45,32 @@ public abstract class ItemSwordEnchanted extends ItemSword {
     		restore(stack);
     }
     
+    public void toEnchantedItem(ItemStack stack) {
+    	if(stack.getItem() instanceof ItemSword) {
+    		NBTTagCompound nbt = GenericUtils.loadCompound(stack);
+    		ItemSword sword = (ItemSword) stack.getItem();
+    		stack.itemID = this.itemID;
+    		nbt.setInteger("originID", sword.itemID);
+    		nbt.setFloat("damage", sword.func_82803_g());
+    	}
+    }
+    
+    /**
+     * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
+     * the damage on the stack.
+     */
+    public boolean hitEntity(ItemStack stack, EntityLivingBase ent1, EntityLivingBase player)
+    {
+    	NBTTagCompound tag = GenericUtils.loadCompound(stack);
+    	ent1.attackEntityFrom(DamageSource.causeMobDamage(player), 4.0F + tag.getFloat("damage"));
+        stack.damageItem(1, player);
+        return true;
+    }
+     
     public void restore(ItemStack stack) {
-    	if(stack.itemID == this.itemID)
-    		stack.itemID = originID;
+    	if(stack.itemID == this.itemID) {
+    		stack.itemID = GenericUtils.loadCompound(stack).getInteger("originID");
+    	}
     }
     
     @SideOnly(Side.CLIENT)
@@ -77,7 +80,12 @@ public abstract class ItemSwordEnchanted extends ItemSword {
      */
     public Icon getIconIndex(ItemStack stack)
     {
-    	return theItem.getIconIndex(stack);
+    	Item item = Item.itemsList[GenericUtils.loadCompound(stack).getInteger("originID")];
+    	return item == null ? null : item.getIconFromDamage(0);
+    }
+    
+    protected int getOriginID(ItemStack stack) {
+    	return GenericUtils.loadCompound(stack).getInteger("originID");
     }
 
 

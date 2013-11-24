@@ -15,9 +15,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class AbilityComponent {
 	
 	AbilityClass baseClass;
+	public final int level;
 
-	public AbilityComponent(AbilityClass base) {
+	public AbilityComponent(AbilityClass base, int lvl) {
 		baseClass = base;
+		level = lvl;
 	}
 	
 	/**

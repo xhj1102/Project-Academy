@@ -25,6 +25,7 @@ clientPacketHandlerSpec = @SidedPacketHandler(channels = { AMGeneralProps.NET_CH
 serverPacketHandlerSpec = @SidedPacketHandler(channels = { AMGeneralProps.NET_CHANNEL_SERVER }, packetHandler = AMPacketHandler.class))
 public class AcademyMod {
 	public static final String VERSION = "no-run";
+	public static final String DEPEDENCY_CORE = "required-after:AcademyCraft@" + VERSION;
 
 	@Instance("AcademyCraft")
 	public static AcademyMod instance;

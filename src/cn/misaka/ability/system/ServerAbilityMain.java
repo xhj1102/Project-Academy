@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 
+import cn.misaka.ability.ability.heat.AbilityClassHeat;
 import cn.misaka.ability.ability.test.AbilityClassTest;
 import cn.misaka.ability.register.AbilityItems;
 
@@ -31,6 +32,7 @@ public final class ServerAbilityMain implements ITickHandler {
 	static {
 		//TODO: 在这里添加所有的能力类别。
 		abilityClasses.add(new AbilityClassTest());
+		abilityClasses.add(new AbilityClassHeat());
 	}
 	
 	@Override
@@ -125,12 +127,7 @@ public final class ServerAbilityMain implements ITickHandler {
 	
 	public static boolean isInUsingState(EntityPlayer player) {
 		World world = player.worldObj;
-		if(world.isRemote) {
-			ItemStack is = player.getCurrentEquippedItem();
-			return is != null && is.itemID == AbilityItems.abilityVoid.itemID;
-		} else {
-			PlayerAbilityData data = getAbilityData(player);
-			return data.isAvailable && data.isActivated && player.getCurrentEquippedItem() == null;
-		}
+		PlayerAbilityData data = getAbilityData(player);
+		return data.isAvailable && data.isActivated;
 	}
 }

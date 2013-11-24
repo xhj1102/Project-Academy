@@ -23,6 +23,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import cn.liutils.api.client.util.RenderUtils;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,14 +34,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderIcon extends Render {
 	
-	protected String icon;
+	protected ResourceLocation icon;
 	private boolean renderBlend = false;
 	protected float alpha = 1.0F;
 	private float size = 0.5F;
 	protected boolean enableDepth = true;
 	protected boolean hasLight = false;
 
-	public RenderIcon(String ic) {
+	public RenderIcon(ResourceLocation ic) {
 		icon = ic;
 	}
 
@@ -89,7 +91,7 @@ public class RenderIcon extends Render {
 			
 			GL11.glTranslatef((float) par2, (float) par4, (float) par6);
 			GL11.glScalef(size, size, size);
-			bindTexture(new ResourceLocation(icon));
+			RenderUtils.loadTexture(icon);
 			
 			Tessellator tessellator = Tessellator.instance;
 			this.func_77026_a(tessellator);
@@ -128,6 +130,6 @@ public class RenderIcon extends Render {
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		// TODO 自动生成的方法存根
-		return new ResourceLocation(icon);
+		return icon;
 	}
 }

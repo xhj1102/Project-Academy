@@ -1,15 +1,14 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.ability.teleport;
-
-import java.util.HashMap;
+package cn.misaka.ability.ability.misc;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import cn.liutils.api.util.BlockPos;
+import cn.misaka.ability.ability.test.AbilityRenderDefault;
+import cn.misaka.ability.entity.EntityMeltdowner;
 import cn.misaka.ability.system.AbilityClass;
 import cn.misaka.ability.system.AbilityClass.ControlStat;
 import cn.misaka.ability.system.AbilityComponent;
@@ -20,17 +19,15 @@ import cn.misaka.ability.system.client.system.AbilityRender;
  * @author WeAthFolD
  *
  */
-public class CompTeleport3 extends AbilityComponent {
+public class CompMeltDowner extends AbilityComponent {
 
-	public static final int KEY_SELECT = 3, KEY_FIREBLOCK = 0;
-	
-	private HashMap<EntityPlayer, BlockPos> selects = new HashMap(); //玩家的当前方块选择对应表
-	
 	/**
 	 * @param base
+	 * @param lvl
 	 */
-	public CompTeleport3(AbilityClass base, int lvl) {
+	public CompMeltDowner(AbilityClass base, int lvl) {
 		super(base, lvl);
+		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -69,8 +66,13 @@ public class CompTeleport3 extends AbilityComponent {
 	@Override
 	protected void onButtonTick(EntityPlayer player, World world,
 			PlayerAbilityData data, int keyID, int ticks) {
-		// TODO Auto-generated method stub
-
+		if(keyID == 0) {
+			if(!world.isRemote) {
+				if(ticks % 15 == 0) {
+					world.spawnEntityInWorld(new EntityMeltdowner(world, player, 10));
+				}
+			}
+		}
 	}
 
 	/* (non-Javadoc)
@@ -79,7 +81,7 @@ public class CompTeleport3 extends AbilityComponent {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public AbilityRender getClientRender() {
-		return null;
+		return new AbilityRenderDefault();
 	}
 
 	/* (non-Javadoc)
@@ -87,8 +89,7 @@ public class CompTeleport3 extends AbilityComponent {
 	 */
 	@Override
 	public String getComponentName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "acamod.comp.melt_downer.name";
 	}
 
 }

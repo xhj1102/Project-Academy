@@ -70,6 +70,10 @@ public class RenderUtils {
 			src = new ResourceLocation(path);
 			srcMap.put(path, src);
 		}
+		loadTexture(src);
+	}
+	
+	public static void loadTexture(ResourceLocation src) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(src);
 	}
 
@@ -163,14 +167,16 @@ public class RenderUtils {
 		GL11.glPopMatrix();
 	}
 	
-	public static void renderEnchantGlint_Equip() {
+	private static ResourceLocation src_glint = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+	
+	public static void renderOverlay_Equip(ResourceLocation src) {
 		GL11.glDepthFunc(GL11.GL_EQUAL);
     	GL11.glDisable(GL11.GL_LIGHTING);
-    	loadTexture("textures/misc/enchanted_item_glint.png");
+    	loadTexture(src);
     	GL11.glEnable(GL11.GL_BLEND);
     	GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
     	float f7 = 0.76F;
-    	GL11.glColor4f(0.5F * f7, 0.25F * f7, 0.8F * f7, 1.0F);
+    	//GL11.glColor4f(0.5F * f7, 0.25F * f7, 0.8F * f7, 1.0F);
     	GL11.glMatrixMode(GL11.GL_TEXTURE);
     	GL11.glPushMatrix();
         float f8 = 0.125F;
@@ -193,14 +199,18 @@ public class RenderUtils {
         GL11.glDepthFunc(GL11.GL_LEQUAL);
 	}
 	
-	public static void renderEnchantGlint_Inv() {
+	public static void renderEnchantGlint_Equip() {
+		renderOverlay_Equip(src_glint);
+	}
+	
+	public static void renderOverlay_Inv(ResourceLocation src) {
 		GL11.glDepthFunc(GL11.GL_EQUAL);
     	GL11.glDisable(GL11.GL_LIGHTING);
-    	loadTexture("textures/misc/enchanted_item_glint.png");
+    	loadTexture(src);
     	GL11.glEnable(GL11.GL_BLEND);
     	GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
     	float f7 = 0.76F;
-    	GL11.glColor4f(0.5F * f7, 0.25F * f7, 0.8F * f7, 1.0F);
+    	//GL11.glColor4f(0.5F * f7, 0.25F * f7, 0.8F * f7, 1.0F);
     	GL11.glMatrixMode(GL11.GL_TEXTURE);
     	GL11.glPushMatrix();
         float f8 = 0.125F;
@@ -231,6 +241,25 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glDepthFunc(GL11.GL_LEQUAL);
+	}
+	
+	public static void renderSimpleOverlay_Inv(ResourceLocation src) {
+		//GL11.glDepthFunc(GL11.GL_EQUAL);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		RenderUtils.loadTexture(src);
+		 t.startDrawingQuads();
+	        t.addVertexWithUV(0.0, 0.0, 0.0, 0.0, 0.0);
+			t.addVertexWithUV(0.0, 16.0, 0.0, 0.0, 1.0);
+			t.addVertexWithUV(16.0, 16.0, 0.0, 1.0, 1.0);
+			t.addVertexWithUV(16.0, 0.0, 0.0, 1.0, 0.0);
+	       t.draw();
+	       GL11.glEnable(GL11.GL_LIGHTING);
+	     GL11.glMatrixMode(GL11.GL_MODELVIEW);
+	     GL11.glDepthFunc(GL11.GL_LEQUAL);
+	}
+	
+	public static void renderEnchantGlint_Inv() {
+		renderOverlay_Inv(src_glint);
 	}
 	
 	/**

@@ -3,6 +3,7 @@
  */
 package cn.misaka.ability.ability.test;
 
+import cn.misaka.ability.ability.misc.CompMeltDowner;
 import cn.misaka.ability.system.AbilityClass;
 
 /**
@@ -15,8 +16,9 @@ public class AbilityClassTest extends AbilityClass {
 	 * 
 	 */
 	public AbilityClassTest() {
-		for(int i = 0; i < 5; i++)
-			components.add(new AbilityComponentTest1(this));
+		components.add(new CompMeltDowner(this, 0));
+		for(int i = 1; i < 5; i++)
+			components.add(new AbilityComponentTest1(this, i));
 	}
 
 	@Override

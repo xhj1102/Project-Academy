@@ -12,12 +12,12 @@ import cn.misaka.ability.system.client.system.AbilityRender;
  * @author WeAthFolD
  *
  */
-public class AbilityRenderTest1 extends AbilityRender {
+public class AbilityRenderDefault extends AbilityRender {
 
 	/**
 	 * 
 	 */
-	public AbilityRenderTest1() {
+	public AbilityRenderDefault() {
 		// TODO Auto-generated constructor stub
 	}
 

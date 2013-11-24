@@ -29,8 +29,8 @@ public class AbilityComponentTest1 extends AbilityComponent {
 	/**
 	 * @param base
 	 */
-	public AbilityComponentTest1(AbilityClass base) {
-		super(base);
+	public AbilityComponentTest1(AbilityClass base, int lvl) {
+		super(base, lvl);
 	}
 
 	/* (non-Javadoc)
@@ -106,7 +106,7 @@ public class AbilityComponentTest1 extends AbilityComponent {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public AbilityRender getClientRender() {
-		return new AbilityRenderTest1();
+		return new AbilityRenderDefault();
 	}
 
 	@Override

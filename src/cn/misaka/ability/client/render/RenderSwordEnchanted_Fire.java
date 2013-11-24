@@ -3,7 +3,11 @@
  */
 package cn.misaka.ability.client.render;
 
+import org.lwjgl.opengl.GL11;
+
 import cn.liutils.api.client.util.RenderUtils;
+import cn.misaka.core.client.props.AMClientProps;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -59,10 +63,22 @@ public class RenderSwordEnchanted_Fire implements IItemRenderer {
 	
 	private void doRenderEquipped(ItemStack stack) {
 		RenderUtils.renderItemIn2d(stack, 0.0625F);
+		RenderUtils.renderOverlay_Equip(AMClientProps.TEX_OVERLAY_FIRE);
+		
+		RenderUtils.renderOverlay_Equip(AMClientProps.TEX_OVERLAY_FIRE);
+		GL11.glCullFace(GL11.GL_FRONT);
+		GL11.glTranslatef(0.0F, 0.0F, 0.0625F);
+		RenderUtils.renderOverlay_Equip(AMClientProps.TEX_OVERLAY_FIRE);
+		GL11.glCullFace(GL11.GL_BACK);
 	}
 	
 	private void doRenderInventory(ItemStack stack) {
+		Minecraft mc = Minecraft.getMinecraft();
+		
+		mc.renderEngine.bindTexture(mc.renderEngine.getResourceLocation(stack.getItemSpriteNumber()));
 		RenderUtils.renderItemInventory(stack);
+		
+		RenderUtils.renderOverlay_Inv(AMClientProps.TEX_OVERLAY_FIRE);
 	}
 
 }

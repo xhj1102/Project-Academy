@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cn.misaka.ability.item.ItemSwordEnchanted_Fire;
+import cn.misaka.ability.register.AbilityItems;
 import cn.misaka.ability.system.AbilityClass;
 import cn.misaka.ability.system.AbilityClass.ControlStat;
 import cn.misaka.ability.system.AbilityComponent;
@@ -21,15 +22,12 @@ import cn.misaka.ability.system.client.system.AbilityRender;
  *
  */
 public abstract class CompHeatBase extends AbilityComponent {
-
-	final int level;
 	
 	/**
 	 * @param base
 	 */
 	public CompHeatBase(AbilityClass base, int lvl) {
-		super(base);
-		level = lvl;
+		super(base, lvl);
 	}
 	
 	/**
@@ -43,11 +41,13 @@ public abstract class CompHeatBase extends AbilityComponent {
 	protected void onEnchantStateChange(EntityPlayer player, World world, PlayerAbilityData data, ControlStat stat, boolean dir) {
 		stat.tag.setBoolean("enchant", dir);
 		ItemStack currentItem = player.getCurrentEquippedItem();
-		if(dir && (currentItem != null && currentItem.getItem() instanceof ItemSword)) { //activate
-			ItemSwordEnchanted_Fire.createEnchantedSword(currentItem, player, level);
+		if(dir) { //activate
+			if((currentItem != null && currentItem.getItem() instanceof ItemSword))
+				AbilityItems.swordEnch_fire.createEnchantedSword(currentItem, player, level);
 		} else { //deactivate
 			stat.tag.setBoolean("enchant", false);
-			ItemSwordEnchanted_Fire.restoreItem(currentItem);
+			if((currentItem != null && currentItem.getItem() instanceof ItemSword))
+				AbilityItems.swordEnch_fire.restore(currentItem);
 		}
 	}
 }

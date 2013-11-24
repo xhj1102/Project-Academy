@@ -10,6 +10,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 
 /**
@@ -24,19 +25,14 @@ public class ItemSwordEnchanted_Fire extends ItemSwordEnchanted {
 	 * @param par1
 	 * @param mat
 	 */
-	public ItemSwordEnchanted_Fire(int par1, EnumToolMaterial mat) {
-		super(par1, mat);
-		items[mat.ordinal()] = this;
+	public ItemSwordEnchanted_Fire(int par1) {
+		super(par1);
 	}
 	
-	public static void createEnchantedSword(ItemStack sword, EntityPlayer player, int level) {
-		for(int i = 0; i < items.length; i++) {
-			if(items[i].originID == sword.itemID) {
-				sword.itemID = items[i].itemID;
-				GenericUtils.loadCompound(sword).setByte("enchLevel", (byte) level);
-				break;
-			}
-		}
+	public void createEnchantedSword(ItemStack sword, EntityPlayer player, int level) {
+		toEnchantedItem(sword);
+		System.out.println("Creating enchanted sword in " + player.worldObj.isRemote);
+		GenericUtils.loadCompound(sword).setByte("enchLevel", (byte) level);
 	}
 	
     public float func_82803_g()
@@ -50,20 +46,13 @@ public class ItemSwordEnchanted_Fire extends ItemSwordEnchanted {
      */
     public boolean hitEntity(ItemStack stack, EntityLivingBase ent1, EntityLivingBase player)
     {
-    	int lev = GenericUtils.loadCompound(stack).getByte("enchLevel");
+    	NBTTagCompound tag = GenericUtils.loadCompound(stack);
+    	int lev = tag.getByte("enchLevel");
     	float addDamage = 2 * lev;
-    	ent1.attackEntityFrom(DamageSource.causeMobDamage(player), 4.0F + addDamage + this.theMaterial.getDamageVsEntity());
-        stack.damageItem(1, player);
+    	
+    	ent1.attackEntityFrom(DamageSource.causeMobDamage(player), 4.0F + addDamage + tag.getFloat("damage"));
+        stack.damageItem(1 + (lev == 1 ? 1 : (this.getOriginID(stack) == Item.swordStone.itemID ? 3 : 1)), player);
         return true;
-    }
-    
-    public static void restoreItem(ItemStack stack) {
-    	for(int i = 0; i < items.length; i++) {
-    		if(stack.itemID == items[i].itemID) {
-    			stack.itemID = items[i].theItem.itemID;
-    			break;
-    		}
-    	}
     }
 
 }

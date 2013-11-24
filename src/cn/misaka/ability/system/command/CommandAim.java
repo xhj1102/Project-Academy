@@ -38,7 +38,7 @@ public class CommandAim extends LICommandBase {
 	 */
 	@Override
 	public String getCommandUsage(ICommandSender icommandsender) {
-		return "/aim, /aim activate, /aim deactivate, /aim level [level]";
+		return "/aim, /aim activate, /aim deactivate, /aim level [level], /aim class [classid]";
 	}
 
 	/* (non-Javadoc)
@@ -63,6 +63,11 @@ public class CommandAim extends LICommandBase {
 				setAbilityLevel(player, Integer.valueOf(strs[1]));
 				typeToSend = EnumDataType.FULL;
 			} else sendWrongMessage(player);
+		} else if(strs[0].equals("class")) {
+			if(strs.length == 2) {
+				setAbilityClass(player, Integer.valueOf(strs[1]));
+				typeToSend = EnumDataType.FULL;
+			} else sendWrongMessage(player);
 		} else sendWrongMessage(player);
 		
 		if(typeToSend != null) {
@@ -81,6 +86,10 @@ public class CommandAim extends LICommandBase {
 		AbilityDataHelper.setHasAbility(player, false);
 		sendChatToPlayer(player, EnumChatFormatting.RED + 
 				StatCollector.translateToLocal("aca.ability.deactivated.name"));
+	}
+	
+	private void setAbilityClass(EntityPlayer player, int type) {
+		AbilityDataHelper.setType(player.getEntityData(), type);
 	}
 	
 	private void setAbilityLevel(EntityPlayer player, int level) {

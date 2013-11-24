@@ -15,7 +15,8 @@ public class AbilityClassHeat extends AbilityClass {
 	 * 
 	 */
 	public AbilityClassHeat() {
-		// TODO Auto-generated constructor stub
+		for(int i = 0; i < 5; i++)
+			components.add(new CompHeat1(this, 0));
 	}
 
 	/* (non-Javadoc)

@@ -54,5 +54,10 @@ public class ItemAbilityVoid extends MisakaBaseItem {
     {
         return new EntityVoid(world);
     }
+    
+    public String getItemStackDisplayName(ItemStack par1ItemStack)
+    {
+    	return "";
+    }
 
 }

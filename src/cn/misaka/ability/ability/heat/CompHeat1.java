@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
- *
+ * 
  */
 public class CompHeat1 extends CompHeatBase {
 
@@ -27,8 +27,14 @@ public class CompHeat1 extends CompHeatBase {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.system.AbilityComponent#onAbilityTick(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World, cn.misaka.ability.system.PlayerAbilityData, cn.misaka.ability.system.AbilityClass.ControlStat)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * cn.misaka.ability.system.AbilityComponent#onAbilityTick(net.minecraft
+	 * .entity.player.EntityPlayer, net.minecraft.world.World,
+	 * cn.misaka.ability.system.PlayerAbilityData,
+	 * cn.misaka.ability.system.AbilityClass.ControlStat)
 	 */
 	@Override
 	protected void onAbilityTick(EntityPlayer player, World world,
@@ -37,28 +43,63 @@ public class CompHeat1 extends CompHeatBase {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.system.AbilityComponent#onButtonDown(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World, cn.misaka.ability.system.PlayerAbilityData, int, cn.misaka.ability.system.AbilityClass.ControlStat)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * cn.misaka.ability.system.AbilityComponent#onButtonDown(net.minecraft.
+	 * entity.player.EntityPlayer, net.minecraft.world.World,
+	 * cn.misaka.ability.system.PlayerAbilityData, int,
+	 * cn.misaka.ability.system.AbilityClass.ControlStat)
 	 */
 	@Override
 	protected void onButtonDown(EntityPlayer player, World world,
 			PlayerAbilityData data, int keyID, ControlStat stat) {
-		// TODO Auto-generated method stub
-
+		switch (keyID) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+		case 3:
+			this.onEnchantStateChange(player, world, data, stat, true);
+		default:
+			return;
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.system.AbilityComponent#onButtonUp(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World, cn.misaka.ability.system.PlayerAbilityData, int, cn.misaka.ability.system.AbilityClass.ControlStat)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * cn.misaka.ability.system.AbilityComponent#onButtonUp(net.minecraft.entity
+	 * .player.EntityPlayer, net.minecraft.world.World,
+	 * cn.misaka.ability.system.PlayerAbilityData, int,
+	 * cn.misaka.ability.system.AbilityClass.ControlStat)
 	 */
 	@Override
 	protected void onButtonUp(EntityPlayer player, World world,
 			PlayerAbilityData data, int keyID, ControlStat stat) {
-		// TODO Auto-generated method stub
-
+		switch (keyID) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+		case 3:
+			this.onEnchantStateChange(player, world, data, stat, false);
+		default:
+			return;
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.system.AbilityComponent#onButtonTick(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World, cn.misaka.ability.system.PlayerAbilityData, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * cn.misaka.ability.system.AbilityComponent#onButtonTick(net.minecraft.
+	 * entity.player.EntityPlayer, net.minecraft.world.World,
+	 * cn.misaka.ability.system.PlayerAbilityData, int, int)
 	 */
 	@Override
 	protected void onButtonTick(EntityPlayer player, World world,
@@ -67,7 +108,9 @@ public class CompHeat1 extends CompHeatBase {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see cn.misaka.ability.system.AbilityComponent#getClientRender()
 	 */
 	@Override
@@ -76,7 +119,9 @@ public class CompHeat1 extends CompHeatBase {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see cn.misaka.ability.system.AbilityComponent#getComponentName()
 	 */
 	@Override

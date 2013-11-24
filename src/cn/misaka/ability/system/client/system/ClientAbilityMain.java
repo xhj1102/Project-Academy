@@ -66,7 +66,7 @@ public class ClientAbilityMain implements ITickHandler {
 		if(LIUtilsMod.DEBUG) {
 			PlayerAbilityData data = ServerAbilityMain.getAbilityData(player);
 			AbilityClass ac = ServerAbilityMain.getAbilityClass(player);
-			if(data.isAvailable) {
+			if(ac != null && data.isAvailable) {
 				String[] texts = new String[4];
 				texts[0] = player.getEntityName() + (data.isActivated ? EnumChatFormatting.GREEN + " ACTIVATED" : EnumChatFormatting.RED + " DEACTIVATED");
 				texts[1] = "Class : " + (ac == null ? "null" : ac.getAbilityName()) + "[" + data.type + "]";

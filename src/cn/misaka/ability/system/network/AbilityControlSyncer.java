@@ -89,7 +89,7 @@ public class AbilityControlSyncer implements IChannelProcess {
 			boolean upDown) {
 		AbilityClass playerAbility = ServerAbilityMain.getAbilityClass(player);
 		PlayerAbilityData data = ServerAbilityMain.getAbilityData(player);
-		if(ServerAbilityMain.isInUsingState(player)) {
+		if(playerAbility != null && ServerAbilityMain.isInUsingState(player)) {
 			playerAbility.onButtonStateChange(player, player.worldObj, data, keyID, upDown);
 			return true;
 		}

@@ -8,8 +8,14 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.input.Keyboard;
 
+import cn.liutils.api.client.render.RenderIcon;
 import cn.liutils.core.LIUtilsMod;
 import cn.liutils.core.client.register.LIKeyProcess;
+import cn.misaka.ability.client.render.RenderSwordEnchanted_Fire;
+import cn.misaka.ability.client.render.ability.misc.RenderMdRay;
+import cn.misaka.ability.client.render.ability.misc.RenderMeltdowner;
+import cn.misaka.ability.entity.EntityMdRay;
+import cn.misaka.ability.entity.EntityMeltdowner;
 import cn.misaka.ability.register.AbilityItems;
 import cn.misaka.ability.system.client.AbilityClientEventHandler;
 import cn.misaka.ability.system.client.keys.KeyAbilityControl;
@@ -17,6 +23,7 @@ import cn.misaka.ability.system.client.keys.KeyAbilitySwitch;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
 import cn.misaka.ability.system.client.system.ClientAbilityMain;
 import cn.misaka.core.client.props.AMClientProps;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
@@ -48,6 +55,9 @@ public class ClientProxy extends CommonProxy {
 	public void init() {
 		
 		MinecraftForgeClient.registerItemRenderer(AbilityItems.abilityVoid.itemID, new RenderAbilityVoid());
+		MinecraftForgeClient.registerItemRenderer(AbilityItems.swordEnch_fire.itemID, new RenderSwordEnchanted_Fire());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMeltdowner.class, new RenderMeltdowner());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMdRay.class, new RenderMdRay());
 		super.init();
 	}
 	
