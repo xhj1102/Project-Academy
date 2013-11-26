@@ -12,8 +12,8 @@ import cn.liutils.api.client.render.RenderIcon;
 import cn.liutils.core.LIUtilsMod;
 import cn.liutils.core.client.register.LIKeyProcess;
 import cn.misaka.ability.client.render.RenderSwordEnchanted_Fire;
-import cn.misaka.ability.client.render.ability.misc.RenderMdRay;
-import cn.misaka.ability.client.render.ability.misc.RenderMeltdowner;
+import cn.misaka.ability.client.render.entity.RenderMdRay;
+import cn.misaka.ability.client.render.entity.RenderMeltdownBall;
 import cn.misaka.ability.entity.EntityMdRay;
 import cn.misaka.ability.entity.EntityMeltdowner;
 import cn.misaka.ability.register.AbilityItems;
@@ -56,7 +56,7 @@ public class ClientProxy extends CommonProxy {
 		
 		MinecraftForgeClient.registerItemRenderer(AbilityItems.abilityVoid.itemID, new RenderAbilityVoid());
 		MinecraftForgeClient.registerItemRenderer(AbilityItems.swordEnch_fire.itemID, new RenderSwordEnchanted_Fire());
-		RenderingRegistry.registerEntityRenderingHandler(EntityMeltdowner.class, new RenderMeltdowner());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMeltdowner.class, new RenderMeltdownBall());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMdRay.class, new RenderMdRay());
 		super.init();
 	}

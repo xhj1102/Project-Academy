@@ -6,6 +6,7 @@ package cn.misaka.ability.system.client.system;
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.util.RenderUtils;
+import cn.misaka.ability.system.AbilityClass.ControlStat;
 import cn.misaka.ability.system.PlayerAbilityData;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,8 +27,9 @@ public abstract class AbilityRender {
 	 * @param player
 	 * @param world
 	 * @param data
+	 * @param control TODO
 	 */
-	public abstract void onRenderEquipped(EntityPlayer player, World world, PlayerAbilityData data, boolean isEquipped);
+	public abstract void onRenderEquipped(EntityPlayer player, World world, PlayerAbilityData data, ControlStat control, boolean isEquipped);
 	
 	protected final void renderHand(EntityPlayer player) {
 		GL11.glPushMatrix();

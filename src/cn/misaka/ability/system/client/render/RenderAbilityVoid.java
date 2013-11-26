@@ -41,7 +41,7 @@ public class RenderAbilityVoid implements IItemRenderer {
 	 * 
 	 * @see net.minecraftforge.client.IItemRenderer#shouldUseRenderHelper(net.
 	 * minecraftforge.client.IItemRenderer.ItemRenderType,
-	 * net.minecraft.item.ItemStack,
+	 * net.minecra ft.item.ItemStack,
 	 * net.minecraftforge.client.IItemRenderer.ItemRendererHelper)
 	 */
 	@Override
@@ -64,7 +64,7 @@ public class RenderAbilityVoid implements IItemRenderer {
 				if(component != null) {
 					AbilityRender render = component.getClientRender();
 					if(render != null)
-						render.onRenderEquipped(player, player.worldObj, data2, type == ItemRenderType.EQUIPPED);
+						render.onRenderEquipped(player, player.worldObj, data2, component.getAbilityClass().getControlStat(player), type == ItemRenderType.EQUIPPED);
 				}
 			}
 		}

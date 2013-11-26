@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cn.misaka.ability.ability.test.AbilityRenderDefault;
+import cn.misaka.ability.client.render.ability.misc.RenderMeltdowner;
 import cn.misaka.ability.entity.EntityMeltdowner;
 import cn.misaka.ability.system.AbilityClass;
 import cn.misaka.ability.system.AbilityClass.ControlStat;
@@ -81,7 +82,7 @@ public class CompMeltDowner extends AbilityComponent {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public AbilityRender getClientRender() {
-		return new AbilityRenderDefault();
+		return new RenderMeltdowner();
 	}
 
 	/* (non-Javadoc)

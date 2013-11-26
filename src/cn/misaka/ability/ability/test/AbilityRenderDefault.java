@@ -5,6 +5,7 @@ package cn.misaka.ability.ability.test;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import cn.misaka.ability.system.AbilityClass.ControlStat;
 import cn.misaka.ability.system.PlayerAbilityData;
 import cn.misaka.ability.system.client.system.AbilityRender;
 
@@ -26,7 +27,7 @@ public class AbilityRenderDefault extends AbilityRender {
 	 */
 	@Override
 	public void onRenderEquipped(EntityPlayer player, World world,
-			PlayerAbilityData data, boolean isEquipped) {
+			PlayerAbilityData data, ControlStat control, boolean isEquipped) {
 		this.renderHand(player);
 	}
 

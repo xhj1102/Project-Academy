@@ -111,4 +111,13 @@ public abstract class AbilityClass {
 	
 	public abstract String getAbilityName();
 	
+	public ControlStat getControlStat(EntityPlayer player) {
+		ControlStat stat = controlStatus.get(player);
+		if(stat == null) {
+			stat = new ControlStat();
+		}
+		controlStatus.put(player, stat);
+		return stat;
+	}
+	
 }

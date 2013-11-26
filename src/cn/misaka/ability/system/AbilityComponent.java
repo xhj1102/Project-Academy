@@ -53,5 +53,9 @@ public abstract class AbilityComponent {
 	public abstract AbilityRender getClientRender();
 	
 	public abstract String getComponentName();
+	
+	public AbilityClass getAbilityClass() {
+		return baseClass;
+	}
 
 }

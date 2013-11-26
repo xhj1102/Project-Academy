@@ -32,11 +32,13 @@ public class EntityMdRay extends EntityBullet {
 	 */
 	public EntityMdRay(World world) {
 		super(world);
+		this.ignoreFrustumCheck = true;
 	}
 	
 	public EntityMdRay(World world, Vec3 begin, Vec3 motion, int dmg) {
 		super(world, begin, motion, dmg);
 	}
+	
 	
 	@Override
 	public void onUpdate() {

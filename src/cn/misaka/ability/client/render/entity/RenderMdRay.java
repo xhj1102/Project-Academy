@@ -1,7 +1,7 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.client.render.ability.misc;
+package cn.misaka.ability.client.render.entity;
 
 import org.lwjgl.opengl.GL11;
 
@@ -44,6 +44,7 @@ public class RenderMdRay extends Render {
 		
 		
 		GL11.glPushMatrix();
+		GL11.glDisable(GL11.GL_LIGHTING);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 		double d = 50.0;
 		
@@ -78,6 +79,7 @@ public class RenderMdRay extends Render {
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 	}
 	
