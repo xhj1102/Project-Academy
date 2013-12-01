@@ -20,12 +20,12 @@ public class RenderCrossedProjectile extends Render {
 
 	protected double LENGTH;
 	protected double HEIGHT;
-	protected String TEXTURE_PATH;
+	protected ResourceLocation TEXTURE_PATH;
 	protected boolean renderTexture = true;
 	protected float colorR, colorG, colorB;
 	protected boolean ignoreLight = false;
 	
-	public RenderCrossedProjectile(double l, double h, String texturePath) {
+	public RenderCrossedProjectile(double l, double h, ResourceLocation texturePath) {
 		LENGTH = l;
 		HEIGHT = h;
 		TEXTURE_PATH = texturePath;
@@ -70,7 +70,7 @@ public class RenderCrossedProjectile extends Render {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
 		if(renderTexture)
-			bindTexture(new ResourceLocation(TEXTURE_PATH));
+			bindTexture(TEXTURE_PATH);
 		else {
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 			GL11.glColor3f(colorR, colorG, colorB);
@@ -114,6 +114,6 @@ public class RenderCrossedProjectile extends Render {
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		// TODO 自动生成的方法存根
-		return new ResourceLocation(TEXTURE_PATH);
+		return TEXTURE_PATH;
 	}
 }

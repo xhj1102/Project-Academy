@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 /**
@@ -17,7 +18,7 @@ public class EntityTrailFX extends Entity {
 
 	private LinkedList<SamplePoint> samples = new LinkedList();
 	private Entity linkedEntity;
-	private String texNormal, texEnd;
+	private ResourceLocation texNormal, texEnd;
 	private boolean doesRenderEnd, hasLight;
 	private int decayTime, sampleFreq;
 	private double width;
@@ -25,7 +26,7 @@ public class EntityTrailFX extends Entity {
 	public EntityTrailFX(World par1World, Entity par2LinkedEntity) {
 		super(par1World);
 		this.linkedEntity = par2LinkedEntity;
-		texNormal = texEnd = "";
+		texNormal = texEnd = null;
 		doesRenderEnd = false;
 		decayTime = 20;
 		sampleFreq = 2;
@@ -50,7 +51,7 @@ public class EntityTrailFX extends Entity {
 		return this;
 	}
 
-	public EntityTrailFX setTextures(String n, String e) {
+	public EntityTrailFX setTextures(ResourceLocation n, ResourceLocation e) {
 		texNormal = n;
 		texEnd = e;
 		return this;
@@ -97,11 +98,11 @@ public class EntityTrailFX extends Entity {
 		}
 	}
 
-	public String getTexNormal() {
+	public ResourceLocation getTexNormal() {
 		return texNormal;
 	}
 
-	public String getTexEnd() {
+	public ResourceLocation getTexEnd() {
 		return texEnd;
 	}
 

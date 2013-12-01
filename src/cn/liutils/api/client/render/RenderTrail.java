@@ -33,9 +33,9 @@ public class RenderTrail extends Render {
 			GL11.glPushMatrix();
 
 			if (i == 0 && ent.doesRenderEnd())
-				bindTexture(new ResourceLocation(ent.getTexEnd()));
+				bindTexture(ent.getTexEnd());
 			else
-				bindTexture(new ResourceLocation(ent.getTexNormal()));
+				bindTexture(ent.getTexNormal());
 
 			SamplePoint sp1 = list.get(i), sp2 = list.get(i + 1);
 

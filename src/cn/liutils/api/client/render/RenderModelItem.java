@@ -22,6 +22,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -43,7 +44,7 @@ public class RenderModelItem implements IItemRenderer, IItemRenderInfProvider {
 
 	protected Tessellator t = Tessellator.instance;
 	IItemModel model;
-	String texturePath;
+	ResourceLocation texturePath;
 	Minecraft mc = Minecraft.getMinecraft();
 	
 	/**
@@ -107,7 +108,7 @@ public class RenderModelItem implements IItemRenderer, IItemRenderInfProvider {
 	 * @param mdl 模型类
 	 * @param texture 对应的贴图文件
 	 */
-	public RenderModelItem(IItemModel mdl, String texture) {
+	public RenderModelItem(IItemModel mdl, ResourceLocation texture) {
 		model = mdl;
 		texturePath = texture;
 	}

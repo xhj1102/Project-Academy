@@ -18,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
@@ -74,7 +75,7 @@ public abstract class RendererSidedCube extends TileEntitySpecialRenderer {
 		maxZ = block.getBlockBoundsMaxZ();
 	}
 
-	public abstract String getTexture(TileEntity te, int side, int metadata);
+	public abstract ResourceLocation getTexture(TileEntity te, int side, int metadata);
 
 	public void doRender(TileEntity tileEntity, double x, double y, double z,
 			float f) {

@@ -200,6 +200,7 @@ public class RenderUtils {
 	}
 	
 	public static void renderEnchantGlint_Equip() {
+		GL11.glColor3f(0.301F, 0.78F, 1.0F);
 		renderOverlay_Equip(src_glint);
 	}
 	
@@ -259,6 +260,7 @@ public class RenderUtils {
 	}
 	
 	public static void renderEnchantGlint_Inv() {
+		GL11.glColor3f(0.301F, 0.78F, 1.0F);
 		renderOverlay_Inv(src_glint);
 	}
 	

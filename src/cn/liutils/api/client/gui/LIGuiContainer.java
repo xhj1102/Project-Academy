@@ -46,6 +46,10 @@ public abstract class LIGuiContainer extends GuiContainer {
 		mc.renderEngine.bindTexture(new ResourceLocation(texture));
 	}
 	
+	protected void bindTexture(ResourceLocation texture){
+		mc.renderEngine.bindTexture(texture);
+	}
+	
 	
 	/**
 	 * 添加一个按钮。

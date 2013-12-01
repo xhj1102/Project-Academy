@@ -30,12 +30,12 @@ public class RenderModel extends Render {
 
 	private ModelBase model;
 	private float modelScale;
-	private String texture;
+	private ResourceLocation texture;
 
 	/**
 	 * 
 	 */
-	public RenderModel(ModelBase m, String texturePath, float scale) {
+	public RenderModel(ModelBase m, ResourceLocation texturePath, float scale) {
 		model = m;
 		modelScale = scale;
 		texture = texturePath;
@@ -47,7 +47,7 @@ public class RenderModel extends Render {
 
 		GL11.glPushMatrix();
 		//Load Texture
-		bindTexture(new ResourceLocation(texture));
+		bindTexture(texture);
 		GL11.glTranslatef((float) par2, (float) par4 + 2 * entity.height,
 				(float) par6);
 		GL11.glRotatef(180.0F - par8, 0.0F, 1.0F, 0.0F);
@@ -60,7 +60,7 @@ public class RenderModel extends Render {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(texture);
+		return null;
 	}
 
 

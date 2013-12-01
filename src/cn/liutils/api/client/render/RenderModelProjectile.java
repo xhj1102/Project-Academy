@@ -31,12 +31,17 @@ public class RenderModelProjectile extends Render {
 
 	private ModelBase model;
 	
-	protected String TEXTURE_PATH;
+	protected ResourceLocation TEXTURE_PATH;
 	
 	protected float offsetX, offsetY, offsetZ;
 	protected float scale;
 	
 	public RenderModelProjectile(ModelBase mdl, String texturePath) {
+		TEXTURE_PATH = new ResourceLocation(texturePath);
+		model = mdl;
+	}
+	
+	public RenderModelProjectile(ModelBase mdl, ResourceLocation texturePath) {
 		TEXTURE_PATH = texturePath;
 		model = mdl;
 	}
@@ -61,7 +66,7 @@ public class RenderModelProjectile extends Render {
 		
 		GL11.glPushMatrix();
 		
-		bindTexture(new ResourceLocation(TEXTURE_PATH));
+		bindTexture(TEXTURE_PATH);
 		GL11.glTranslatef((float) par2, (float) par4, (float) par6);
 		GL11.glRotatef(180.0F - gren.rotationYaw, 0.0F, -1.0F, 0.0F); // 左右旋转
 		GL11.glRotatef(gren.rotationPitch, 1.0F, 0.0F, 0.0F); // 上下旋转
@@ -74,7 +79,7 @@ public class RenderModelProjectile extends Render {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(TEXTURE_PATH);
+		return null;
 	}
 
 
