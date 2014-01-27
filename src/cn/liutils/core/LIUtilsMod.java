@@ -36,7 +36,7 @@ public class LIUtilsMod {
 	
 	public static final String DEPENDENCY = "required-after:LIutils@" + VERSION;
 	
-	public static final boolean DEBUG = true; //请在编译时设置为false
+	public static final boolean DEBUG = false; //请在编译时设置为false
 	
 	@Instance("LIutils")
 	public static LIUtilsMod instance;

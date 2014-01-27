@@ -21,7 +21,7 @@ import net.minecraft.world.World;
  */
 public class EntityMeltdowner extends EntityThrowable {
 
-	int lifeTime = rand.nextInt(7) + 20;
+	int lifeTime = rand.nextInt(7) + 40;
 	int damage = 5;
 	public float alpha = 0;
 	public float size = rand.nextFloat() * 0.5F + 0.5F; // 0.5F-1.0F

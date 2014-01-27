@@ -22,7 +22,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
 
 /**
@@ -42,10 +41,10 @@ public class EntityBullet extends EntityThrowable {
 	
 	public EntityBullet(World par1World, EntityLivingBase par2EntityLiving, int dmg) {
 		super(par1World, par2EntityLiving);
-		this.rotationYaw = GenericUtils.wrapYawAngle(-par2EntityLiving.rotationYawHead);
+		this.rotationYaw = par2EntityLiving.rotationYawHead;
         this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * 0.4F;
         this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * 0.4F;
-        this.motionY = -MathHelper.sin((this.rotationPitch + this.func_70183_g()) / 180.0F * (float)Math.PI) * 0.4F;
+        this.motionY = MathHelper.sin((this.rotationPitch + this.func_70183_g()) / 180.0F * (float)Math.PI) * 0.4F;
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.func_70182_d(), 1.0F);
 		this.motion = new Motion3D(this);
 		this.damage = dmg;
