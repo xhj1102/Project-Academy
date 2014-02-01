@@ -10,10 +10,12 @@ import cn.misaka.system.proxy.CommonProxy;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
 
 /**
+ * 用来进行自身能力调整的一系列指令。
  * @author WeAthFolD
  *
  */
@@ -64,7 +66,13 @@ public class CommandAim extends CommandBase {
 				data.isDeveloped = !data.isDeveloped;
 				message = "Player Developing Status : " + data.isDeveloped;
 			} else if(str[0].equals("set")) {
-				message = EnumChatFormatting.RED + "UNsupported Operation yet.";
+				if(str.length < 3 || !Character.isDigit(str[2].charAt(0))) {
+					message = EnumChatFormatting.RED + "Invaild input.";
+				} else {
+					setProperties(data, str[1].toLowerCase(), Integer.valueOf(str[2]));
+					syncType = EnumDataType.FULL;
+				}
+				
 			}
 		} else {
 			message = EnumChatFormatting.RED + "Invaild command, try again.";
@@ -76,6 +84,14 @@ public class CommandAim extends CommandBase {
 	
 	private void msg(EntityPlayer player, String msg) {
 		player.sendChatToPlayer(ChatMessageComponent.createFromText(msg));
+	}
+	
+	private void setProperties(PlayerAbilityData data, String key, int value) {
+		if(key.equals("class")) {
+			data.ability_class = value;
+		} else if(key.equals("level")) {
+			data.ability_level = value;
+		}
 	}
 	
 

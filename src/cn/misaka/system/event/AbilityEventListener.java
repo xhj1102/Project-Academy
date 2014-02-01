@@ -9,6 +9,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
 /**
+ * 喜闻乐见的EventHandler。
  * @author WeAthFolD
  *
  */

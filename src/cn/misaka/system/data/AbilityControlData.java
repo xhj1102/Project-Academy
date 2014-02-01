@@ -6,6 +6,7 @@ package cn.misaka.system.data;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
+ * 属于玩家能力信息的控制信息，保存了所有自定义键位相关的内容。
  * @author WeAthFolD
  *
  */
@@ -14,8 +15,8 @@ public class AbilityControlData {
 	public NBTTagCompound data;
 	public PlayerAbilityData baseData;
 	
-	public int currentSetID;
-	public ControlSet[] controlSets = new ControlSet[4];
+	public int currentSetID; //当前使用的presetID
+	public ControlSet[] controlSets = new ControlSet[4]; //所有的预设。
 	private final static String PREFIX = AbilityDataHelper.PRF_CNTRL;
 
 	public AbilityControlData(NBTTagCompound nbt, PlayerAbilityData base) {
@@ -26,6 +27,9 @@ public class AbilityControlData {
 		reloadControlData();
 	}
 	
+	/**
+	 * 从NBT中重新加载控制数据。
+	 */
 	public void reloadControlData() {
 		currentSetID = data.getByte(PREFIX + "setid");
 		for(int i = 0; i < 4; i++) {
@@ -33,6 +37,9 @@ public class AbilityControlData {
 		}
 	}
 	
+	/**
+	 * 保存实时控制数据到NBT中。
+	 */
 	public void saveData() {
 		data.setByte(PREFIX + "setid", (byte) currentSetID);
 		for(int i = 0; i < 4; i++) {
@@ -40,6 +47,11 @@ public class AbilityControlData {
 		}
 	}
 	
+	/**
+	 * 单个自定义操作预设。
+	 * @author WeAthFolD
+	 *
+	 */
 	public static class ControlSet {
 		public int keyData[][] = new int[4][];
 		

@@ -4,9 +4,13 @@
 package cn.misaka.system.network;
 
 import java.io.DataInputStream;
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
 
 import cpw.mods.fml.common.network.Player;
 import cn.liutils.api.register.IChannelProcess;
+import cn.misaka.system.proxy.CommonProxy;
 
 /**
  * 数据结构：
@@ -29,8 +33,13 @@ public class ControlDataListener implements IChannelProcess {
 	 */
 	@Override
 	public void onPacketData(DataInputStream stream, Player player) {
-		// TODO Auto-generated method stub
-
+		try {
+			int keyID = stream.readByte();
+			boolean b = stream.readBoolean();
+			CommonProxy.abilityMain.onControlStatChange((EntityPlayer) player, keyID, b);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

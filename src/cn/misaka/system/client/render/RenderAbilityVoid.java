@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
 /**
+ * TODO:补完中。
  * @author WeAthFolD
  *
  */

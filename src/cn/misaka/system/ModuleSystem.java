@@ -3,7 +3,9 @@
  */
 package cn.misaka.system;
 
+import net.minecraft.command.CommandHandler;
 import cn.misaka.core.AcademyMod;
+import cn.misaka.system.command.CommandAim;
 import cn.misaka.system.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -17,6 +19,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
 /**
+ * 能力系统底层的主类。
  * @author WeAthFolD
  *
  */
@@ -47,7 +50,8 @@ public class ModuleSystem {
 	
 	@EventHandler()
 	public void serverStarting(FMLServerStartingEvent event) {
-		
+		CommandHandler cm = (CommandHandler) event.getServer().getCommandManager();
+		cm.registerCommand(new CommandAim());
 	}
 
 }

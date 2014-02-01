@@ -7,22 +7,19 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import cn.liutils.api.util.GenericUtils;
+import cn.misaka.ability.ability.test.AbilityClassTest;
 import cn.misaka.core.AcademyMod;
 import cn.misaka.system.ability.AbilityClass;
-import cn.misaka.system.ability.AbilityClassNull;
 import cn.misaka.system.ability.AbilityLevel;
 import cn.misaka.system.ability.AbilitySkill;
 import cn.misaka.system.control.PlayerControlStat;
 import cn.misaka.system.data.PlayerAbilityData;
 import cn.misaka.system.network.AbilityDataSender;
 import cn.misaka.system.network.AbilityDataSender.EnumDataType;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -35,7 +32,7 @@ public class AbilityMain implements ITickHandler {
 	private static ArrayList<AbilityClass> classList = new ArrayList();
 	static {
 		//TODO:在这里添加所有的能力类。
-		classList.add(new AbilityClassNull());
+		classList.add(new AbilityClassTest());
 	}
 	
 	private Map<EntityPlayer, PlayerAbilityData> dataMap = new HashMap(); //玩家数据对应表。
@@ -55,8 +52,9 @@ public class AbilityMain implements ITickHandler {
 				AbilityDataSender.sendSyncRequestFromClient(EnumDataType.CONTROL);
 				return null;
 			}
+			return data;
 		}
-		return data;
+		return data.isDataStateGood() ? data : null;
 	}
 	
 	public PlayerControlStat getControlStat(EntityPlayer Player) {
@@ -116,16 +114,16 @@ public class AbilityMain implements ITickHandler {
 				
 			} else { System.out.println("No level found : " + data.ability_level); }
 		} else { System.out.println("No class found : " + data.ability_class); }
-		System.out.println("Successfully finished update in " + world.isRemote + " side");
+		//System.out.println("Successfully finished update in " + world.isRemote + " side");
 	}
 	
-	public void onControlStatChange(EntityPlayer player, int keyID, boolean isDown) {
+	public boolean onControlStatChange(EntityPlayer player, int keyID, boolean isDown) {
 		//TODO:Unfinished
 		PlayerControlStat stat = getControlStat(player);
 		PlayerAbilityData data = getAbilityData(player);
 		World world = player.worldObj;
-		
-		if(data == null) return;
+		System.out.println("OnControlStatChange called");
+		if(data == null || !data.isDeveloped || !data.isActivated) return false;
 		if(isDown) stat.onKeyDown(keyID);
 		else stat.onKeyUp(keyID);
 		
@@ -138,7 +136,7 @@ public class AbilityMain implements ITickHandler {
 				else skl.onButtonUp(world, player, arr[1], stat);
 			}
 		}
-			
+		return true;
 	}
 	
 	public int[] getSkillArrayFor(EntityPlayer player, int keyID) {

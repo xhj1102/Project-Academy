@@ -99,9 +99,10 @@ public class AbilityDataSender {
 	private static void sendSimple(PlayerAbilityData data, DataOutputStream stream) throws IOException {
 		stream.writeByte(data.ability_class);
 		stream.writeByte(data.ability_level);
-		stream.writeInt(data.calcPoint);
+		stream.writeShort(data.calcPoint);
 		stream.writeBoolean(data.isDeveloped);
 		stream.writeBoolean(data.isActivated);
+		stream.writeShort(data.currentCalcPoint);
 	}
 	
 	private static void sendFull(PlayerAbilityData data, DataOutputStream stream) throws IOException {

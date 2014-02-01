@@ -27,6 +27,7 @@ public class AbilityDataListener implements IChannelProcess {
 	@Override
 	public void onPacketData(DataInputStream stream, Player plr) {
 		EntityPlayer player = (EntityPlayer) plr;
+		System.out.println("Received data packet from " + !player.worldObj.isRemote);
 		try  {
 			int ord = stream.readByte();
 			PlayerAbilityData data = CommonProxy.abilityMain.getAbilityData(player);
@@ -46,16 +47,17 @@ public class AbilityDataListener implements IChannelProcess {
 	private void readSimple(DataInputStream stream, PlayerAbilityData data) throws IOException {
 		data.ability_class = stream.readByte();
 		data.ability_level = stream.readByte();
-		data.calcPoint = stream.readInt();
+		data.calcPoint = stream.readShort();
 		data.isDeveloped = stream.readBoolean();
 		data.isActivated = stream.readBoolean();
+		data.currentCalcPoint = stream.readShort();
 	}
 	
 	private void readFull(DataInputStream stream, PlayerAbilityData data) throws IOException {
 		readSimple(stream, data);
 		data.props_speed = stream.readByte();
 		data.props_power = stream.readByte();
-		data.props_defense = stream.readInt();
+		data.props_defense = stream.readByte();
 	}
 	
 	private void readControl(DataInputStream stream, PlayerAbilityData d) throws IOException {

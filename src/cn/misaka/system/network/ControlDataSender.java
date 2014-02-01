@@ -21,12 +21,12 @@ import net.minecraft.network.packet.Packet250CustomPayload;
  */
 public class ControlDataSender {
 
-	public static void sendControlDataToServer(EntityPlayer player, int keyID, boolean UporDown) {
-		ByteArrayOutputStream stream = AMPacketHandler.getStream(AMGeneralProps.NET_ID_ABILITY_SYNC_SERVER, 1);
+	public static void sendControlDataToServer(EntityPlayer player, int keyID, boolean isDown) {
+		ByteArrayOutputStream stream = AMPacketHandler.getStream(AMGeneralProps.NET_ID_ABILITY_CONTROL, 2);
 		DataOutputStream strm = new DataOutputStream(stream);
 		try {
 			strm.writeByte(keyID);
-			strm.writeBoolean(UporDown);
+			strm.writeBoolean(isDown);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

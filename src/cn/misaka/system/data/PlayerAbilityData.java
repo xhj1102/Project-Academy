@@ -13,12 +13,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
+ * 玩家的完整能力信息。从NBT中读取并实时维护。
  * @author WeAthFolD
- *
  */
 public class PlayerAbilityData {
 
-	
 	/**
 	 * 对应的玩家实例。
 	 */
@@ -36,15 +35,16 @@ public class PlayerAbilityData {
 	
 	public int tickBeforeRequest = 0;
 	
-	/**
-	 * 
-	 */
 	public PlayerAbilityData(EntityPlayer p) {
 		player = p;
 		controlData = new AbilityControlData(p.getEntityData(), this);
 		reloadProperties();
+		currentCalcPoint = calcPoint;
 	}
 	
+	/**
+	 * 重新从NBT读取信息。
+	 */
 	public void reloadProperties() {
 		if(player.worldObj.isRemote) {
 			AbilityDataSender.sendSyncRequestFromClient(EnumDataType.FULL);
@@ -64,6 +64,9 @@ public class PlayerAbilityData {
 		controlData.reloadControlData();
 	}
 	
+	/**
+	 * 保存到NBT。
+	 */
 	public void saveProperties() {
 		if(player.worldObj.isRemote) return;
 		NBTTagCompound tag = player.getEntityData();
@@ -80,6 +83,9 @@ public class PlayerAbilityData {
 		controlData.saveData();
 	}
 	
+	/**
+	 * 每tick进行的更新。如果是client段可能从服务器要求数据更新。
+	 */
 	public void updateTick() {
 		if(!player.worldObj.isRemote) return;
 		if(++tickBeforeRequest >= 60 && !isDataStateGood()) {
@@ -89,9 +95,20 @@ public class PlayerAbilityData {
 		}
 	}
 	
+	/**
+	 * 数据是否处于良好的同步状态？
+	 * @return
+	 */
 	public boolean isDataStateGood() {
 		return !player.worldObj.isRemote || (!isDeveloped || ability_class == 0);
 	}
 	
+	/**
+	 * 当前玩家是否可以使用能力？
+	 * @return
+	 */
+	public boolean canPlayerUseAbility() {
+		return isDeveloped && isActivated;
+	}
 
 }
