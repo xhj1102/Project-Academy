@@ -52,7 +52,7 @@ public class AcademyMod {
 
 	@EventHandler()
 	public void load(FMLInitializationEvent event) {
-
+		proxy.init();
 	}
 
 	@EventHandler()

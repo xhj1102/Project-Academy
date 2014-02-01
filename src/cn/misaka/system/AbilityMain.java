@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.liutils.api.util.GenericUtils;
 import cn.misaka.ability.ability.test.AbilityClassTest;
@@ -99,6 +100,9 @@ public class AbilityMain implements ITickHandler {
 		//接下来的在两端都要调用（操作部分）
 		if(!data.isDataStateGood()) return;
 		AbilityClass abc = getAbilityClass(player);
+		ItemStack is = player.getCurrentEquippedItem();
+		boolean b2 = is == null || is.itemID == ModuleSystem.itemAbilityVoid.itemID;
+		
 		if(abc != null) {
 			AbilityLevel lvl = abc.getAbilityLevel(data.ability_level);
 			if(lvl != null) {
@@ -108,7 +112,10 @@ public class AbilityMain implements ITickHandler {
 					if(stat.keyDown[i]) {
 						int[] flag =  lvl.getSkillForKey(i);
 						AbilitySkill skl = abc.getAbilitySkill(flag[0]);
-						skl.onButtonTick(world, player, flag[1], stat); //执行日常的键位更新
+						if(!b2 || !skl.onButtonTick(world, player, flag[1], stat)) { //执行日常的键位更新
+							stat.keyDown[i] = false;
+							data.lastActiveSkill = null;
+						}
 					}
 				}
 				
@@ -118,22 +125,31 @@ public class AbilityMain implements ITickHandler {
 	}
 	
 	public boolean onControlStatChange(EntityPlayer player, int keyID, boolean isDown) {
-		//TODO:Unfinished
 		PlayerControlStat stat = getControlStat(player);
 		PlayerAbilityData data = getAbilityData(player);
 		World world = player.worldObj;
 		System.out.println("OnControlStatChange called");
 		if(data == null || !data.isDeveloped || !data.isActivated) return false;
+		boolean b = !isDown && !stat.keyDown[keyID];
+		ItemStack is = player.getCurrentEquippedItem();
+		boolean b2 = is == null || is.itemID == ModuleSystem.itemAbilityVoid.itemID;
+		
 		if(isDown) stat.onKeyDown(keyID);
 		else stat.onKeyUp(keyID);
+		
 		
 		int[] arr = getSkillArrayFor(player, keyID);
 		if(arr != null) {
 			AbilityClass abc = getAbilityClass(data);
 			if(abc != null) {
 				AbilitySkill skl = abc.getAbilitySkill(arr[0]);
-				if(isDown) skl.onButtonDown(world, player, arr[1], stat);
-				else skl.onButtonUp(world, player, arr[1], stat);
+				if(isDown) {
+					if(b2 && skl.onButtonDown(world, player, arr[1], stat) && data.lastActiveSkill == null)
+						data.lastActiveSkill = skl;
+				} else if(!b) { //只在进行更新循环时才调用 
+					skl.onButtonUp(world, player, arr[1], stat);
+					data.lastActiveSkill = null;
+				}
 			}
 		}
 		return true;

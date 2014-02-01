@@ -1,14 +1,28 @@
 package cn.misaka.core.proxy;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import cn.misaka.core.AcademyMod;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class Proxy {
-	public static final String LOCALIZATIONPATH = "/assets/academy/lang";
-	public void load() {
+	
+	public static final String LOCALIZATIONPATH = "/assets/misaka/lang";
+	public static Set<String> languages = new HashSet();
+	
+	static {
+		languages.add("zh_CN");
+	}
+	
+	public void init() {
+		for (String lang : languages) {
+			LanguageRegistry.instance().loadLocalization(
+					LOCALIZATIONPATH + lang + ".properties", lang, false);
+		}
+		
 	}
 
 	public static boolean isRendering() {
@@ -17,24 +31,5 @@ public class Proxy {
 
 	private static boolean isSimulating() {
 		return !FMLCommonHandler.instance().getEffectiveSide().isClient();
-	}
-
-	public void loadLocalization() {
-		File LocalizationDirectory = new File(getClass().getResource(
-				LOCALIZATIONPATH).getFile());
-		File[] files = LocalizationDirectory.listFiles();
-		for (int i = 0; i < files.length; i++) {
-			if (!files[i].isDirectory()) {
-				File file = files[i];
-				String fileName = file.getName();
-				if (!fileName.endsWith(".lang") || fileName.length() != 10) {
-					continue;
-				}
-				LanguageRegistry.instance().loadLocalization(
-						LOCALIZATIONPATH + fileName,
-						fileName.substring(0, 5), false);
-				AcademyMod.log.info("成功加载语言:" + fileName.substring(0, 5));
-			}
-		}
 	}
 }

@@ -6,6 +6,7 @@ package cn.misaka.system.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.misaka.system.ability.AbilitySkill;
 import cn.misaka.system.network.AbilityDataSender;
 import cn.misaka.system.network.AbilityDataSender.EnumDataType;
 
@@ -23,17 +24,23 @@ public class PlayerAbilityData {
 	 */
 	public EntityPlayer player;
 	
+	//BASE
 	public int ability_class, ability_level;
 	public int calcPoint;
-	public int currentCalcPoint;
 	public boolean isDeveloped, isActivated;
 	
-	
-	public AbilityControlData controlData;
-	
+	//PROPS
 	public int props_speed, props_power, props_defense;
 	
+	//CONTROL
+	public AbilityControlData controlData;
+	
+	//-----------------实时--------------------------
 	public int tickBeforeRequest = 0;
+	public int currentCalcPoint;
+	public AbilitySkill lastActiveSkill;
+	
+	//--------------------------------------
 	
 	public PlayerAbilityData(EntityPlayer p) {
 		player = p;
@@ -70,11 +77,12 @@ public class PlayerAbilityData {
 	public void saveProperties() {
 		if(player.worldObj.isRemote) return;
 		NBTTagCompound tag = player.getEntityData();
+		System.out.println("Saving data to NBT...");
 		tag.setByte(AbilityDataHelper.PRF_BASE + "class", (byte) ability_class);
 		tag.setByte(AbilityDataHelper.PRF_BASE + "level", (byte) ability_level);
-		tag.setInteger(AbilityDataHelper.PRF_BASE +"cp", calcPoint);
-		tag.setBoolean(AbilityDataHelper.PRF_PROPS + "isDeveloped", isDeveloped);
-		tag.setBoolean(AbilityDataHelper.PRF_PROPS + "isActivated", isActivated);
+		tag.setInteger(AbilityDataHelper.PRF_BASE + "cp", calcPoint);
+		tag.setBoolean(AbilityDataHelper.PRF_BASE + "isDeveloped", isDeveloped);
+		tag.setBoolean(AbilityDataHelper.PRF_BASE + "isActivated", isActivated);
 		
 		tag.setByte(AbilityDataHelper.PRF_PROPS + "speed", (byte) props_speed);
 		tag.setByte(AbilityDataHelper.PRF_PROPS + "power", (byte) props_power);
@@ -87,7 +95,13 @@ public class PlayerAbilityData {
 	 * 每tick进行的更新。如果是client段可能从服务器要求数据更新。
 	 */
 	public void updateTick() {
-		if(!player.worldObj.isRemote) return;
+		if(!player.worldObj.isRemote) {
+			if(++tickBeforeRequest >= 6000) {
+				tickBeforeRequest = 0; //6000tick(30s)自动保存=w=
+				saveProperties();
+			}
+			return;
+		}
 		if(++tickBeforeRequest >= 60 && !isDataStateGood()) {
 			tickBeforeRequest = 0;
 			AbilityDataSender.sendSyncRequestFromClient(EnumDataType.FULL);

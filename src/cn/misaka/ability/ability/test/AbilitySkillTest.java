@@ -3,9 +3,13 @@
  */
 package cn.misaka.ability.ability.test;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import cn.misaka.ability.client.render.ability.misc.SkillRenderTest;
 import cn.misaka.system.ability.AbilitySkill;
+import cn.misaka.system.client.render.SkillRender;
 import cn.misaka.system.control.PlayerControlStat;
 
 /**
@@ -25,29 +29,32 @@ public class AbilitySkillTest extends AbilitySkill {
 	 * @see cn.misaka.system.ability.AbilitySkill#onButtonTick(net.minecraft.world.World, net.minecraft.entity.player.EntityPlayer, int, cn.misaka.system.control.PlayerControlStat)
 	 */
 	@Override
-	public void onButtonTick(World world, EntityPlayer player, int keyID,
+	public boolean onButtonTick(World world, EntityPlayer player, int keyID,
 			PlayerControlStat stat) {
 		// TODO Auto-generated method stub
 		System.out.println("OnBtnTick called in " + world.isRemote);
+		return true;
 	}
 
 	/* (non-Javadoc)
 	 * @see cn.misaka.system.ability.AbilitySkill#onButtonDown(net.minecraft.world.World, net.minecraft.entity.player.EntityPlayer, int, cn.misaka.system.control.PlayerControlStat)
 	 */
 	@Override
-	public void onButtonDown(World world, EntityPlayer player, int keyID,
+	public boolean onButtonDown(World world, EntityPlayer player, int keyID,
 			PlayerControlStat stat) {
 		// TODO Auto-generated method stub
 		System.out.println("OnBtnDn called in " + world.isRemote);
+		return true;
 	}
 
 	/* (non-Javadoc)
 	 * @see cn.misaka.system.ability.AbilitySkill#onButtonUp(net.minecraft.world.World, net.minecraft.entity.player.EntityPlayer, int, cn.misaka.system.control.PlayerControlStat)
 	 */
 	@Override
-	public void onButtonUp(World world, EntityPlayer player, int keyID,
+	public boolean onButtonUp(World world, EntityPlayer player, int keyID,
 			PlayerControlStat stat) {
 		System.out.println("OnButtonUp called in " + world.isRemote);
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -66,6 +73,14 @@ public class AbilitySkillTest extends AbilitySkill {
 	public String getDescriptionForKey(int keyID) {
 		// TODO Auto-generated method stub
 		return "Test";
+	}
+
+	SkillRender renderer = new SkillRenderTest();
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public SkillRender getSkillRenderer() {
+		return renderer; //请不要偷懒写new...
 	}
 
 }

@@ -7,13 +7,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ClientProxy extends Proxy {
 	
 	@Override
-	public void load() {
-		super.load();
-	}
-
-	@Override
-	public void loadLocalization() {
-		super.loadLocalization();
+	public void init() {
+		super.init();
 	}
 
 }

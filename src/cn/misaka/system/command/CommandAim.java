@@ -78,8 +78,10 @@ public class CommandAim extends CommandBase {
 			message = EnumChatFormatting.RED + "Invaild command, try again.";
 		}
 		if(message != null) msg(player, message);
-		if(syncType != EnumDataType.NONE)
+		if(syncType != EnumDataType.NONE) {
 			AbilityDataSender.sendAbilityDataFromServer(data, syncType);
+			data.saveProperties();
+		}
 	}
 	
 	private void msg(EntityPlayer player, String msg) {

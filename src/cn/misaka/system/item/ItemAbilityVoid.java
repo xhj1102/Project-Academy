@@ -3,6 +3,7 @@
  */
 package cn.misaka.system.item;
 
+import cn.misaka.core.AcademyMod;
 import cn.misaka.system.data.PlayerAbilityData;
 import cn.misaka.system.proxy.CommonProxy;
 import net.minecraft.entity.Entity;
@@ -23,12 +24,16 @@ public class ItemAbilityVoid extends Item {
 	 */
 	public ItemAbilityVoid(int par1) {
 		super(par1);
+		this.setCreativeTab(AcademyMod.cct);
+		this.setUnlocalizedName("ability_void");
+		
 	}
 	
-    public void onUpdate(ItemStack stack, World world, EntityPlayer player, int ha, boolean holding) {
-    	if(!holding) stack.itemID = 0;
+    public void onUpdate(ItemStack stack, World world, Entity ent, int slot, boolean holding) {
+    	EntityPlayer player = (EntityPlayer) ent;
     	PlayerAbilityData data = CommonProxy.abilityMain.getAbilityData(player);
-    	if(!data.isActivated) stack.itemID = 0;
+    	if(holding) player.isSwingInProgress = false;
+    	if(!holding || !data.canPlayerUseAbility()) player.inventory.setInventorySlotContents(slot, null);
     }
 
 }

@@ -3,6 +3,9 @@
  */
 package cn.misaka.system.ability;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import cn.misaka.system.client.render.SkillRender;
 import cn.misaka.system.control.PlayerControlStat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -22,11 +25,35 @@ public abstract class AbilitySkill {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public abstract void onButtonTick(World world, EntityPlayer player, int keyID, PlayerControlStat stat);
+	/**
+	 * 特定操作键被按下时每一tick被调用。
+	 * @param world
+	 * @param player
+	 * @param keyID
+	 * @param stat
+	 * @return 返回false则代表终止更新
+	 */
+	public abstract boolean onButtonTick(World world, EntityPlayer player, int keyID, PlayerControlStat stat);
 	
-	public abstract void onButtonDown(World world, EntityPlayer player, int keyID, PlayerControlStat stat);
+	/**
+	 * 按钮被松开时调用。
+	 * @param world
+	 * @param player
+	 * @param keyID
+	 * @param stat
+	 * @return 好像暂时没什么特别的意义
+	 */
+	public abstract boolean onButtonDown(World world, EntityPlayer player, int keyID, PlayerControlStat stat);
 	
-	public abstract void onButtonUp(World world, EntityPlayer player, int keyID, PlayerControlStat stat);
+	/**
+	 * 操作键被按下的一刻被调用。
+	 * @param world
+	 * @param player
+	 * @param keyID
+	 * @param stat
+	 * @return 返回true确认动作成功，进入更新循环，激活渲染器
+	 */
+	public abstract boolean onButtonUp(World world, EntityPlayer player, int keyID, PlayerControlStat stat);
 	
 	/**
 	 * 获取最多需要使用的键位数。
@@ -35,5 +62,12 @@ public abstract class AbilitySkill {
 	public abstract int getMaxKeys();
 	
 	public abstract String getDescriptionForKey(int keyID);
+	
+	@SideOnly(Side.CLIENT)
+	/**
+	 * 获取喜闻乐见的渲染器=3=
+	 * @return
+	 */
+	public abstract SkillRender getSkillRenderer();
 	
 }
