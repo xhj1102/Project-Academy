@@ -3,8 +3,11 @@ package cn.misaka.core;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import net.minecraft.creativetab.CreativeTabs;
+
 import cn.liutils.core.register.Config;
 import cn.misaka.core.proxy.AMGeneralProps;
+import cn.misaka.core.misc.AMCreativeTab;
 import cn.misaka.core.network.AMPacketHandler;
 
 import cpw.mods.fml.common.FMLLog;
@@ -25,7 +28,8 @@ clientPacketHandlerSpec = @SidedPacketHandler(channels = { AMGeneralProps.NET_CH
 serverPacketHandlerSpec = @SidedPacketHandler(channels = { AMGeneralProps.NET_CHANNEL_SERVER }, packetHandler = AMPacketHandler.class))
 public class AcademyMod {
 	public static final String VERSION = "no-run";
-	public static final String DEPEDENCY_CORE = "required-after:AcademyCraft@" + VERSION;
+	public static final String DEPEDENCY_CORE = "required-after:AcademyCraft@" + VERSION,
+			DEPENDENCY_SYSTEM = "required-after:AcademyCraft-System@" + VERSION;
 
 	@Instance("AcademyCraft")
 	public static AcademyMod instance;
@@ -33,6 +37,8 @@ public class AcademyMod {
 	public static Logger log = Logger.getLogger("AcademyCraft");
 	
 	public static Config config;
+	
+	public static CreativeTabs cct = new AMCreativeTab("academy");
 
 	@SidedProxy(clientSide = "cn.misaka.core.proxy.ClientProxy", serverSide = "cn.misaka.core.proxy.Proxy")
 	public static cn.misaka.core.proxy.Proxy proxy;

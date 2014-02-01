@@ -12,7 +12,8 @@ public class AMClientProps {
 	
 	public static ResourceLocation
 		TEX_OVERLAY_FIRE = getRes("textures/effects/overlay_fire.png"),
-		TEX_EFFECT_MELTDOWN = getRes("textures/effects/meltdown_ball.png");
+		TEX_EFFECT_MELTDOWN = getRes("textures/effects/meltdown_ball.png"),
+		TEX_ABILITY_DEVELOPER = getRes("textures/blocks/ability_dev.png");
 	
 	public static ResourceLocation
 		ANIM_SMOKE[] = getResArray("textures/effects/smoke001.png", 
