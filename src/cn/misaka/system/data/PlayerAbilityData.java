@@ -39,6 +39,7 @@ public class PlayerAbilityData {
 	public int tickBeforeRequest = 0;
 	public int currentCalcPoint;
 	public AbilitySkill lastActiveSkill;
+	private int tickCoolingDown = 0;
 	
 	//--------------------------------------
 	
@@ -61,6 +62,9 @@ public class PlayerAbilityData {
 		ability_class = tag.getByte(AbilityDataHelper.PRF_BASE + "class");
 		ability_level = tag.getByte(AbilityDataHelper.PRF_BASE + "level");
 		calcPoint = tag.getInteger(AbilityDataHelper.PRF_BASE + "cp");
+		if(calcPoint == 0) {
+			calcPoint = AbilityDataHelper.getDefaultCP(ability_level);
+		}
 		isDeveloped = tag.getBoolean(AbilityDataHelper.PRF_BASE + "isDeveloped");
 		isActivated = tag.getBoolean(AbilityDataHelper.PRF_BASE + "isActivated");
 		
@@ -95,6 +99,16 @@ public class PlayerAbilityData {
 	 * 每tick进行的更新。如果是client段可能从服务器要求数据更新。
 	 */
 	public void updateTick() {
+		//ccp update
+		
+		if(tickCoolingDown > 0) --tickCoolingDown;
+		else {
+			if(currentCalcPoint < calcPoint)
+				currentCalcPoint += 10;
+			if(currentCalcPoint > calcPoint)
+				currentCalcPoint = calcPoint;
+		}
+		
 		if(!player.worldObj.isRemote) {
 			if(++tickBeforeRequest >= 6000) {
 				tickBeforeRequest = 0; //6000tick(30s)自动保存=w=
@@ -106,6 +120,19 @@ public class PlayerAbilityData {
 			tickBeforeRequest = 0;
 			AbilityDataSender.sendSyncRequestFromClient(EnumDataType.FULL);
 			AbilityDataSender.sendSyncRequestFromClient(EnumDataType.CONTROL);
+		}
+	}
+	
+	public boolean consumeCCP(int amount, boolean alwaysConsume) {
+		boolean b = amount > currentCalcPoint;
+		if(b && !alwaysConsume) return false;
+		if(b) {
+			currentCalcPoint = 0;
+			tickCoolingDown = 30;
+			return false;
+		} else {
+			currentCalcPoint -= amount;
+			return true;
 		}
 	}
 	

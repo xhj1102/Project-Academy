@@ -25,6 +25,23 @@ public class AbilityDataHelper {
 		PRF_KEYSET = prefix(KEYSET);
 	
 	
+	public static int getDefaultCP(int level) {
+		switch(level) {
+		case 0:
+			return 300;
+		case 1:
+			return 1500;
+		case 2:
+			return 6000;
+		case 3:
+			return 15000;
+		case 4:
+			return 40000;
+		default:
+			return 1000;
+		}
+	}
+	
 	public static boolean isSkillAvailable(NBTTagCompound tag, int abclass, int skill) {
 		return tag.getBoolean(PRF_SKILLS + abclass + "_" + skill);
 	}

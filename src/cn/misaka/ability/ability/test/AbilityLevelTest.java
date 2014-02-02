@@ -47,7 +47,7 @@ public class AbilityLevelTest extends AbilityLevel {
 	@Override
 	public int[] getSkillForKey(int keyID) {
 		// TODO Auto-generated method stub
-		return new int[] { 0, 1 };
+		return new int[] { 0, keyID == 0 ? 0 : 1 };
 	}
 
 	@Override

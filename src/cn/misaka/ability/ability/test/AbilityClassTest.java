@@ -27,7 +27,7 @@ public class AbilityClassTest extends AbilityClass {
 	@Override
 	public String getAbilityName() {
 		// TODO Auto-generated method stub
-		return "TEST";
+		return "Melt Downer";
 	}
 
 }

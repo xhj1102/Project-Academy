@@ -11,6 +11,7 @@ import cn.misaka.ability.client.render.ability.misc.SkillRenderTest;
 import cn.misaka.system.ability.AbilitySkill;
 import cn.misaka.system.client.render.SkillRender;
 import cn.misaka.system.control.PlayerControlStat;
+import cn.misaka.system.data.PlayerAbilityData;
 
 /**
  * @author WeAthFolD
@@ -29,10 +30,13 @@ public class AbilitySkillTest extends AbilitySkill {
 	 * @see cn.misaka.system.ability.AbilitySkill#onButtonTick(net.minecraft.world.World, net.minecraft.entity.player.EntityPlayer, int, cn.misaka.system.control.PlayerControlStat)
 	 */
 	@Override
-	public boolean onButtonTick(World world, EntityPlayer player, int keyID,
+	public boolean onButtonTick(World world, PlayerAbilityData data, int keyID,
 			PlayerControlStat stat) {
 		// TODO Auto-generated method stub
 		System.out.println("OnBtnTick called in " + world.isRemote);
+		if(keyID == 0) {
+			data.consumeCCP(30, true);
+		}
 		return true;
 	}
 
@@ -40,10 +44,13 @@ public class AbilitySkillTest extends AbilitySkill {
 	 * @see cn.misaka.system.ability.AbilitySkill#onButtonDown(net.minecraft.world.World, net.minecraft.entity.player.EntityPlayer, int, cn.misaka.system.control.PlayerControlStat)
 	 */
 	@Override
-	public boolean onButtonDown(World world, EntityPlayer player, int keyID,
+	public boolean onButtonDown(World world, PlayerAbilityData data, int keyID,
 			PlayerControlStat stat) {
 		// TODO Auto-generated method stub
 		System.out.println("OnBtnDn called in " + world.isRemote);
+		if(keyID == 1) {
+			data.consumeCCP(300, false);
+		}
 		return true;
 	}
 
@@ -51,9 +58,10 @@ public class AbilitySkillTest extends AbilitySkill {
 	 * @see cn.misaka.system.ability.AbilitySkill#onButtonUp(net.minecraft.world.World, net.minecraft.entity.player.EntityPlayer, int, cn.misaka.system.control.PlayerControlStat)
 	 */
 	@Override
-	public boolean onButtonUp(World world, EntityPlayer player, int keyID,
+	public boolean onButtonUp(World world, PlayerAbilityData data, int keyID,
 			PlayerControlStat stat) {
 		System.out.println("OnButtonUp called in " + world.isRemote);
+		
 		return true;
 	}
 

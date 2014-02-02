@@ -112,7 +112,7 @@ public class AbilityMain implements ITickHandler {
 					if(stat.keyDown[i]) {
 						int[] flag =  lvl.getSkillForKey(i);
 						AbilitySkill skl = abc.getAbilitySkill(flag[0]);
-						if(!b2 || !skl.onButtonTick(world, player, flag[1], stat)) { //执行日常的键位更新
+						if(!b2 || !skl.onButtonTick(world, data, flag[1], stat)) { //执行日常的键位更新
 							stat.keyDown[i] = false;
 							data.lastActiveSkill = null;
 						}
@@ -144,10 +144,10 @@ public class AbilityMain implements ITickHandler {
 			if(abc != null) {
 				AbilitySkill skl = abc.getAbilitySkill(arr[0]);
 				if(isDown) {
-					if(b2 && skl.onButtonDown(world, player, arr[1], stat) && data.lastActiveSkill == null)
+					if(b2 && skl.onButtonDown(world, data, arr[1], stat) && data.lastActiveSkill == null)
 						data.lastActiveSkill = skl;
 				} else if(!b) { //只在进行更新循环时才调用 
-					skl.onButtonUp(world, player, arr[1], stat);
+					skl.onButtonUp(world, data, arr[1], stat);
 					data.lastActiveSkill = null;
 				}
 			}

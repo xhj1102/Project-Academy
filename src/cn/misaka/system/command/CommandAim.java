@@ -57,11 +57,11 @@ public class CommandAim extends CommandBase {
 			if(str[0].equals("sync")) {
 				syncType = EnumDataType.FULL;
 				message = "Successfully Synced from server.";
-			} else if(str[0].equals("activate")) {
+			} else if(str[0].equals("activate") || str[0].equals("a")) {
 				syncType = EnumDataType.SIMPLE;
 				data.isActivated = !data.isActivated;
 				message = "Player Ability " + (data.isActivated ? "activated" : "deactivated");
-			} else if(str[0].equals("develope")) {
+			} else if(str[0].equals("develope") || str[0].equals("d")) {
 				syncType = EnumDataType.SIMPLE;
 				data.isDeveloped = !data.isDeveloped;
 				message = "Player Developing Status : " + data.isDeveloped;
@@ -93,6 +93,10 @@ public class CommandAim extends CommandBase {
 			data.ability_class = value;
 		} else if(key.equals("level")) {
 			data.ability_level = value;
+		} else if(key.equals("cp")) {
+			data.currentCalcPoint = data.calcPoint = value;
+		} else if(key.equals("ccp")) {
+			data.currentCalcPoint = value;
 		}
 	}
 	

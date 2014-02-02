@@ -4,6 +4,7 @@
 package cn.misaka.system.proxy;
 
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.input.Keyboard;
 
@@ -13,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cn.liutils.core.client.register.LIKeyProcess;
 import cn.misaka.system.ModuleSystem;
 import cn.misaka.system.client.event.ClientAbilityMain;
+import cn.misaka.system.client.event.ClientEventListener;
 import cn.misaka.system.client.render.RenderAbilityVoid;
 import cn.misaka.system.control.keys.KeyAbilityControl;
 
@@ -32,6 +34,7 @@ public class ClientProxy extends CommonProxy {
 		LIKeyProcess.addKey("abi3", Keyboard.KEY_F, false, new KeyAbilityControl(3));
 		
 		TickRegistry.registerTickHandler(new ClientAbilityMain(), Side.CLIENT);
+		MinecraftForge.EVENT_BUS.register(new ClientEventListener());
 	}
 	
 	@Override
