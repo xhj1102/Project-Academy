@@ -7,6 +7,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import cn.lambdacraft.deathmatch.entity.EntityARGrenade;
+import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec;
 import cn.misaka.ability.client.render.ability.misc.SkillRenderTest;
 import cn.misaka.system.ability.AbilitySkill;
 import cn.misaka.system.client.render.SkillRender;
@@ -31,7 +33,7 @@ public class AbilitySkillTest extends AbilitySkill {
 	 */
 	@Override
 	public boolean onButtonTick(World world, PlayerAbilityData data, int keyID,
-			PlayerControlStat stat) {
+			PlayerControlStat stat, boolean emptyHand) {
 		// TODO Auto-generated method stub
 		System.out.println("OnBtnTick called in " + world.isRemote);
 		if(keyID == 0) {
@@ -45,11 +47,12 @@ public class AbilitySkillTest extends AbilitySkill {
 	 */
 	@Override
 	public boolean onButtonDown(World world, PlayerAbilityData data, int keyID,
-			PlayerControlStat stat) {
+			PlayerControlStat stat, boolean emptyHand) {
 		// TODO Auto-generated method stub
 		System.out.println("OnBtnDn called in " + world.isRemote);
 		if(keyID == 1) {
-			data.consumeCCP(300, false);
+			if(data.consumeCCP(300, false) && !world.isRemote)
+				world.spawnEntityInWorld(new EntityARGrenade(world, data.player));
 		}
 		return true;
 	}
@@ -59,7 +62,7 @@ public class AbilitySkillTest extends AbilitySkill {
 	 */
 	@Override
 	public boolean onButtonUp(World world, PlayerAbilityData data, int keyID,
-			PlayerControlStat stat) {
+			PlayerControlStat stat, boolean emptyHand) {
 		System.out.println("OnButtonUp called in " + world.isRemote);
 		
 		return true;

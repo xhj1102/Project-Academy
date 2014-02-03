@@ -27,34 +27,34 @@ public abstract class AbilitySkill {
 	}
 	
 	/**
-	 * 特定操作键被按下时每一tick被调用。
+	 * 特定操作键被按下过程每一tick被调用。
 	 * @param world
 	 * @param player
 	 * @param keyID
 	 * @param stat
 	 * @return 返回false则代表终止更新
 	 */
-	public abstract boolean onButtonTick(World world, PlayerAbilityData player, int keyID, PlayerControlStat stat);
+	public abstract boolean onButtonTick(World world, PlayerAbilityData player, int keyID, PlayerControlStat stat, boolean isEmptyHand);
 	
 	/**
-	 * 按钮被松开时调用。
+	 * 按钮被按下时调用。
 	 * @param world
 	 * @param player
 	 * @param keyID
 	 * @param stat
 	 * @return 好像暂时没什么特别的意义
 	 */
-	public abstract boolean onButtonDown(World world, PlayerAbilityData player, int keyID, PlayerControlStat stat);
+	public abstract boolean onButtonDown(World world, PlayerAbilityData player, int keyID, PlayerControlStat stat, boolean isEmptyHand);
 	
 	/**
-	 * 操作键被按下的一刻被调用。
+	 * 操作键被松开一刻被调用。
 	 * @param world
 	 * @param player
 	 * @param keyID
 	 * @param stat
 	 * @return 返回true确认动作成功，进入更新循环，激活渲染器
 	 */
-	public abstract boolean onButtonUp(World world, PlayerAbilityData player, int keyID, PlayerControlStat stat);
+	public abstract boolean onButtonUp(World world, PlayerAbilityData player, int keyID, PlayerControlStat stat, boolean isEmptyHand);
 	
 	/**
 	 * 获取最多需要使用的键位数。

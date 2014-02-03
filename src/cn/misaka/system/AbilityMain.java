@@ -88,6 +88,7 @@ public class AbilityMain implements ITickHandler {
 		EntityPlayer player = (EntityPlayer) tickData[0];
 		World world = player.worldObj;
 		PlayerAbilityData data = getAbilityData(player);
+		
 		if(!world.isRemote) isServerTicker = true; //用于判断是否在C/S集成服务器中运行
 		if(!isServerTicker || !world.isRemote) { //如果是集成服务期，仅在S端调用
 			if(data == null) {
@@ -96,6 +97,7 @@ public class AbilityMain implements ITickHandler {
 			}
 			data.updateTick();
 		}
+		if(data != null) data.player = player;
 		
 		//接下来的在两端都要调用（操作部分）
 		if(!data.isDataStateGood()) return;
@@ -112,7 +114,7 @@ public class AbilityMain implements ITickHandler {
 					if(stat.keyDown[i]) {
 						int[] flag =  lvl.getSkillForKey(i);
 						AbilitySkill skl = abc.getAbilitySkill(flag[0]);
-						if(!b2 || !skl.onButtonTick(world, data, flag[1], stat)) { //执行日常的键位更新
+						if(!skl.onButtonTick(world, data, flag[1], stat, b2)) { //执行日常的键位更新
 							stat.keyDown[i] = false;
 							data.lastActiveSkill = null;
 						}
@@ -144,10 +146,10 @@ public class AbilityMain implements ITickHandler {
 			if(abc != null) {
 				AbilitySkill skl = abc.getAbilitySkill(arr[0]);
 				if(isDown) {
-					if(b2 && skl.onButtonDown(world, data, arr[1], stat) && data.lastActiveSkill == null)
+					if(skl.onButtonDown(world, data, arr[1], stat, b2) && data.lastActiveSkill == null)
 						data.lastActiveSkill = skl;
 				} else if(!b) { //只在进行更新循环时才调用 
-					skl.onButtonUp(world, data, arr[1], stat);
+					skl.onButtonUp(world, data, arr[1], stat, b2);
 					data.lastActiveSkill = null;
 				}
 			}

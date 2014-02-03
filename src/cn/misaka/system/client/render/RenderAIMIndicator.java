@@ -33,6 +33,8 @@ public class RenderAIMIndicator {
 		int tickTime = player.ticksExisted;
 		GL11.glPushMatrix();
 		
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glTranslatef(k - 40F, 48F, 0.0F);
 		RenderUtils.loadTexture(AMClientProps.TEX_AIM_INDICATOR);
 		if(data != null) {
@@ -40,6 +42,7 @@ public class RenderAIMIndicator {
 				if(data.isActivated) {
 					renderIndications(data, tickTime);
 				}
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.7F);
 				renderCircle(data, tickTime);
 			}
 		}
@@ -67,11 +70,12 @@ public class RenderAIMIndicator {
 	
 	private static void renderIndications(PlayerAbilityData data, int tickTime) {
 		
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.7F);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
 		drawTexturedModalRect(-141, -24, 114, 184, 121, 22, 312, 54); //主要信息
 		drawTexturedModalRect(-193, -1, 6, 239, 173, 9, 446, 20); //计算力槽
 		drawTexturedModalRect(-71, 9, 335, 259, 51, 10, 132, 25); //计算力数值
 		
+		GL11.glColor4f(1.0F,1.0F,1.0F,.7F);
 		if(data.calcPoint != 0) {
 			drawTexturedModalRect(-189, 1, 15, 437, 173, 5, 446, 10);
 			if(data.currentCalcPoint != 0) {
