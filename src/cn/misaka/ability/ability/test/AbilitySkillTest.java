@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import cn.lambdacraft.deathmatch.entity.EntityARGrenade;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec;
 import cn.misaka.ability.client.render.ability.misc.SkillRenderTest;
+import cn.misaka.system.ability.AbilityClass;
 import cn.misaka.system.ability.AbilitySkill;
 import cn.misaka.system.client.render.SkillRender;
 import cn.misaka.system.control.PlayerControlStat;
@@ -24,8 +25,8 @@ public class AbilitySkillTest extends AbilitySkill {
 	/**
 	 * 
 	 */
-	public AbilitySkillTest() {
-		// TODO Auto-generated constructor stub
+	public AbilitySkillTest(AbilityClass cls, int id) {
+		super(cls, id);
 	}
 
 	/* (non-Javadoc)

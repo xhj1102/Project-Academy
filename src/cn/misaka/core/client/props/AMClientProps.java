@@ -14,7 +14,8 @@ public class AMClientProps {
 		TEX_OVERLAY_FIRE = getRes("textures/effects/overlay_fire.png"),
 		TEX_EFFECT_MELTDOWN = getRes("textures/effects/meltdown_ball.png"),
 		TEX_ABILITY_DEVELOPER = getRes("textures/blocks/ability_dev.png"),
-		TEX_AIM_INDICATOR = getRes("textures/guis/aim_indicator.png");
+		TEX_AIM_INDICATOR = getRes("textures/guis/aim_indicator.png"),
+		TEX_EFFECT_STEVE = getRes("textures/effects/steve_indicator.png");
 	
 	public static ResourceLocation
 		FONT_ORATOR_STD = getRes("textures/guis/oratorstd.png");

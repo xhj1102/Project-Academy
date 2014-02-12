@@ -17,6 +17,7 @@ import cn.misaka.core.network.AMPacketHandler;
 import cn.misaka.core.proxy.AMGeneralProps;
 import cn.misaka.system.data.AbilityControlData;
 import cn.misaka.system.data.PlayerAbilityData;
+import cn.misaka.system.proxy.CommonProxy;
 
 /**
  * 从服务端发送的数据同步。详见代码
@@ -39,6 +40,7 @@ public class AbilityDataSender {
 	 * @param type
 	 */
 	public static void sendAbilityDataFromServer(PlayerAbilityData data, EnumDataType type) {
+		if(CommonProxy.abilityMain.isIntergratedServer) return;
 		ByteArrayOutputStream stream = AMPacketHandler.getStream(AMGeneralProps.NET_ID_ABILITY_SYNC_SERVER, 1 + type.dataSize);
 		DataOutputStream strm = new DataOutputStream(stream);
 		try {
@@ -60,6 +62,7 @@ public class AbilityDataSender {
 	}
 	
 	public static void sendSyncRequestFromClient(EnumDataType type) {
+		if(CommonProxy.abilityMain.isIntergratedServer) return;
 		ByteArrayOutputStream stream = AMPacketHandler.getStream(AMGeneralProps.NET_ID_ABILITY_SYNC_SERVER, 1);
 		DataOutputStream strm = new DataOutputStream(stream);
 		try {

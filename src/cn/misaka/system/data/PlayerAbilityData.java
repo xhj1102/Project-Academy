@@ -23,6 +23,7 @@ public class PlayerAbilityData {
 	 * 对应的玩家实例。
 	 */
 	public EntityPlayer player;
+	public boolean isLoaded = false;
 	
 	//BASE
 	public int ability_class, ability_level;
@@ -48,14 +49,18 @@ public class PlayerAbilityData {
 		controlData = new AbilityControlData(p.getEntityData(), this);
 		reloadProperties();
 		currentCalcPoint = calcPoint;
+		System.out.println("Creating an instance for " + p.getEntityName() + " " + p.worldObj.isRemote);
 	}
 	
 	/**
 	 * 重新从NBT读取信息。
 	 */
-	public void reloadProperties() {
+	private void reloadProperties() {
+		System.out.println("Reloading Properties in " + player.worldObj.isRemote);
+		
 		if(player.worldObj.isRemote) {
 			AbilityDataSender.sendSyncRequestFromClient(EnumDataType.FULL);
+			System.out.println("Sending request from client...");
 			return;
 		}
 		NBTTagCompound tag = player.getEntityData();
@@ -71,6 +76,8 @@ public class PlayerAbilityData {
 		props_speed = tag.getByte(AbilityDataHelper.PRF_PROPS + "speed");
 		props_power = tag.getByte(AbilityDataHelper.PRF_PROPS + "power");
 		props_defense = tag.getByte(AbilityDataHelper.PRF_PROPS + "defense");
+		
+		isLoaded = true;
 		
 		controlData.reloadControlData();
 	}
@@ -100,6 +107,8 @@ public class PlayerAbilityData {
 	 */
 	public void updateTick() {
 		//ccp update
+		if(!isLoaded && !player.worldObj.isRemote)
+			reloadProperties();
 		
 		if(tickCoolingDown > 0) --tickCoolingDown;
 		else {
@@ -124,6 +133,7 @@ public class PlayerAbilityData {
 	}
 	
 	public boolean consumeCCP(int amount, boolean alwaysConsume) {
+		if(player.capabilities.isCreativeMode) return true;
 		boolean b = amount > currentCalcPoint;
 		if(b && !alwaysConsume) return false;
 		if(b) {

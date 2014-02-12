@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.liutils.api.util.GenericUtils;
+import cn.misaka.ability.ability.teleport.ClassTeleport;
 import cn.misaka.ability.ability.test.AbilityClassTest;
 import cn.misaka.core.AcademyMod;
 import cn.misaka.system.ability.AbilityClass;
@@ -31,15 +32,18 @@ import cpw.mods.fml.common.TickType;
 public class AbilityMain implements ITickHandler {
 
 	private static ArrayList<AbilityClass> classList = new ArrayList();
+	
 	static {
 		//TODO:在这里添加所有的能力类。
+		classList.add(new ClassTeleport());
 		classList.add(new AbilityClassTest());
 	}
 	
 	private Map<EntityPlayer, PlayerAbilityData> dataMap = new HashMap(); //玩家数据对应表。
 	private Map<EntityPlayer, PlayerControlStat> ctrlMap = new HashMap(); //当前操作信息对应表。(FOR SERVER ONLY)
 	
-	private boolean isServerTicker = false;
+	public boolean isServerTicker = false;
+	public boolean isIntergratedServer = false;
 	
 	public AbilityMain() {}
 	
@@ -90,14 +94,16 @@ public class AbilityMain implements ITickHandler {
 		PlayerAbilityData data = getAbilityData(player);
 		
 		if(!world.isRemote) isServerTicker = true; //用于判断是否在C/S集成服务器中运行
-		if(!isServerTicker || !world.isRemote) { //如果是集成服务期，仅在S端调用
+		if(data != null) data.player = player;
+		if(!isServerTicker || !world.isRemote) { //如果是集成服务器，仅在S端调用
+			isIntergratedServer = true;
 			if(data == null) {
 				data = new PlayerAbilityData(player);
 				dataMap.put(player, data);
 			}
 			data.updateTick();
+			System.out.println("Updating....." + data.ability_level + " " + data.player.worldObj.isRemote);
 		}
-		if(data != null) data.player = player;
 		
 		//接下来的在两端都要调用（操作部分）
 		if(!data.isDataStateGood()) return;
@@ -140,7 +146,7 @@ public class AbilityMain implements ITickHandler {
 		else stat.onKeyUp(keyID);
 		
 		
-		int[] arr = getSkillArrayFor(player, keyID);
+		int[] arr = getSkillArrayFor(data, keyID);
 		if(arr != null) {
 			AbilityClass abc = getAbilityClass(data);
 			if(abc != null) {
@@ -157,28 +163,39 @@ public class AbilityMain implements ITickHandler {
 		return true;
 	}
 	
-	public int[] getSkillArrayFor(EntityPlayer player, int keyID) {
+	public int[] getSkillArrayFor(PlayerAbilityData data, int keyID) {
 		int[] thearr = new int[2];
-		PlayerAbilityData data = getAbilityData(player);
-		if(data != null) {
-			AbilityClass abc = getAbilityClass(data);
-			if(abc != null) {
-				AbilityLevel lvl = abc.getAbilityLevel(data.ability_level);
-				if(lvl != null) {
-					
-					if(lvl.useCustomKeyset()) return lvl.getSkillForKey(keyID);
-					else {
-						return data.controlData.controlSets[data.controlData.currentSetID].keyData[keyID];
-					}
-					
+		AbilityClass abc = getAbilityClass(data);
+		if(abc != null) {
+			AbilityLevel lvl = abc.getAbilityLevel(data.ability_level);
+			if(lvl != null) {
+				
+				if(lvl.useCustomKeyset()) return lvl.getSkillForKey(keyID);
+				else {
+					return data.controlData.controlSets[data.controlData.currentSetID].keyData[keyID];
 				}
-				return null;
+				
 			}
 			return null;
 		}
 		return null;
 	}
 	
+	/**
+	 * 获取某个给定skill的给定局部键ID对应的玩家操作键ID。如果有多个只会返回找到的第一个。
+	 * @param data
+	 * @param skillID
+	 * @param keyID
+	 * @return
+	 */
+	public int getMapForLocalKey(PlayerAbilityData data, int skillID, int keyID) {
+		for(int i = 0; i < 4; i++) {
+			int[] arr =  getSkillArrayFor(data, i);
+			if(arr != null && (arr[0] == skillID && arr[1] == keyID))
+				return i;
+		}
+		return -1;
+	}
 	
 	public void onWorldSave() {
 		for(Map.Entry<EntityPlayer, PlayerAbilityData> entry : dataMap.entrySet()) {
@@ -208,6 +225,7 @@ public class AbilityMain implements ITickHandler {
 	public void cleanup() {
 		dataMap.clear();
 		ctrlMap.clear();
+		isServerTicker = isIntergratedServer = false;
 	}
 
 	@Override

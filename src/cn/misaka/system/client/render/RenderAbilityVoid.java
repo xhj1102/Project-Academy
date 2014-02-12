@@ -69,7 +69,9 @@ public class RenderAbilityVoid implements IItemRenderer {
 		if(data != null) {
 			AbilitySkill skl = data.lastActiveSkill;
 			if(skl != null) {
-				skl.getSkillRenderer().onRenderEquipped(player, player.worldObj, data, CommonProxy.abilityMain.getControlStat(player), b);
+				SkillRender render = skl.getSkillRenderer();
+				if(render != null)
+					render.onRenderEquipped(player, player.worldObj, data, CommonProxy.abilityMain.getControlStat(player), b);
 			} else SkillRender.renderHand(player);
 		}
 	}

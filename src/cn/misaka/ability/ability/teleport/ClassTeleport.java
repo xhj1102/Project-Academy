@@ -1,7 +1,7 @@
 /**
  * Code by Lambda Innovation, 2013.
  */
-package cn.misaka.ability.ability.test;
+package cn.misaka.ability.ability.teleport;
 
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
@@ -12,16 +12,15 @@ import cn.misaka.system.ability.AbilityClass;
  * @author WeAthFolD
  *
  */
-public class AbilityClassTest extends AbilityClass {
+public class ClassTeleport extends AbilityClass {
 
 	/**
 	 * 
 	 */
-	public AbilityClassTest() {
-		for(int i = 0; i < 5; i++) {
-			this.skillList.add(new AbilitySkillTest(this, i));
-			this.levelList.add(new AbilityLevelTest(this));
-		}
+	public ClassTeleport() {
+		
+		this.levelList.add(new LevelTest(this));
+		this.skillList.add(new SkillPlayerTransform(this, 0));
 	}
 
 	/* (non-Javadoc)
@@ -29,8 +28,7 @@ public class AbilityClassTest extends AbilityClass {
 	 */
 	@Override
 	public String getAbilityName() {
-		// TODO Auto-generated method stub
-		return "Melt Downer";
+		return "Teleporter";
 	}
 
 	@Override

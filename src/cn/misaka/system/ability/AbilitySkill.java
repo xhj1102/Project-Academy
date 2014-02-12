@@ -18,12 +18,13 @@ import net.minecraft.world.World;
  *
  */
 public abstract class AbilitySkill {
+	
+	protected AbilityClass baseClass;
+	public final int skillID;
 
-	/**
-	 * 
-	 */
-	public AbilitySkill() {
-		// TODO Auto-generated constructor stub
+	public AbilitySkill(AbilityClass cls, int id) {
+		baseClass = cls;
+		skillID = id;
 	}
 	
 	/**

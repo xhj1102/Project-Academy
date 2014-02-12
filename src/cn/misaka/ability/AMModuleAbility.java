@@ -7,6 +7,7 @@ import net.minecraft.command.CommandHandler;
 import net.minecraft.entity.Entity;
 import cn.liutils.core.register.Config;
 import cn.misaka.ability.entity.EntityMeltdowner;
+import cn.misaka.ability.entity.EntityTeleportIndicator;
 import cn.misaka.ability.proxy.CommonProxy;
 import cn.misaka.ability.register.AbilityBlocks;
 import cn.misaka.ability.register.AbilityItems;
@@ -51,6 +52,7 @@ public class AMModuleAbility {
 	public void init(FMLInitializationEvent event) {
 		
 		registerEntity(EntityMeltdowner.class, "melt_downer");
+		registerEntity(EntityTeleportIndicator.class, "tele_indicator");
 		
 		proxy.init();
 	}

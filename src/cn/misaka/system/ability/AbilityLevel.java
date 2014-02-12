@@ -4,6 +4,8 @@
 package cn.misaka.system.ability;
 
 import cn.misaka.system.data.AbilityControlData;
+import cn.misaka.system.data.PlayerAbilityData;
+import cn.misaka.system.proxy.CommonProxy;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**
@@ -61,6 +63,4 @@ public abstract class AbilityLevel {
 	 *         [1]映射到的keyID
 	 */
 	public abstract int[] getSkillForKey(int keyID);
-	
-
 }

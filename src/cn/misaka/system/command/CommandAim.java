@@ -79,8 +79,8 @@ public class CommandAim extends CommandBase {
 		}
 		if(message != null) msg(player, message);
 		if(syncType != EnumDataType.NONE) {
-			AbilityDataSender.sendAbilityDataFromServer(data, syncType);
 			data.saveProperties();
+			AbilityDataSender.sendAbilityDataFromServer(data, syncType);
 		}
 	}
 	

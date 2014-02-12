@@ -6,6 +6,11 @@ package cn.misaka.system.ability;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.util.ResourceLocation;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import cn.liutils.api.util.GenericUtils;
 
 /**
@@ -51,5 +56,12 @@ public abstract class AbilityClass {
 	public final AbilitySkill getAbilitySkill(int id) {
 		return GenericUtils.safeFetchFrom(skillList, id);
 	}
+	
+	/**
+	 * 获取本能力系的对应Logo，是一个贴图文件。
+	 * @return 贴图
+	 */
+	@SideOnly(Side.CLIENT)
+	public abstract ResourceLocation getClassLogo();
 	
 }
