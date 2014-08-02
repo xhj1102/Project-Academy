@@ -8,21 +8,42 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.system.item;
+package cn.misaka.api.client.data;
 
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
+import cn.misaka.api.data.APPlayerData;
 
 /**
+ * TODO: Waiting to be done
  * @author WeAthFolD
  *
  */
-public class ItemAbilityVoid extends Item {
+public final class APPlayerDataClient extends APPlayerData {
 
 	/**
-	 * 
+	 * @param player
 	 */
-	public ItemAbilityVoid() {
+	public APPlayerDataClient(EntityPlayer player) {
+		super(player);
 		// TODO Auto-generated constructor stub
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.misaka.api.data.APPlayerData#isDataStateGood()
+	 */
+	@Override
+	public boolean isDataStateGood() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.misaka.api.data.APPlayerData#isDataStateGood(int)
+	 */
+	@Override
+	public boolean isDataStateGood(int flag) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

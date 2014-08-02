@@ -8,20 +8,19 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.system.item;
-
-import net.minecraft.item.Item;
+package cn.misaka.system.control;
 
 /**
+ * 操作控制统和类。
  * @author WeAthFolD
  *
  */
-public class ItemAbilityVoid extends Item {
+public class APControlMain {
 
 	/**
 	 * 
 	 */
-	public ItemAbilityVoid() {
+	public APControlMain() {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -8,21 +8,30 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.system.item;
-
-import net.minecraft.item.Item;
+package cn.misaka.api.control;
 
 /**
  * @author WeAthFolD
  *
  */
-public class ItemAbilityVoid extends Item {
+public class SkillControlStat {
 
 	/**
 	 * 
 	 */
-	public ItemAbilityVoid() {
+	public SkillControlStat() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * @return true if ANY key is down
+	 */
+	public boolean isKeyDown() {
+		return false;
+	}
+	
+	public boolean isKeyDown(int kid) {
+		return false;
 	}
 
 }

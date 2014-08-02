@@ -8,21 +8,32 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.system.item;
+package cn.misaka.system.client.key;
 
-import net.minecraft.item.Item;
+import cn.liutils.api.client.register.IKeyHandler;
 
 /**
- * @author WeAthFolD
+ * @author Administrator
  *
  */
-public class ItemAbilityVoid extends Item {
+public class KeyWheelplate implements IKeyHandler {
 
-	/**
-	 * 
-	 */
-	public ItemAbilityVoid() {
-		// TODO Auto-generated constructor stub
+	@Override
+	public void onKeyDown(int keyCode, boolean tickEnd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyUp(int keyCode, boolean tickEnd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyTick(int keyCode, boolean tickEnd) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

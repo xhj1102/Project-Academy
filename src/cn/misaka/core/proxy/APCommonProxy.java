@@ -8,20 +8,18 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.system.item;
-
-import net.minecraft.item.Item;
+package cn.misaka.core.proxy;
 
 /**
- * @author WeAthFolD
+ * @author Administrator
  *
  */
-public class ItemAbilityVoid extends Item {
+public class APCommonProxy {
 
 	/**
 	 * 
 	 */
-	public ItemAbilityVoid() {
+	public APCommonProxy() {
 		// TODO Auto-generated constructor stub
 	}
 
