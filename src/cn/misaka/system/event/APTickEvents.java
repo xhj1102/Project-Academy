@@ -8,18 +8,26 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.proxy;
+package cn.misaka.system.event;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 /**
- * @author Administrator
+ * @author WeAthFolD
  *
  */
-public class APCommonProxy {
+public class APTickEvents {
 
-	public void preInit() {}
+	@SubscribeEvent
+	public void onServerTick(ServerTickEvent event) {
+		
+	}
 	
-	public void init() {}
-	
-	public void postInit() {}
+	@SubscribeEvent
+	public void onClientTick(ClientTickEvent event) {
+		
+	}
 
 }

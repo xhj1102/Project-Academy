@@ -14,10 +14,19 @@ package cn.misaka.system.control.preset;
  * @author WeAthFolD
  *
  */
-public class ControlPreset extends Pair<Integer, Integer> {
+public class ControlPreset  {
 	
-	public ControlPreset(int abilityID, int keyID) {
-		super(abilityID, keyID);
+	/**
+	 * key represents abilityID, value represents keyID
+	 */
+	public static class Entry extends Pair<Integer, Integer> {
+
+		public Entry(int k, int v) {
+			super(k, v);
+		}
+		
 	}
+	
+	public Entry[] settings = new Entry[4];
 
 }

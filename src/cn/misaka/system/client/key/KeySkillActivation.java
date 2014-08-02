@@ -17,12 +17,8 @@ import cn.liutils.api.client.register.IKeyHandler;
  *
  */
 public class KeySkillActivation implements IKeyHandler {
-
-	/**
-	 * 
-	 */
+	
 	public KeySkillActivation() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)

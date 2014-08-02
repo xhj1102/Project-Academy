@@ -10,17 +10,23 @@
  */
 package cn.misaka.core.proxy;
 
+import org.lwjgl.input.Keyboard;
+
+import cn.liutils.core.client.register.LIKeyProcess;
+import cn.misaka.system.client.key.KeySkillControl;
+
 /**
  * @author WeAthFolD
  *
  */
 public class APClientProxy extends APCommonProxy {
 
-	/**
-	 * 
-	 */
-	public APClientProxy() {
-		// TODO Auto-generated constructor stub
+	@Override
+	public void preInit() {
+		LIKeyProcess.addKey("AP_ML", LIKeyProcess.MOUSE_LEFT, false, new KeySkillControl(0));
+		LIKeyProcess.addKey("AP_MR", LIKeyProcess.MOUSE_RIGHT, false, new KeySkillControl(1));
+		LIKeyProcess.addKey("AP_R", Keyboard.KEY_R, false, new KeySkillControl(2));
+		LIKeyProcess.addKey("AP_F", Keyboard.KEY_F, false, new KeySkillControl(3));
 	}
 
 }

@@ -17,7 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
  * @author WeAthFolD
  *
  */
-public abstract class APPlayerData {
+public abstract class PlayerData {
 	
 	public int 
 		classid,
@@ -26,6 +26,8 @@ public abstract class APPlayerData {
 		
 	public int
 		current_cp;
+	
+	EntityPlayer thePlayer;
 	
 	
 	/**
@@ -45,8 +47,8 @@ public abstract class APPlayerData {
 		}
 	}
 
-	public APPlayerData(EntityPlayer player) {
-		// TODO Auto-generated constructor stub
+	public PlayerData(EntityPlayer player) {
+		thePlayer = player;
 	}
 	
 	public void onUpdate() {

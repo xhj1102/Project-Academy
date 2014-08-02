@@ -10,17 +10,16 @@
  */
 package cn.misaka.api.data;
 
+import cn.misaka.api.ability.AbilityClass;
+import cn.misaka.system.AbilityMain;
+
 /**
- * 玩家信息的总处理类。在这里进行
+ * 在这里进行对信息的处理和修改等内容
  * @author WeAthFolD
  */
-public class PlayerDataHandler {
+public class PlayerDataHelper {
 
-	/**
-	 * 
-	 */
-	public PlayerDataHandler() {
-		// TODO Auto-generated constructor stub
+	public static AbilityClass getAbilityClass(PlayerData data) {
+		return AbilityMain.getAbility(data.classid);
 	}
-
 }

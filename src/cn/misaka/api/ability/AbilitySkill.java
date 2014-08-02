@@ -60,6 +60,10 @@ public abstract class AbilitySkill {
 		
 	}
 	
+	public int getMaxKeys() {
+		return 0;
+	}
+	
 	/**
 	 * 为当前能力添加操作提示，在GUI的右端显示。
 	 */

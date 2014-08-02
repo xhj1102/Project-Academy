@@ -11,19 +11,22 @@
 package cn.misaka.api.client.data;
 
 import net.minecraft.entity.player.EntityPlayer;
-import cn.misaka.api.data.APPlayerData;
+import cn.misaka.api.data.PlayerData;
+import cn.misaka.system.control.preset.ControlPreset;
 
 /**
  * TODO: Waiting to be done
  * @author WeAthFolD
  *
  */
-public final class APPlayerDataClient extends APPlayerData {
+public final class PlayerDataClient extends PlayerData {
 
+	public boolean isActivated;
+	
 	/**
 	 * @param player
 	 */
-	public APPlayerDataClient(EntityPlayer player) {
+	public PlayerDataClient(EntityPlayer player) {
 		super(player);
 		// TODO Auto-generated constructor stub
 	}
@@ -44,6 +47,10 @@ public final class APPlayerDataClient extends APPlayerData {
 	public boolean isDataStateGood(int flag) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public ControlPreset.Entry[] getCurrentPreset() {
+		return new ControlPreset.Entry[4];
 	}
 
 }

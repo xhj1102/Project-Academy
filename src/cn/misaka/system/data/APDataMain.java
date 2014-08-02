@@ -8,18 +8,30 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.proxy;
+package cn.misaka.system.data;
+
+import net.minecraft.entity.player.EntityPlayer;
+import cn.misaka.api.data.PlayerData;
 
 /**
- * @author Administrator
+ * @author WeAthFolD
  *
  */
-public class APCommonProxy {
+public class APDataMain {
 
-	public void preInit() {}
+	/**
+	 * 
+	 */
+	public APDataMain() {
+		// TODO Auto-generated constructor stub
+	}
 	
-	public void init() {}
+	public static PlayerData loadPlayerData(EntityPlayer player) {
+		return getPlayerData(player);
+	}
 	
-	public void postInit() {}
+	public static  PlayerData getPlayerData(EntityPlayer player) {
+		return null;
+	}
 
 }

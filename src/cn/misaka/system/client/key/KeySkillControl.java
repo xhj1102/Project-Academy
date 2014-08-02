@@ -10,37 +10,39 @@
  */
 package cn.misaka.system.client.key;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import cn.liutils.api.client.register.IKeyHandler;
+import cn.liutils.api.util.GenericUtils;
+import cn.misaka.system.control.APControlMain;
 
 /**
- * @author Administrator
- *
+ * 技能操作键位。传给APControlMain进行下一步动作。
  */
 public class KeySkillControl implements IKeyHandler {
 
-	/**
-	 * 
-	 */
-	public KeySkillControl() {
-		// TODO Auto-generated constructor stub
+	Minecraft mc = Minecraft.getMinecraft();
+	
+	private final int subid;
+	
+	public KeySkillControl(int kid) {
+		subid = kid;
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.liutils.api.client.register.IKeyHandler#onKeyDown(int, boolean)
-	 */
 	@Override
 	public void onKeyDown(int keyCode, boolean tickEnd) {
-		// TODO Auto-generated method stub
-
+		if(tickEnd || !GenericUtils.isPlayerInGame())
+			return;
+		EntityPlayer player = mc.thePlayer;
+		APControlMain.onKeyChangedClient(subid, true);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.liutils.api.client.register.IKeyHandler#onKeyUp(int, boolean)
-	 */
 	@Override
 	public void onKeyUp(int keyCode, boolean tickEnd) {
-		// TODO Auto-generated method stub
-
+		if(tickEnd || !GenericUtils.isPlayerInGame())
+			return;
+		EntityPlayer player = mc.thePlayer;
+		APControlMain.onKeyChangedClient(subid, false);
 	}
 
 	/* (non-Javadoc)
@@ -48,8 +50,7 @@ public class KeySkillControl implements IKeyHandler {
 	 */
 	@Override
 	public void onKeyTick(int keyCode, boolean tickEnd) {
-		// TODO Auto-generated method stub
-
+		//NOPE
 	}
 
 }

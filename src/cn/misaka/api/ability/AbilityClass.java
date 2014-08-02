@@ -24,7 +24,8 @@ public abstract class AbilityClass {
 
 	protected final String unl_name;
 	
-	protected AbilityLevel[] ability_levels;
+	public AbilityLevel[] ability_levels;
+	public AbilitySkill[] ability_skills;
 	
 	/**
 	 * 在统一加载时给予的绝对id，和该能力系在总存储中的下标号相同。
@@ -36,14 +37,25 @@ public abstract class AbilityClass {
 		this.id = id;
 	}
 	
-	protected void initLevels() {
+	protected void initClass() {
 		ability_levels = new AbilityLevel[0];
+		ability_skills = new AbilitySkill[0];
 	}
 	
 	public AbilityLevel getLevel(int id) {
-		if(id >= ability_levels.length)
-			return null;
 		return ability_levels[id];
+	}
+	
+	public AbilitySkill getSkill(int id) {
+		return ability_skills[id];
+	}
+	
+	public final int getMaxLevels() {
+		return ability_levels.length;
+	}
+	
+	public final int getMaxSkills() {
+		return ability_skills.length;
 	}
 	
 	@SideOnly(Side.CLIENT)

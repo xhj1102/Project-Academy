@@ -8,18 +8,16 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.proxy;
+package cn.misaka.system.control;
 
 /**
- * @author Administrator
+ * @author WeAthFolD
  *
  */
-public class APCommonProxy {
+public class APControlClient {
 
-	public void preInit() {}
-	
-	public void init() {}
-	
-	public void postInit() {}
+	public static void onKeyDown(int kid) {
+		
+	}
 
 }

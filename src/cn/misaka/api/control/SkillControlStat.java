@@ -33,5 +33,9 @@ public class SkillControlStat {
 	public boolean isKeyDown(int kid) {
 		return false;
 	}
+	
+	public void setKeyDown(int kid, boolean downOrUp) {
+		
+	}
 
 }
