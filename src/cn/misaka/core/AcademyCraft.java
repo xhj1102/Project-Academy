@@ -13,13 +13,16 @@ package cn.misaka.core;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.command.CommandHandler;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.misaka.ability.system.event.APEventListener;
 import cn.misaka.ability.system.event.APTickEvents;
 import cn.misaka.ability.system.network.message.MsgControl;
+import cn.misaka.core.misc.APCreativeTab;
 import cn.misaka.core.proxy.APCommonProxy;
 import cn.misaka.core.proxy.APGeneralProps;
+import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -57,12 +60,15 @@ public class AcademyCraft {
 	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(APGeneralProps.NET_CHANNEL);
 	private static int nextNetID = 0;
 	
+	public static CreativeTabs cct = new APCreativeTab();
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		log.info("Starting AcademyCraft " + VERSION);
 		log.info("Copyright (c) Lambda Innovation, 2013-2014");
 		log.info("http://www.lambdacraft.cn");
 		
+		APBlocks.init(config);
 		APItems.init(config);
 		FMLCommonHandler.instance().bus().register(new APTickEvents());
 		MinecraftForge.EVENT_BUS.register(new APEventListener());

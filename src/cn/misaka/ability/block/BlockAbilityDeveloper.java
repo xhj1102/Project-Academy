@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cn.liutils.core.proxy.LIClientProps;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
+import cn.misaka.core.AcademyCraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -28,6 +29,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * META: 第1位：0HEAD 1TAIL 第2、3位：byte(2) facingDirection 值和ForgeDirection有一个映射
  * HEAD方块执行渲染行为
+ * TODO：活塞推动会发生什么呢（笑）
  * @author WeAthFolD
  *
  */
@@ -37,6 +39,8 @@ public class BlockAbilityDeveloper extends BlockContainer {
 	
 	public BlockAbilityDeveloper() {
 		super(Material.iron);
+		setHardness(2.0F);
+		setCreativeTab(AcademyCraft.cct);
 		setBlockName("ability_developer");
 	}
 
@@ -73,11 +77,16 @@ public class BlockAbilityDeveloper extends BlockContainer {
         world.setBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, this, metadata + 1, 0x02); //set the 'tail' block
     }
     
-    @Override
-    public void breakBlock(World world, int x, int y, int z, Block me, int what)
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-    	super.breakBlock(world, x, y, z, me, what);
-    	System.out.println(what);
+    	super.onNeighborBlockChange(world, x, y, z, block);
+    	int metadata = world.getBlockMetadata(x, y, z);
+		ForgeDirection dir = getFacingDirection(metadata);
+		if((metadata & 0x01) == 1) {
+			dir = dir.getOpposite();
+		}
+		if(world.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ) != this)
+			world.setBlockToAir(x, y, z);
     }
 	
 }

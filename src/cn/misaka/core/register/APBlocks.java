@@ -12,6 +12,7 @@ package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cn.misaka.ability.block.BlockAbilityDeveloper;
+import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import net.minecraftforge.common.config.Configuration;
 
 /**
@@ -26,6 +27,8 @@ public class APBlocks {
 		ability_developer = new BlockAbilityDeveloper();
 		
 		GameRegistry.registerBlock(ability_developer, "ability_developer");
+		
+		GameRegistry.registerTileEntity(TileAbilityDeveloper.class, "tile_ability_developer");
 	}
 
 }

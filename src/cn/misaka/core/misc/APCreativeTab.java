@@ -8,21 +8,39 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.block.tile;
+package cn.misaka.core.misc;
 
-import net.minecraft.tileentity.TileEntity;
+import cn.misaka.core.register.APItems;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 
 /**
- * 
  * @author WeAthFolD
+ *
  */
-public class TileAbilityDeveloper extends TileEntity {
+public class APCreativeTab extends CreativeTabs {
 
-	public TileAbilityDeveloper() {
+	/**
+	 * @param lable
+	 */
+	public APCreativeTab() {
+		super("AcademyCraft");
 	}
-	
+
+	/**
+	 * @param par1
+	 * @param par2Str
+	 */
+	public APCreativeTab(int par1) {
+		super(par1, "AcademyCraft");
+	}
+
+	/* (non-Javadoc)
+	 * @see net.minecraft.creativetab.CreativeTabs#getTabIconItem()
+	 */
 	@Override
-	public void updateEntity() {
+	public Item getTabIconItem() {
+		return APItems.itemLogo;
 	}
 
 }

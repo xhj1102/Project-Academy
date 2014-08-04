@@ -30,6 +30,7 @@ public class APItems {
 		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
 		
 		GameRegistry.registerItem(itemVoid, "ability_void");
+		GameRegistry.registerItem(itemLogo, "ap_logo");
 	}
 
 }

@@ -14,7 +14,10 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cn.liutils.core.client.register.LIKeyProcess;
+import cn.misaka.ability.block.tile.TileAbilityDeveloper;
+import cn.misaka.ability.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.ability.system.client.key.KeySkillControl;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
 import cn.misaka.core.register.APItems;
@@ -36,6 +39,7 @@ public class APClientProxy extends APCommonProxy {
 	@Override
 	public void init() {
 		MinecraftForgeClient.registerItemRenderer(APItems.itemVoid, new RenderAbilityVoid());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAbilityDeveloper.class, new RenderAbilityDeveloper());
 	}
 
 }

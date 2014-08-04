@@ -8,21 +8,28 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.block.tile;
+package cn.misaka.core.proxy;
 
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 
 /**
- * 
  * @author WeAthFolD
+ *
  */
-public class TileAbilityDeveloper extends TileEntity {
+public class APClientProps {
 
-	public TileAbilityDeveloper() {
-	}
+	//Model textures
+	public static final ResourceLocation
+		TEX_ABILITY_DEVELOPER = src("academy:textures/models/ability_developer.png");
+		
+	//OBJ models
+	public static final
+		IModelCustom MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj"));
 	
-	@Override
-	public void updateEntity() {
+	
+	private static ResourceLocation src(String s) {
+		return new ResourceLocation(s);
 	}
-
 }
