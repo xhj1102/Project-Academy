@@ -1,2 +1,20 @@
 {
+  "records.ac1": {
+    "category": "records",
+    "sounds": [
+      "records/ac1"
+    ]
+  },
+  "records.ac2": {
+    "category": "records",
+    "sounds": [
+      "records/ac2"
+    ]
+  },
+  "records.ac3": {
+    "category": "records",
+    "sounds": [
+      "records/ac3"
+    ]
+  }
 }

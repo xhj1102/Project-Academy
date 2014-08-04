@@ -11,6 +11,8 @@
 package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import cn.misaka.ability.system.item.ItemAPRecord;
+import cn.misaka.ability.system.item.ItemCoin;
 import cn.misaka.ability.system.item.ItemVoid;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
@@ -23,14 +25,26 @@ public class APItems {
 	
 	public static Item 
 		itemVoid,
-		itemLogo;
+		itemLogo,
+		itemAPRecord1,
+		itemAPRecord2,
+		itemAPRecord3,
+		itemCoin;
 
 	public static void init(Configuration conf) {
 		itemVoid = new ItemVoid();
 		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
+		itemAPRecord1 = new ItemAPRecord("ac1", 1);
+		itemAPRecord2 = new ItemAPRecord("ac2", 2);
+		itemAPRecord3 = new ItemAPRecord("ac3", 3);
+		itemCoin = new ItemCoin();
 		
 		GameRegistry.registerItem(itemVoid, "ability_void");
 		GameRegistry.registerItem(itemLogo, "ap_logo");
+		GameRegistry.registerItem(itemAPRecord1, "ap_record1");
+		GameRegistry.registerItem(itemAPRecord2, "ap_record2");
+		GameRegistry.registerItem(itemAPRecord3, "ap_record3");
+		GameRegistry.registerItem(itemCoin, "ap_coin");
 	}
 
 }
