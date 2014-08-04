@@ -16,13 +16,16 @@ import cn.liutils.core.proxy.LIClientProps;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.core.AcademyCraft;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -87,6 +90,42 @@ public class BlockAbilityDeveloper extends BlockContainer {
 		}
 		if(world.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ) != this)
 			world.setBlockToAir(x, y, z);
+    }
+    
+    @Override
+    public boolean isBed(IBlockAccess world, int x, int y, int z, EntityLivingBase player)
+    {
+    	return true;
+    }
+    
+    public int getBedDirection(IBlockAccess world, int x, int y, int z)
+    {
+    	return world.getBlockMetadata(x, y, z) >> 1;
+    }
+    
+    public boolean isBedFoot(IBlockAccess world, int x, int y, int z)
+    {
+        return (world.getBlockMetadata(x, y, z) & 0x01) == 0;
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitx, float hity, float hitz)
+    {
+    	System.out.println("OnBlockActivated on " + world.isRemote);
+    	if(world.isRemote) return false;
+    	{
+    		int meta = world.getBlockMetadata(x, y, z);
+        	if((meta & 0x01) == 0) {
+        		ForgeDirection dir = getFacingDirection(meta).getOpposite();
+        		x += dir.offsetX;
+        		z += dir.offsetZ;
+        	}
+    	}
+    	if(world.getBlock(x, y, z) != this) return false;
+    	System.out.println("Now trying to mount player~");
+    	TileAbilityDeveloper dev = (TileAbilityDeveloper) world.getTileEntity(x, y, z);
+    	dev.tryMount(player);
+    	return true;
     }
 	
 }

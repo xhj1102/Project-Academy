@@ -10,13 +10,23 @@
  */
 package cn.misaka.ability.client.render.tile;
 
+import java.util.Iterator;
+
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.core.proxy.APClientProps;
+import cn.misaka.core.register.APBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.model.IModelCustom;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * @author WeAthFolD
@@ -25,22 +35,25 @@ import net.minecraftforge.client.model.IModelCustom;
 public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 
 	private static final IModelCustom model = APClientProps.MDL_ABILITY_DEVELOPER;
+	private final float rotations[] = new float[] { 90, 0, -90, 180 };
 	
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float subtick) {
 		
 		if((te.blockMetadata & 0x01) == 1) return; //Render only HEAD
-		float scale = 0.015F;
-		GL11.glDisable(GL11.GL_CULL_FACE);
+		float scale = 0.017F;
+		ForgeDirection dir = APBlocks.ability_developer.getFacingDirection(te.blockMetadata);
+		
 		GL11.glPushMatrix(); {
 			RenderUtils.loadTexture(APClientProps.TEX_ABILITY_DEVELOPER);
 			
-			GL11.glTranslated(x, y, z);
+			GL11.glTranslated(x + 0.5 + dir.offsetX * 0.5, y, z + 0.5 + dir.offsetZ * 0.5);
+			
+			GL11.glRotatef(rotations[te.blockMetadata >> 1], 0.0F, 1.0F, 0.0F);
 			GL11.glScalef(scale, scale, scale);
 			model.renderAll();
 			
 		} GL11.glPopMatrix();
-		GL11.glEnable(GL11.GL_CULL_FACE);
 	}
 
 }
