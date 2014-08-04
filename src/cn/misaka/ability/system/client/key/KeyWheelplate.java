@@ -8,28 +8,32 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.register;
+package cn.misaka.ability.system.client.key;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemVoid;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
+import cn.liutils.api.client.register.IKeyHandler;
 
 /**
- * @author WeAthFolD
+ * @author Administrator
  *
  */
-public class APItems {
-	
-	public static Item 
-		itemVoid,
-		itemLogo;
+public class KeyWheelplate implements IKeyHandler {
 
-	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
+	@Override
+	public void onKeyDown(int keyCode, boolean tickEnd) {
+		// TODO Auto-generated method stub
 		
-		GameRegistry.registerItem(itemVoid, "ability_void");
+	}
+
+	@Override
+	public void onKeyUp(int keyCode, boolean tickEnd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyTick(int keyCode, boolean tickEnd) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -8,28 +8,26 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.register;
+package cn.misaka.ability.system.event;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemVoid;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
+import cn.misaka.ability.api.data.PlayerData;
+import cn.misaka.ability.system.data.APDataMain;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.world.BlockEvent;
 
 /**
  * @author WeAthFolD
  *
  */
-public class APItems {
-	
-	public static Item 
-		itemVoid,
-		itemLogo;
+public class APEventListener {
 
-	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
-		
-		GameRegistry.registerItem(itemVoid, "ability_void");
+	@SubscribeEvent
+	public void onBlockBreak(BlockEvent.BreakEvent event) {
+		EntityPlayer player = event.getPlayer();
+		PlayerData pstat = APDataMain.loadPlayerData(player);
+		if(pstat != null && pstat.isActivated && player.getCurrentEquippedItem() == null) {
+			event.setCanceled(true);
+		}
 	}
-
 }

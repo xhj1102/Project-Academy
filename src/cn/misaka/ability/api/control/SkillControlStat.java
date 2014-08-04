@@ -8,28 +8,35 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.register;
-
-import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemVoid;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
+package cn.misaka.ability.api.control;
 
 /**
  * @author WeAthFolD
  *
  */
-public class APItems {
-	
-	public static Item 
-		itemVoid,
-		itemLogo;
+public class SkillControlStat {
 
-	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
-		
-		GameRegistry.registerItem(itemVoid, "ability_void");
+	private boolean[] keyDown = new boolean[4];
+	
+	/**
+	 * @return true if ANY key is down
+	 */
+	public boolean isKeyDown() {
+		for(boolean b : keyDown)
+			if(b) return true;
+		return false;
+	}
+	
+	public boolean isKeyDown(int kid) {
+		return keyDown[kid];
+	}
+	
+	public void setKeyDown(int kid, boolean downOrUp) {
+		keyDown[kid] = downOrUp;
+	}
+	
+	public void clear() {
+		for(boolean b : keyDown) b = false;
 	}
 
 }

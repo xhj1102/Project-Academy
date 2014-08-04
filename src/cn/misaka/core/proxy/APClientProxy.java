@@ -15,9 +15,9 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.input.Keyboard;
 
 import cn.liutils.core.client.register.LIKeyProcess;
+import cn.misaka.ability.system.client.key.KeySkillControl;
+import cn.misaka.ability.system.client.render.RenderAbilityVoid;
 import cn.misaka.core.register.APItems;
-import cn.misaka.system.client.key.KeySkillControl;
-import cn.misaka.system.client.render.RenderAbilityVoid;
 
 /**
  * @author WeAthFolD

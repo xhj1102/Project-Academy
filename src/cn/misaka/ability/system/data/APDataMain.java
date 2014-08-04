@@ -8,28 +8,30 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.register;
+package cn.misaka.ability.system.data;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemVoid;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraft.entity.player.EntityPlayer;
+import cn.misaka.ability.api.data.PlayerData;
 
 /**
  * @author WeAthFolD
  *
  */
-public class APItems {
-	
-	public static Item 
-		itemVoid,
-		itemLogo;
+public class APDataMain {
 
-	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
-		
-		GameRegistry.registerItem(itemVoid, "ability_void");
+	/**
+	 * 
+	 */
+	public APDataMain() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public static PlayerData loadPlayerData(EntityPlayer player) {
+		return getPlayerData(player);
+	}
+	
+	public static  PlayerData getPlayerData(EntityPlayer player) {
+		return null;
 	}
 
 }

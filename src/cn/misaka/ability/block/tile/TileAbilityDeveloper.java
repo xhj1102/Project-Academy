@@ -8,28 +8,17 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.register;
+package cn.misaka.ability.block.tile;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemVoid;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraft.tileentity.TileEntity;
 
 /**
+ * 
  * @author WeAthFolD
- *
  */
-public class APItems {
-	
-	public static Item 
-		itemVoid,
-		itemLogo;
+public class TileAbilityDeveloper extends TileEntity {
 
-	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
-		
-		GameRegistry.registerItem(itemVoid, "ability_void");
+	public TileAbilityDeveloper() {
 	}
 
 }

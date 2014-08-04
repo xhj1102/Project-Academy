@@ -11,25 +11,21 @@
 package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemVoid;
-import net.minecraft.item.Item;
+import cn.misaka.ability.block.BlockAbilityDeveloper;
 import net.minecraftforge.common.config.Configuration;
 
 /**
  * @author WeAthFolD
  *
  */
-public class APItems {
-	
-	public static Item 
-		itemVoid,
-		itemLogo;
+public class APBlocks {
 
+	public static BlockAbilityDeveloper ability_developer;
+	
 	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
+		ability_developer = new BlockAbilityDeveloper();
 		
-		GameRegistry.registerItem(itemVoid, "ability_void");
+		GameRegistry.registerBlock(ability_developer, "ability_developer");
 	}
 
 }

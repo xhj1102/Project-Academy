@@ -8,28 +8,18 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.register;
-
-import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemVoid;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
+package cn.misaka.ability.system.control.preset;
 
 /**
  * @author WeAthFolD
  *
  */
-public class APItems {
+class Pair<U, V> {
+	public U key;
+	public V value;
 	
-	public static Item 
-		itemVoid,
-		itemLogo;
-
-	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
-		
-		GameRegistry.registerItem(itemVoid, "ability_void");
+	public Pair(U k, V v) {
+		key = k;
+		value = v;
 	}
-
 }
