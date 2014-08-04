@@ -27,6 +27,8 @@ public abstract class PlayerData {
 	public int
 		current_cp;
 	
+	public boolean isActivated;
+	
 	EntityPlayer thePlayer;
 	
 	

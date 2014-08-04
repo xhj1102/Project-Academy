@@ -5,6 +5,8 @@ import java.util.HashMap;
 public class PlayerControlData {
 	
 	public HashMap<Integer, SkillControlStat> keyStateMap = new HashMap();
+	
+	public int activateSkill = -1;
 
 	public PlayerControlData() {
 	}
@@ -24,8 +26,16 @@ public class PlayerControlData {
 		return preStat != isDown;
 	}
 	
+	/**
+	 * -1 if skill disabled
+	 * @param skillID
+	 */
+	public void setActivateSkill(int skillID) {
+		activateSkill = skillID;
+	}
+	
 	public SkillControlStat loadKeyStates(int ability_id, int max_keys) {
-		SkillControlStat states = getKeyStates(ability_id);
+		SkillControlStat states = getSkillStates(ability_id);
 		if(states == null) {
 			states = new SkillControlStat();
 			keyStateMap.put(Integer.valueOf(ability_id), states);
@@ -34,11 +44,11 @@ public class PlayerControlData {
 	}
 	
 	public boolean getKeyState(int ability_id, int subkey) {
-		SkillControlStat states = getKeyStates(ability_id);
+		SkillControlStat states = getSkillStates(ability_id);
 		return states == null ? false : states.isKeyDown(subkey);
 	}
 	
-	public SkillControlStat getKeyStates(int ability_id) {
+	public SkillControlStat getSkillStates(int ability_id) {
 		return keyStateMap.get(Integer.valueOf(ability_id));
 	}
 

@@ -10,9 +10,17 @@
  */
 package cn.misaka.system.event;
 
+import cn.misaka.core.register.APItems;
+import cn.misaka.system.control.APControlMain;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -22,12 +30,27 @@ public class APTickEvents {
 
 	@SubscribeEvent
 	public void onServerTick(ServerTickEvent event) {
-		
+		if(event.phase == Phase.END) {
+			APControlMain.onTick(false);
+		}
 	}
 	
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void onClientTick(ClientTickEvent event) {
-		
+		if(event.phase == Phase.START) {
+			APControlMain.onTick(true);
+			
+			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+			if(player != null) //(&& ability is activated)
+				equipVoid(player);
+		}
+	}
+	
+	private void equipVoid(EntityPlayer player) {
+		if(player.getCurrentEquippedItem() == null) {
+			player.setCurrentItemOrArmor(0, new ItemStack(APItems.itemVoid));
+		}
 	}
 
 }

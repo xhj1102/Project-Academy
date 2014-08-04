@@ -20,15 +20,11 @@ import cn.misaka.system.control.preset.ControlPreset;
  *
  */
 public final class PlayerDataClient extends PlayerData {
-
-	public boolean isActivated;
-	
 	/**
 	 * @param player
 	 */
 	public PlayerDataClient(EntityPlayer player) {
 		super(player);
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -45,7 +41,6 @@ public final class PlayerDataClient extends PlayerData {
 	 */
 	@Override
 	public boolean isDataStateGood(int flag) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

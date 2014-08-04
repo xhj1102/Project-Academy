@@ -8,21 +8,26 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.system.item;
+package cn.misaka.system.event;
 
-import net.minecraft.item.Item;
+import cn.misaka.api.data.PlayerData;
+import cn.misaka.system.data.APDataMain;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.world.BlockEvent;
 
 /**
  * @author WeAthFolD
  *
  */
-public class ItemAbilityVoid extends Item {
+public class APEventListener {
 
-	/**
-	 * 
-	 */
-	public ItemAbilityVoid() {
-		// TODO Auto-generated constructor stub
+	@SubscribeEvent
+	public void onBlockBreak(BlockEvent.BreakEvent event) {
+		EntityPlayer player = event.getPlayer();
+		PlayerData pstat = APDataMain.loadPlayerData(player);
+		if(pstat != null && pstat.isActivated && player.getCurrentEquippedItem() == null) {
+			event.setCanceled(true);
+		}
 	}
-
 }

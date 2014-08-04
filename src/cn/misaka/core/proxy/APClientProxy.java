@@ -10,10 +10,14 @@
  */
 package cn.misaka.core.proxy;
 
+import net.minecraftforge.client.MinecraftForgeClient;
+
 import org.lwjgl.input.Keyboard;
 
 import cn.liutils.core.client.register.LIKeyProcess;
+import cn.misaka.core.register.APItems;
 import cn.misaka.system.client.key.KeySkillControl;
+import cn.misaka.system.client.render.RenderAbilityVoid;
 
 /**
  * @author WeAthFolD
@@ -27,6 +31,11 @@ public class APClientProxy extends APCommonProxy {
 		LIKeyProcess.addKey("AP_MR", LIKeyProcess.MOUSE_RIGHT, false, new KeySkillControl(1));
 		LIKeyProcess.addKey("AP_R", Keyboard.KEY_R, false, new KeySkillControl(2));
 		LIKeyProcess.addKey("AP_F", Keyboard.KEY_F, false, new KeySkillControl(3));
+	}
+	
+	@Override
+	public void init() {
+		MinecraftForgeClient.registerItemRenderer(APItems.itemVoid, new RenderAbilityVoid());
 	}
 
 }

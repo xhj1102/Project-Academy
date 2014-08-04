@@ -8,16 +8,25 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.system.control;
+package cn.misaka.core.register;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cn.misaka.system.item.ItemVoid;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.config.Configuration;
 
 /**
  * @author WeAthFolD
  *
  */
-public class APControlClient {
+public class APItems {
+	
+	public static Item itemVoid;
 
-	public static void onKeyDown(int kid) {
+	public static void init(Configuration conf) {
+		itemVoid = new ItemVoid();
 		
+		GameRegistry.registerItem(itemVoid, "ability_void");
 	}
 
 }

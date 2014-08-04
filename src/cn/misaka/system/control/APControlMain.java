@@ -19,9 +19,11 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cn.misaka.api.ability.AbilityClass;
+import cn.misaka.api.ability.AbilityLevel;
 import cn.misaka.api.ability.AbilitySkill;
 import cn.misaka.api.client.data.PlayerDataClient;
 import cn.misaka.api.control.PlayerControlData;
+import cn.misaka.api.control.SkillControlStat;
 import cn.misaka.api.data.PlayerData;
 import cn.misaka.api.data.PlayerDataHelper;
 import cn.misaka.core.AcademyCraft;
@@ -52,7 +54,8 @@ public class APControlMain {
 		Map<EntityPlayer, PlayerControlData> map = getMap(player.worldObj);
 		PlayerControlData data = map.get(player);
 		if(data == null) {
-			map.put(player, new PlayerControlData());
+			data = new PlayerControlData();
+			map.put(player, data);
 		}
 		return data;
 	}
@@ -77,31 +80,39 @@ public class APControlMain {
 		AbilitySkill skl = cls.getSkill(skill_id);
 		if(data.isDataStateGood()) {
 			ctrl.onKeyStateChange(skill_id, skl.getMaxKeys(), key_id, isDown);
-			skl.onKeyStateChange(player.worldObj, player, ctrl.getKeyStates(skill_id), key_id, ctrl);
+			skl.onKeyStateChange(player.worldObj, player, ctrl.getSkillStates(skill_id), key_id, ctrl);
 		}
 	}
 	
 	public static void onTick(boolean isClient) {
 		Set< Map.Entry<EntityPlayer, PlayerControlData> > set = 
 				getMap(isClient).entrySet();
+		
 		for(Map.Entry<EntityPlayer, PlayerControlData> entry : set) { 
 			//Go through all the players and their skill states, execute updates
 			EntityPlayer player = entry.getKey();
-			PlayerControlData ctrl = entry.getValue();
 			PlayerData data = APDataMain.loadPlayerData(player);
-			if(!data.isDataStateGood()) continue;
+			if(data == null || !data.isDataStateGood()) continue;
+			
 			AbilityClass ability = PlayerDataHelper.getAbilityClass(data);
+			PlayerControlData ctrl = entry.getValue();
 			if(ability == null) {
 				System.err.println("Can't find player ability class while doing tickUpdate. This is a BUG!");
 			}
+			
+			AbilityLevel level = ability.getLevel(data.level);
+			level.onPlayerUpdate(player.worldObj, player, ctrl);
+			
 			for(int k = 0; k < ability.ability_skills.length; k++) {
 				AbilitySkill skl = ability.ability_skills[k];
-				for(int i = 0; i < skl.getMaxKeys(); i++) {
-					if(ctrl.getKeyState(k, i)) {
-						skl.onSkillTick(player.worldObj, player, ctrl.keyStateMap.get(k), ctrl);
+				SkillControlStat st = ctrl.getSkillStates(k);
+				if(st.isKeyDown()) {
+					if(!skl.onSkillTick(player.worldObj, player, st, ctrl)) {
+						st.clear();
 					}
 				}
 			}
+			
 		}
 	}
 	
@@ -113,7 +124,7 @@ public class APControlMain {
 	public static void onKeyChangedClient(int keyid, boolean down) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer; //Can't be NULL!
 		PlayerDataClient data = (PlayerDataClient) APDataMain.loadPlayerData(player);
-		if(data.isActivated && data.isDataStateGood()) {
+		if(data != null && data.isActivated && data.isDataStateGood()) {
 			ControlPreset.Entry prs[] = data.getCurrentPreset();
 			onSkillKeyChanged(player, prs[keyid].key, prs[keyid].value, down); //解读为skill局部的id
 			AcademyCraft.netHandler.sendToServer(new MsgControl(prs[keyid].key, prs[keyid].value, down));

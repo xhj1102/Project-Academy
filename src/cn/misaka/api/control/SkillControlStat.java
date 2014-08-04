@@ -16,26 +16,27 @@ package cn.misaka.api.control;
  */
 public class SkillControlStat {
 
-	/**
-	 * 
-	 */
-	public SkillControlStat() {
-		// TODO Auto-generated constructor stub
-	}
+	private boolean[] keyDown = new boolean[4];
 	
 	/**
 	 * @return true if ANY key is down
 	 */
 	public boolean isKeyDown() {
+		for(boolean b : keyDown)
+			if(b) return true;
 		return false;
 	}
 	
 	public boolean isKeyDown(int kid) {
-		return false;
+		return keyDown[kid];
 	}
 	
 	public void setKeyDown(int kid, boolean downOrUp) {
-		
+		keyDown[kid] = downOrUp;
+	}
+	
+	public void clear() {
+		for(boolean b : keyDown) b = false;
 	}
 
 }

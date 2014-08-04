@@ -13,10 +13,15 @@ package cn.misaka.core;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.command.CommandHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.misaka.core.proxy.APCommonProxy;
 import cn.misaka.core.proxy.APGeneralProps;
+import cn.misaka.core.register.APItems;
+import cn.misaka.system.event.APEventListener;
+import cn.misaka.system.event.APTickEvents;
 import cn.misaka.system.network.message.MsgControl;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -57,6 +62,10 @@ public class AcademyCraft {
 		log.info("Starting AcademyCraft " + VERSION);
 		log.info("Copyright (c) Lambda Innovation, 2013-2014");
 		log.info("http://www.lambdacraft.cn");
+		
+		APItems.init(config);
+		FMLCommonHandler.instance().bus().register(new APTickEvents());
+		MinecraftForge.EVENT_BUS.register(new APEventListener());
 		
 		proxy.preInit();
 	}
