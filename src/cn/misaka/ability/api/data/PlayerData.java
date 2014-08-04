@@ -11,6 +11,7 @@
 package cn.misaka.ability.api.data;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 
 /**
  * 单个玩家的能力信息。（基类）
