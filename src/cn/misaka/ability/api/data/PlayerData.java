@@ -66,5 +66,19 @@ public abstract class PlayerData {
 	 * @param flag 参照 @EnumPlayerData 的flag进行计算。
 	 */
 	public abstract boolean isDataStateGood(int flag);
+	/**
+	 * 用于定位世界的保存路径
+	*/
+	public static String getSavePath(){
+    	String runDir = System.getProperty("user.dir");
+    	System.out.println(runDir);
+    	//String[] mcDir = runDir.split(".minecraft");
+    	String saveDir = runDir + File.separator + "saves" + File.separator + MinecraftServer.getServer().getFolderName();
+    	File f = new File(saveDir);
+    	if(!f.exists()){
+    		saveDir = runDir + ("\\saves" + File.separator + MinecraftServer.getServer().getFolderName());
+    	}
+    	return saveDir;
+    }
 	
 }
