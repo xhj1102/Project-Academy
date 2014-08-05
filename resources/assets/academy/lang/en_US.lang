@@ -1,0 +1,12 @@
+#English Language File 2014/8/5 for debugging
+#Items
+item.ability_void.name=Launch Ability
+item.ap_logo.name=AcademyCraft Logo
+item.APRecord.name=Railgun Record
+item.coin.name=Game Coin
+
+#Blocks
+tile.ability_developer.name=Ability Developer
+
+#CreativeTabs
+itemGroup.AcademyCraft=AcademyCraft

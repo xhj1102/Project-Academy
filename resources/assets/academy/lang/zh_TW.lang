@@ -1,0 +1,12 @@
+#繁體中文語言文件 2014/8/5 for debugging
+#物品
+item.ability_void.name=超能力發動
+item.ap_logo.name=AcademyCraft標誌
+item.APRecord.name=超電磁砲唱片
+item.coin.name=遊戲幣
+
+#方塊
+tile.ability_developer.name=能力開發機
+
+#创造模式物品栏
+itemGroup.AcademyCraft=AcademyCraft
