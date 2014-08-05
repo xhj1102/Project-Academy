@@ -1,20 +1,5 @@
 {
-  "records.ac1": {
-    "category": "records",
-    "sounds": [
-      "records/ac1"
-    ]
-  },
-  "records.ac2": {
-    "category": "records",
-    "sounds": [
-      "records/ac2"
-    ]
-  },
-  "records.ac3": {
-    "category": "records",
-    "sounds": [
-      "records/ac3"
-    ]
-  }
+"records.ac1": {"category": "master", "sounds": [{"name": "records/ac1", "stream": true}]},
+"records.ac2": {"category": "master", "sounds": [{"name": "records/ac2", "stream": true}]},
+"records.ac3": {"category": "master", "sounds": [{"name": "records/ac3", "stream": true}]}
 }

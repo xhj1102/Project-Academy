@@ -111,22 +111,16 @@ public class ItemAPRecord extends ItemRecord {
 		this.itemIcon = par1IconRegister.registerIcon("academy:record" + recID);
 	}
 	
+	private static final ResourceLocation sources[] = new ResourceLocation[] {
+		new ResourceLocation("academy:records.ac1"),
+		new ResourceLocation("academy:records.ac2"),
+		new ResourceLocation("academy:records.ac3")
+	};
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getRecordResource(String par1) {
-		ResourceLocation APRECsource = null;
-		switch(par1) {
-		case "ac1":
-			APRECsource = new ResourceLocation("academy:records/ac1.ogg");
-			break;
-		case "ac2":
-			APRECsource = new ResourceLocation("academy:records/ac2.ogg");
-			break;
-		case "ac3":
-			APRECsource = new ResourceLocation("academy:records/ac3.ogg");
-			break;
-		}
-		return APRECsource;
+		return sources[recID - 1];
 	}
 	
 }
