@@ -76,7 +76,7 @@ public abstract class PlayerData {
 	/**
 	 * 接下来是json与数据间的转换
 	*/
-	public static String data2json(AbilityData a){
+    public static String data2json(AbilityData a){
     	Gson g = new Gson();
     	return g.toJson(a);
     }
