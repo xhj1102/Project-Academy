@@ -1,9 +1,18 @@
 #English Language File 2014/8/5 for debugging
 #Items
-item.ability_void.name=Launch Ability
+item.ability_void.name=
 item.ap_logo.name=AcademyCraft Logo
-item.APRecord.name=Railgun Record
-item.coin.name=Game Coin
+item.ap_record1.name=Railgun Record - Only My Railgun
+item.ap_record2.name=Railgun Record - Sister's Noise
+item.ap_record3.name=Railgun Record - LEVEL5 -Judgelight-
+item.ap_coin.name=Game Coin
+item.ability_capsule1.name=Mind Induction Capsule
+item.ability_capsule2.name=AIM Activation Capsule
+item.ability_capsule3.name=Personal Reality Enhancing Capsule
+item.ability_tablet1.name=Mind Induction Tablet
+item.ability_tablet2.name=AIM Activation Tablet
+item.ability_tablet3.name=Personal Reality Enhancing Tablet
+item.ap_needle.name=Needle
 
 #Blocks
 tile.ability_developer.name=Ability Developer

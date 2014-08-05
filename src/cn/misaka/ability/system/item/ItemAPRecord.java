@@ -43,7 +43,6 @@ public class ItemAPRecord extends ItemRecord {
 	 */
 	public ItemAPRecord(String p_i45350_1_, int subID) {
 		super(p_i45350_1_);
-		setUnlocalizedName("APRecord");
 		setCreativeTab(AcademyCraft.cct);
 		recID = subID;
 	}

@@ -11,9 +11,7 @@
 package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.system.item.ItemAPRecord;
-import cn.misaka.ability.system.item.ItemCoin;
-import cn.misaka.ability.system.item.ItemVoid;
+import cn.misaka.ability.system.item.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
@@ -29,15 +27,31 @@ public class APItems {
 		itemAPRecord1,
 		itemAPRecord2,
 		itemAPRecord3,
-		itemCoin;
+		itemCoin,
+		//H即High, M即Medium, L即Low.
+		itemCapsuleH,
+		itemCapsuleM,
+		itemCapsuleL,
+		itemTabletH,
+		itemTabletM,
+		itemTabletL,
+		itemNeedle;
 
 	public static void init(Configuration conf) {
 		itemVoid = new ItemVoid();
 		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
-		itemAPRecord1 = new ItemAPRecord("ac1", 1);
-		itemAPRecord2 = new ItemAPRecord("ac2", 2);
-		itemAPRecord3 = new ItemAPRecord("ac3", 3);
+		itemAPRecord1 = new ItemAPRecord("ac1", 1).setUnlocalizedName("ap_record1");
+		itemAPRecord2 = new ItemAPRecord("ac2", 2).setUnlocalizedName("ap_record2");
+		itemAPRecord3 = new ItemAPRecord("ac3", 3).setUnlocalizedName("ap_record3");
 		itemCoin = new ItemCoin();
+		itemCapsuleH = new ItemCapsule(1).setUnlocalizedName("ability_capsule1");
+		itemCapsuleM = new ItemCapsule(2).setUnlocalizedName("ability_capsule2");
+		itemCapsuleL = new ItemCapsule(3).setUnlocalizedName("ability_capsule3");
+		itemTabletH = new ItemTablet(1).setUnlocalizedName("ability_tablet1");
+		itemTabletM = new ItemTablet(2).setUnlocalizedName("ability_tablet2");
+		itemTabletL = new ItemTablet(3).setUnlocalizedName("ability_tablet3");
+		itemNeedle = new ItemNeedle();
+		
 		
 		GameRegistry.registerItem(itemVoid, "ability_void");
 		GameRegistry.registerItem(itemLogo, "ap_logo");
@@ -45,6 +59,13 @@ public class APItems {
 		GameRegistry.registerItem(itemAPRecord2, "ap_record2");
 		GameRegistry.registerItem(itemAPRecord3, "ap_record3");
 		GameRegistry.registerItem(itemCoin, "ap_coin");
+		GameRegistry.registerItem(itemCapsuleH, "ability_capsule1");
+		GameRegistry.registerItem(itemCapsuleM, "ability_capsule2");
+		GameRegistry.registerItem(itemCapsuleL, "ability_capsule3");
+		GameRegistry.registerItem(itemTabletH, "ability_tablet1");
+		GameRegistry.registerItem(itemTabletM, "ability_tablet2");
+		GameRegistry.registerItem(itemTabletL, "ability_tablet3");
+		GameRegistry.registerItem(itemNeedle, "ap_needle");
 	}
 
 }

@@ -10,20 +10,38 @@
  */
 package cn.misaka.ability.system.item;
 
-import cn.liutils.core.LIUtilsMod;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import cn.misaka.core.AcademyCraft;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 
 /**
  * @author KSkun
- * 硬币什么的功能之后再加吧
+ * 狼狼记得重写吃药的动作，我们要每天萌萌哒
  */
-public class ItemCoin extends Item {
+public class ItemCapsule extends Item {
 	
-	public ItemCoin() {
-		setUnlocalizedName("ap_coin");
-		setTextureName("academy:coin-front");
+	int capsuleID;
+	
+	/**
+	 * 
+	 * @param subID
+	 * metadata
+	 * 
+	 * @param capsuleID
+	 * metadata2
+	 */
+	
+	public ItemCapsule(int subID) {
 		setCreativeTab(AcademyCraft.cct);
+		capsuleID = subID;
 	}
-
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister par1IconRegister) {
+		this.itemIcon = par1IconRegister.registerIcon("academy:capsule" + capsuleID);
+	}
+	
 }
