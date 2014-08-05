@@ -13,6 +13,11 @@ package cn.misaka.ability.api.data;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import com.google.gson.*;
 
 /**
  * 单个玩家的能力信息。（基类）
@@ -68,6 +73,56 @@ public abstract class PlayerData {
 	 * @param flag 参照 @EnumPlayerData 的flag进行计算。
 	 */
 	public abstract boolean isDataStateGood(int flag);
+	/**
+	 * 接下来是json与数据间的转换
+	*/
+	public static String data2json(AbilityData a){
+    	Gson g = new Gson();
+    	return g.toJson(a);
+    }
+    public static AbilityData json2data(String json){
+    	Gson g = new Gson();
+    	return g.fromJson(json, AbilityData.class);
+    }
+    /**
+     * 接下来就是鸡冻人心的读取和存储分了，啪啪啪
+    */
+    public static void saveAbility(EntityPlayer p,AbilityData a) throws IOException{
+    	String s = getSavePath();
+    	s += File.separator + "AbilityData"; //+ File.separator + p.getCommandSenderName() + ".ac";
+    	System.out.println(s);
+    	File f = new File(s);
+    	if(!f.exists()){
+    		f.mkdir();
+    	}
+    	s += File.separator + p.getCommandSenderName() + ".ac";
+    	f = new File(s);
+    	if(!f.exists()){
+    		f.createNewFile();
+    	}
+    	FileWriter fw = new FileWriter(f);
+    	fw.write(data2json(a));
+    	fw.close();
+    }
+    public static AbilityData getAbility(EntityPlayer p) throws IOException{
+    	String s = getSavePath();
+    	s += File.separator + "AbilityData"; //+ File.separator + p.getCommandSenderName() + ".ac";
+    	System.out.println(s);
+    	File f = new File(s);
+    	if(!f.exists()){
+    		return new AbilityData(p,(byte)0,(byte)0,0,new boolean[3],new float[3]);
+    	}
+    	s += File.separator + p.getCommandSenderName() + ".ac";
+    	f = new File(s);
+    	if(!f.exists()){
+    		return new AbilityData(p,(byte)0,(byte)0,0,new boolean[3],new float[3]);
+    	}
+    	FileReader fr = new FileReader(f);
+    	char[] temp = new char[1024];
+    	String json = new String(temp,0,fr.read(temp));
+    	fr.close();
+    	return json2data(json);
+    }
 	/**
 	 * 用于定位世界的保存路径
 	*/
