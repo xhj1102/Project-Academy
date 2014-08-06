@@ -11,13 +11,16 @@
 package cn.misaka.ability.system.event;
 
 import cn.misaka.ability.system.control.APControlMain;
+import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -50,6 +53,19 @@ public class APTickEvents {
 	private void equipVoid(EntityPlayer player) {
 		if(player.getCurrentEquippedItem() == null) {
 			player.setCurrentItemOrArmor(0, new ItemStack(APItems.itemVoid));
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerTick(PlayerTickEvent event) {
+		//Tick consistency
+		if(event.phase == Phase.START) {
+			if(event.player.getEntityData().getBoolean("ac_ondev")) {
+				if(event.player.worldObj.getBlock(MathHelper.floor_double(event.player.posX),
+						MathHelper.floor_double(event.player.posY),
+						MathHelper.floor_double(event.player.posZ)) != APBlocks.ability_developer)
+					event.player.getEntityData().setBoolean("ac_ondev", false);
+			}
 		}
 	}
 

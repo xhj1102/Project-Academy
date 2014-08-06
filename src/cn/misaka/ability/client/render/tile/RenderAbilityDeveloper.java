@@ -34,14 +34,15 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 
-	private static final IModelCustom model = APClientProps.MDL_ABILITY_DEVELOPER;
+	private final IModelCustom model = APClientProps.MDL_ABILITY_DEVELOPER;
 	private final float rotations[] = new float[] { 90, 0, -90, 180 };
 	
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float subtick) {
 		
-		if((te.blockMetadata & 0x01) == 1) return; //Render only HEAD
-		float scale = 0.017F;
+		int meta = te.getBlockMetadata();
+		if((meta & 0x01) == 1) return; //Render only HEAD
+		float scale = 0.0215F;
 		ForgeDirection dir = APBlocks.ability_developer.getFacingDirection(te.blockMetadata);
 		
 		GL11.glPushMatrix(); {
@@ -49,7 +50,8 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 			
 			GL11.glTranslated(x + 0.5 + dir.offsetX * 0.5, y, z + 0.5 + dir.offsetZ * 0.5);
 			
-			GL11.glRotatef(rotations[te.blockMetadata >> 1], 0.0F, 1.0F, 0.0F);
+			GL11.glRotatef(rotations[meta >> 1], 0.0F, 1.0F, 0.0F);
+			GL11.glTranslated(.1D, 0.0D, -0.12D);
 			GL11.glScalef(scale, scale, scale);
 			model.renderAll();
 			

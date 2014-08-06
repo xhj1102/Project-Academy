@@ -10,13 +10,17 @@
  */
 package cn.misaka.core.proxy;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cn.liutils.core.client.register.LIKeyProcess;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
+import cn.misaka.ability.client.model.ModelBipedAP;
+import cn.misaka.ability.client.render.entity.RenderPlayerAP;
 import cn.misaka.ability.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.ability.system.client.key.KeySkillControl;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
@@ -27,6 +31,8 @@ import cn.misaka.core.register.APItems;
  *
  */
 public class APClientProxy extends APCommonProxy {
+	
+	private static ModelBipedAP hacker = new ModelBipedAP();
 
 	@Override
 	public void preInit() {
@@ -40,6 +46,7 @@ public class APClientProxy extends APCommonProxy {
 	public void init() {
 		MinecraftForgeClient.registerItemRenderer(APItems.itemVoid, new RenderAbilityVoid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAbilityDeveloper.class, new RenderAbilityDeveloper());
+		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerAP());
 	}
 
 }

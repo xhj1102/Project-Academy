@@ -11,12 +11,19 @@
 package cn.misaka.ability.block.tile;
 
 import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 
+import cn.liutils.api.util.EntityUtils;
+import cn.misaka.ability.block.BlockAbilityDeveloper;
+import cn.misaka.ability.system.network.message.MsgDeveloperPlayer;
+import cn.misaka.core.AcademyCraft;
 import cn.misaka.core.register.APBlocks;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -26,59 +33,67 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class TileAbilityDeveloper extends TileEntity {
 	
-	public EntityPlayer mountPlayer;
-	
-	
-	private static Field field_sleeping,
-			field_sleep_timer;
-
-	static {
-		try {
-			field_sleeping =  EntityPlayer.class.getDeclaredField("sleeping");
-			field_sleep_timer = EntityPlayer.class.getDeclaredField("sleepTimer");
-			field_sleeping.setAccessible(true);
-			field_sleep_timer.setAccessible(true);
-		} catch (Exception e) {
-			//NOPE
-		}
-	}
+	private EntityPlayer mountPlayer;
 	
 	public TileAbilityDeveloper() {
 	}
 	
 	@Override
 	public void updateEntity() {
-		if(mountPlayer != null) {
-			try {
-				mountPlayer.motionX = mountPlayer.motionY = mountPlayer.motionZ = 0.0;
-				field_sleep_timer.set(mountPlayer, 0);
-				field_sleeping.set(mountPlayer, true);
-			} catch (Exception e) {
-				System.err.println("Error while processing player tick update in AbilityDeveloper, this is a bug!");
-			}
+		if(!this.tileEntityInvalid && mountPlayer != null) {
+			setPosition();
 		}
+	}
+	
+	@Override
+    public void invalidate()
+    {
+    	disMount();
+    	super.invalidate();
+    }
+	
+	public EntityPlayer getMountedPlayer() {
+		return mountPlayer;
 	}
 	
 	public void tryMount(EntityPlayer player) {
 		if(mountPlayer == null || mountPlayer == player) {
 			mountPlayer = player;
 			setPosition();
-			player.width = player.height = 0.2F;
-			player.yOffset = 0.2F;
-			player.motionX = player.motionY = player.motionZ = 0.0;
-			player.playerLocation = new ChunkCoordinates(xCoord, yCoord, zCoord);
-			try {
-				field_sleeping.set(player, true);
-				field_sleep_timer.set(player, 0);
-			} catch(Exception e) {
-				System.err.println("Error while handling player sleep, this is a bug!");
-			}
+			player.getEntityData().setBoolean("ac_ondev", true);
+			player.getEntityData().setByte("ac_devdir", (byte) (getBlockMetadata() >> 1));
+			if(!player.worldObj.isRemote)
+				AcademyCraft.netHandler.sendToDimension(new MsgDeveloperPlayer(player, true, getBlockMetadata() >> 1), worldObj.provider.dimensionId);
+		}
+	}
+	
+	public void disMount() {
+		if(mountPlayer != null) {
+			mountPlayer.getEntityData().setBoolean("ac_ondev", false);
+			mountPlayer.yOffset = worldObj.isRemote ? 1.62F : 0.0F;
+			Vec3 vec3 = calculateExitPosition();
+			EntityUtils.applyEntityToPos(mountPlayer, vec3);
+			//mountPlayer.onGround = true;
+			if(!mountPlayer.worldObj.isRemote)
+				AcademyCraft.netHandler.sendToDimension(new MsgDeveloperPlayer(mountPlayer, false, getBlockMetadata() >> 1), worldObj.provider.dimensionId);
+			mountPlayer = null;
 		}
 	}
 	
 	private void setPosition() {
-		float yOffset = 0.3F, frntOffset = -0.1F;
-		ForgeDirection dir = APBlocks.ability_developer.getFacingDirection(blockMetadata);
-		mountPlayer.setPosition(xCoord + 0.5 + dir.offsetX * (0.5 + frntOffset), yCoord + 0, zCoord + 0.5 + dir.offsetZ * (0.5 + frntOffset));
+		ForgeDirection dir = APBlocks.ability_developer.getFacingDirection(getBlockMetadata());
+		mountPlayer.yOffset = 1.00F;
+		mountPlayer.motionX = mountPlayer.motionY = mountPlayer.motionZ = 0.0;
+		double x = xCoord + 0.5,
+				y = yCoord + .63,
+				z = zCoord + 0.5;
+		mountPlayer.posX = x;
+		mountPlayer.posY = y;
+		mountPlayer.posZ = z;
+	}
+	
+	private Vec3 calculateExitPosition() {
+		ForgeDirection ndir = BlockAbilityDeveloper.getFacingDirection(getBlockMetadata()).getRotation(ForgeDirection.UP);
+		return worldObj.getWorldVec3Pool().getVecFromPool(xCoord + 0.5 + ndir.offsetX, yCoord + 3.0F, zCoord + 0.5 + ndir.offsetZ);
 	}
 }

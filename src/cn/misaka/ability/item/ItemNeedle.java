@@ -8,22 +8,21 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.item;
+package cn.misaka.ability.item;
 
-import cn.liutils.core.LIUtilsMod;
 import cn.misaka.core.AcademyCraft;
 import net.minecraft.item.Item;
 
 /**
  * @author KSkun
- * 硬币什么的功能之后再加吧
+ * 简单的钢针
  */
-public class ItemCoin extends Item {
-	
-	public ItemCoin() {
-		setUnlocalizedName("ap_coin");
-		setTextureName("academy:coin-front");
-		setCreativeTab(AcademyCraft.cct);
-	}
+public class ItemNeedle extends Item {
 
+	public ItemNeedle() {
+		setUnlocalizedName("ap_needle");
+		setCreativeTab(AcademyCraft.cct);
+		setTextureName("academy:needle");
+	}
+	
 }

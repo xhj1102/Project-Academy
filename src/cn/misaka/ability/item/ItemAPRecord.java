@@ -8,7 +8,7 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.item;
+package cn.misaka.ability.item;
 
 import java.util.List;
 
@@ -43,6 +43,7 @@ public class ItemAPRecord extends ItemRecord {
 	 */
 	public ItemAPRecord(String p_i45350_1_, int subID) {
 		super(p_i45350_1_);
+		setUnlocalizedName("APRecord");
 		setCreativeTab(AcademyCraft.cct);
 		recID = subID;
 	}

@@ -32,6 +32,8 @@ public class MsgControl implements IMessage {
 		key_id = key;
 		downOrUp = down;
 	}
+	
+	public MsgControl() {}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {

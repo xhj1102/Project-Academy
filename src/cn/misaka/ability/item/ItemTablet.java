@@ -8,21 +8,40 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.item;
+package cn.misaka.ability.item;
 
-import cn.misaka.core.AcademyCraft;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
+import cn.misaka.core.AcademyCraft;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author KSkun
- * 简单的钢针
+ * 跟capsule完全一样有木有
  */
-public class ItemNeedle extends Item {
+public class ItemTablet extends Item {
 
-	public ItemNeedle() {
-		setUnlocalizedName("ap_needle");
+	int tabletID;
+	
+	/**
+	 * 
+	 * @param subID
+	 * metadata
+	 * 
+	 * @param capsuleID
+	 * metadata2
+	 */
+	
+	public ItemTablet(int subID) {
 		setCreativeTab(AcademyCraft.cct);
-		setTextureName("academy:needle");
+		tabletID = subID;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister par1IconRegister) {
+		this.itemIcon = par1IconRegister.registerIcon("academy:tablet" + tabletID);
 	}
 	
 }

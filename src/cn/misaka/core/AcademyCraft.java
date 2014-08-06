@@ -19,6 +19,7 @@ import net.minecraftforge.common.config.Configuration;
 import cn.misaka.ability.system.event.APEventListener;
 import cn.misaka.ability.system.event.APTickEvents;
 import cn.misaka.ability.system.network.message.MsgControl;
+import cn.misaka.ability.system.network.message.MsgDeveloperPlayer;
 import cn.misaka.core.misc.APCreativeTab;
 import cn.misaka.core.proxy.APCommonProxy;
 import cn.misaka.core.proxy.APGeneralProps;
@@ -79,6 +80,7 @@ public class AcademyCraft {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		netHandler.registerMessage(MsgControl.Handler.class, MsgControl.class, getNextChannelID(), Side.SERVER);
+		netHandler.registerMessage(MsgDeveloperPlayer.Handler.class, MsgDeveloperPlayer.class, getNextChannelID(), Side.CLIENT);
 		proxy.init();
 	}
 	

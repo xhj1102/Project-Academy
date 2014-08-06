@@ -28,7 +28,7 @@ public class ItemVoid extends Item {
 
 	public ItemVoid() {
 		setUnlocalizedName("ability_void");
-		setTextureName(LIUtilsMod.DEBUG ? "academy:blank" : "academy:void");
+		setTextureName(LIUtilsMod.DEBUG ? "academy:void" : "academy:blank");
 	}
 	
 	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {

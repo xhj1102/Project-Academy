@@ -10,6 +10,8 @@
  */
 package cn.misaka.ability.block;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cn.liutils.core.proxy.LIClientProps;
@@ -18,12 +20,16 @@ import cn.misaka.core.AcademyCraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -38,7 +44,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class BlockAbilityDeveloper extends BlockContainer {
 	
-	private final int[] dirMap = { 3, 4, 2, 5 };
+	private static final int[] dirMap = { 3, 4, 2, 5 };
 	
 	public BlockAbilityDeveloper() {
 		super(Material.iron);
@@ -46,10 +52,9 @@ public class BlockAbilityDeveloper extends BlockContainer {
 		setCreativeTab(AcademyCraft.cct);
 		setBlockName("ability_developer");
 	}
-
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) {
-		return new TileAbilityDeveloper();
+	
+	public static ForgeDirection getFacingDirection(int metadata) {
+		return ForgeDirection.values()[dirMap[metadata >> 1]];
 	}
 
 	@Override
@@ -59,13 +64,21 @@ public class BlockAbilityDeveloper extends BlockContainer {
     }
 	
 	@Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+	
+	@Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World wrld, int x, int y, int z)
+    {
+    	return null;
+    }
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
 		return LIClientProps.RENDER_TYPE_EMPTY;
-	}
-	
-	public ForgeDirection getFacingDirection(int metadata) {
-		return ForgeDirection.values()[dirMap[metadata >> 1]];
 	}
 	
 	@Override
@@ -76,8 +89,15 @@ public class BlockAbilityDeveloper extends BlockContainer {
 
         world.setBlockMetadataWithNotify(x, y, z, metadata, 0x02);
         
-        ForgeDirection dir = getFacingDirection(metadata);
-        world.setBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, this, metadata + 1, 0x02); //set the 'tail' block
+        ForgeDirection dir = getFacingDirection(metadata); 
+        Block b0 = world.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
+        if(b0 == Blocks.air || b0 instanceof BlockLiquid)
+        	world.setBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, this, metadata + 1, 0x02); //set the 'tail' block
+        else {
+        	world.setBlockToAir(x, y, z);
+        	if(!world.isRemote)
+        		this.dropBlockAsItem(world, x, y, z, new ItemStack(this));
+        }
     }
     
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
@@ -93,39 +113,25 @@ public class BlockAbilityDeveloper extends BlockContainer {
     }
     
     @Override
-    public boolean isBed(IBlockAccess world, int x, int y, int z, EntityLivingBase player)
-    {
-    	return true;
-    }
-    
-    public int getBedDirection(IBlockAccess world, int x, int y, int z)
-    {
-    	return world.getBlockMetadata(x, y, z) >> 1;
-    }
-    
-    public boolean isBedFoot(IBlockAccess world, int x, int y, int z)
-    {
-        return (world.getBlockMetadata(x, y, z) & 0x01) == 0;
-    }
-    
-    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitx, float hity, float hitz)
     {
-    	System.out.println("OnBlockActivated on " + world.isRemote);
-    	if(world.isRemote) return false;
     	{
     		int meta = world.getBlockMetadata(x, y, z);
-        	if((meta & 0x01) == 0) {
+        	if((meta & 0x01) == 1) {
         		ForgeDirection dir = getFacingDirection(meta).getOpposite();
         		x += dir.offsetX;
         		z += dir.offsetZ;
         	}
     	}
     	if(world.getBlock(x, y, z) != this) return false;
-    	System.out.println("Now trying to mount player~");
     	TileAbilityDeveloper dev = (TileAbilityDeveloper) world.getTileEntity(x, y, z);
     	dev.tryMount(player);
     	return true;
     }
+    
+	@Override
+	public TileEntity createNewTileEntity(World var1, int var2) {
+		return new TileAbilityDeveloper();
+	}
 	
 }

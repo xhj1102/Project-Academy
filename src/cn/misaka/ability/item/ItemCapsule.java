@@ -8,21 +8,21 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.item;
+package cn.misaka.ability.item;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.Item;
-import cn.misaka.core.AcademyCraft;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cn.misaka.core.AcademyCraft;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 
 /**
  * @author KSkun
- * 跟capsule完全一样有木有
+ * 狼狼记得重写吃药的动作，我们要每天萌萌哒
  */
-public class ItemTablet extends Item {
-
-	int tabletID;
+public class ItemCapsule extends Item {
+	
+	int capsuleID;
 	
 	/**
 	 * 
@@ -33,15 +33,15 @@ public class ItemTablet extends Item {
 	 * metadata2
 	 */
 	
-	public ItemTablet(int subID) {
+	public ItemCapsule(int subID) {
 		setCreativeTab(AcademyCraft.cct);
-		tabletID = subID;
+		capsuleID = subID;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("academy:tablet" + tabletID);
+		this.itemIcon = par1IconRegister.registerIcon("academy:capsule" + capsuleID);
 	}
 	
 }
