@@ -17,6 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import cn.liutils.core.proxy.LIClientProps;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.core.AcademyCraft;
+import cn.misaka.core.proxy.APClientProps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockContainer;
@@ -123,9 +124,11 @@ public class BlockAbilityDeveloper extends BlockContainer {
         		z += dir.offsetZ;
         	}
     	}
-    	if(world.getBlock(x, y, z) != this) return false;
+    	if(world.getBlock(x, y, z) != this || player.isSneaking()) return false;
     	TileAbilityDeveloper dev = (TileAbilityDeveloper) world.getTileEntity(x, y, z);
-    	dev.tryMount(player);
+    	if(dev.tryMount(player)) {
+    		player.openGui(AcademyCraft.INSTANCE, APClientProps.GUI_ID_ABILITY_DEV, world, x, y, z);
+    	}
     	return true;
     }
     

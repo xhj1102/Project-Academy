@@ -56,7 +56,7 @@ public class TileAbilityDeveloper extends TileEntity {
 		return mountPlayer;
 	}
 	
-	public void tryMount(EntityPlayer player) {
+	public boolean tryMount(EntityPlayer player) {
 		if(mountPlayer == null || mountPlayer == player) {
 			mountPlayer = player;
 			setPosition();
@@ -64,7 +64,9 @@ public class TileAbilityDeveloper extends TileEntity {
 			player.getEntityData().setByte("ac_devdir", (byte) (getBlockMetadata() >> 1));
 			if(!player.worldObj.isRemote)
 				AcademyCraft.netHandler.sendToDimension(new MsgDeveloperPlayer(player, true, getBlockMetadata() >> 1), worldObj.provider.dimensionId);
+			return true;
 		}
+		return false;
 	}
 	
 	public void disMount() {

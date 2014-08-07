@@ -46,6 +46,7 @@ public class RenderPlayerAP extends RenderPlayer {
     	EntityPlayer player = (EntityPlayer) par1Entity;
     	
     	GL11.glPushMatrix(); {
+    		//Ability Developer related transformations.
     		if(player.getEntityData().getBoolean("ac_ondev")) {
     			RenderUtils.loadTexture(steveTextures);
             	GL11.glTranslated(par2, par4, par6);

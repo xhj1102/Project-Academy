@@ -20,13 +20,18 @@ import net.minecraftforge.client.model.IModelCustom;
  */
 public class APClientProps {
 
-	//Model textures
+	//Textures
 	public static final ResourceLocation
-		TEX_ABILITY_DEVELOPER = src("academy:textures/models/ability_developer.png");
+		TEX_MDL_ABILITY_DEVELOPER = src("academy:textures/models/ability_developer.png"),
+		TEX_GUI_ABILITY_DEVELOPER = src("academy:textures/guis/ability_dev.png");
 		
 	//OBJ models
 	public static final
 		IModelCustom MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj"));
+	
+	//GUI IDs
+	public static final int
+		GUI_ID_ABILITY_DEV = 0;
 	
 	
 	private static ResourceLocation src(String s) {

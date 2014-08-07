@@ -16,11 +16,14 @@ import net.minecraft.command.CommandHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import cn.liutils.api.register.LIGuiHandler;
+import cn.misaka.ability.client.gui.GuiAbilityDeveloper;
 import cn.misaka.ability.system.event.APEventListener;
 import cn.misaka.ability.system.event.APTickEvents;
 import cn.misaka.ability.system.network.message.MsgControl;
 import cn.misaka.ability.system.network.message.MsgDeveloperPlayer;
 import cn.misaka.core.misc.APCreativeTab;
+import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.proxy.APCommonProxy;
 import cn.misaka.core.proxy.APGeneralProps;
 import cn.misaka.core.register.APBlocks;
@@ -43,7 +46,7 @@ import cpw.mods.fml.relauncher.Side;
  * @author WeAthFolD
  *
  */
-@Mod(modid = "project-academy", name = "AcademyCraft", version = AcademyCraft.VERSION)
+@Mod(modid = "academy-craft", name = "AcademyCraft", version = AcademyCraft.VERSION)
 public class AcademyCraft {
 	
 	public static final String VERSION = "0.0.1dev";
@@ -63,6 +66,8 @@ public class AcademyCraft {
 	
 	public static CreativeTabs cct = new APCreativeTab();
 	
+	public static LIGuiHandler guiHandler = new LIGuiHandler();
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		log.info("Starting AcademyCraft " + VERSION);
@@ -72,6 +77,8 @@ public class AcademyCraft {
 		APBlocks.init(config);
 		APItems.init(config);
 		FMLCommonHandler.instance().bus().register(new APTickEvents());
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
+		guiHandler.addGuiElement(APClientProps.GUI_ID_ABILITY_DEV, new GuiAbilityDeveloper.Element());
 		MinecraftForge.EVENT_BUS.register(new APEventListener());
 		
 		proxy.preInit();

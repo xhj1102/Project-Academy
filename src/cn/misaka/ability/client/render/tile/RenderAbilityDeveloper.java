@@ -46,7 +46,7 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 		ForgeDirection dir = APBlocks.ability_developer.getFacingDirection(te.blockMetadata);
 		
 		GL11.glPushMatrix(); {
-			RenderUtils.loadTexture(APClientProps.TEX_ABILITY_DEVELOPER);
+			RenderUtils.loadTexture(APClientProps.TEX_MDL_ABILITY_DEVELOPER);
 			
 			GL11.glTranslated(x + 0.5 + dir.offsetX * 0.5, y, z + 0.5 + dir.offsetZ * 0.5);
 			
