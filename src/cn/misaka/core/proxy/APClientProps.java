@@ -23,7 +23,9 @@ public class APClientProps {
 	//Textures
 	public static final ResourceLocation
 		TEX_MDL_ABILITY_DEVELOPER = src("academy:textures/models/ability_developer.png"),
-		TEX_GUI_ABILITY_DEVELOPER = src("academy:textures/guis/ability_dev.png");
+		TEX_GUI_ABILITY_DEVELOPER = src("academy:textures/guis/ability_dev.png"),
+		TEX_HUD_CPBAR = src("academy:textures/guis/cpbar.png"),
+		TEX_HUD_LOGO = src("academy:textures/guis/logo.png");
 		
 	//OBJ models
 	public static final

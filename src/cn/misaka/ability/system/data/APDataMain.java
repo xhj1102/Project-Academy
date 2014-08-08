@@ -10,28 +10,50 @@
  */
 package cn.misaka.ability.system.data;
 
+import java.util.HashMap;
+
 import net.minecraft.entity.player.EntityPlayer;
 import cn.misaka.ability.api.data.PlayerData;
+import cn.misaka.ability.api.data.PlayerDataClient;
+import cn.misaka.ability.api.data.PlayerDataServer;
 
 /**
  * @author WeAthFolD
  *
  */
 public class APDataMain {
+	
+	private static HashMap<EntityPlayer, PlayerData> dataMap_client = new HashMap<EntityPlayer, PlayerData>();
+	private static HashMap<EntityPlayer, PlayerData> dataMap_server = new HashMap<EntityPlayer, PlayerData>();
 
-	/**
-	 * 
-	 */
-	public APDataMain() {
-		// TODO Auto-generated constructor stub
+	public static PlayerData loadPlayerData(EntityPlayer player) {
+		HashMap<EntityPlayer, PlayerData> dataMap = getDataMap(player.worldObj.isRemote);
+		PlayerData data = dataMap.get(player);
+		if(data == null) {
+			data = PlayerData.getPlayerData(player);
+			dataMap.put(player, data);
+		}
+		return data;
 	}
 	
-	public static PlayerData loadPlayerData(EntityPlayer player) {
-		return getPlayerData(player);
+	static int tickUntilUpdate = 40;
+	public static void onTick(boolean isRemote) {
+		HashMap<EntityPlayer, PlayerData> map = getDataMap(isRemote);
+		if(isRemote) {
+			if(--tickUntilUpdate == 0) {
+				tickUntilUpdate = 40;
+			}
+		} else {
+			
+		}
 	}
 	
 	public static  PlayerData getPlayerData(EntityPlayer player) {
-		return null;
+		return getDataMap(player.worldObj.isRemote).get(player);
+	}
+	
+	private static HashMap<EntityPlayer, PlayerData> getDataMap(boolean isRemote) {
+		return isRemote ? dataMap_client : dataMap_server;
 	}
 
 }

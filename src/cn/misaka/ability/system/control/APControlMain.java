@@ -21,10 +21,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import cn.misaka.ability.api.ability.AbilityClass;
 import cn.misaka.ability.api.ability.AbilityLevel;
 import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.ability.api.client.data.PlayerDataClient;
 import cn.misaka.ability.api.control.PlayerControlData;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
+import cn.misaka.ability.api.data.PlayerDataClient;
 import cn.misaka.ability.api.data.PlayerDataHelper;
 import cn.misaka.ability.system.control.preset.ControlPreset;
 import cn.misaka.ability.system.data.APDataMain;
@@ -98,6 +98,7 @@ public class APControlMain {
 			PlayerControlData ctrl = entry.getValue();
 			if(ability == null) {
 				System.err.println("Can't find player ability class while doing tickUpdate. This is a BUG!");
+				return;
 			}
 			
 			AbilityLevel level = ability.getLevel(data.level);
@@ -106,7 +107,7 @@ public class APControlMain {
 			for(int k = 0; k < ability.ability_skills.length; k++) {
 				AbilitySkill skl = ability.ability_skills[k];
 				SkillControlStat st = ctrl.getSkillStates(k);
-				if(st.isKeyDown()) {
+				if(skl.isSkillActivated(player.worldObj, player, st, ctrl)) {
 					if(!skl.onSkillTick(player.worldObj, player, st, ctrl)) {
 						st.clear();
 					}

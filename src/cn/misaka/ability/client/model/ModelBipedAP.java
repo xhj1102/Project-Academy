@@ -58,8 +58,6 @@ public class ModelBipedAP extends ModelBiped {
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
     {
     	this.bipedHead.rotateAngleX = wrap(par7Entity.rotationPitch + 15F, 10, 60) * PI_DIV_180;
-    	if(false)
-    		System.out.println(par7Entity.rotationYaw);
     	this.bipedHead.rotateAngleY = wrap(par7Entity.rotationYaw % 360F, -45, 45) * PI_DIV_180;
     }
     

@@ -14,14 +14,18 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.command.CommandHandler;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.register.LIGuiHandler;
 import cn.misaka.ability.client.gui.GuiAbilityDeveloper;
+import cn.misaka.ability.system.command.CommandAim;
 import cn.misaka.ability.system.event.APEventListener;
 import cn.misaka.ability.system.event.APTickEvents;
 import cn.misaka.ability.system.network.message.MsgControl;
 import cn.misaka.ability.system.network.message.MsgDeveloperPlayer;
+import cn.misaka.ability.system.network.message.MsgSyncToClient;
+import cn.misaka.ability.system.network.message.MsgSyncToServer;
 import cn.misaka.core.misc.APCreativeTab;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.proxy.APCommonProxy;
@@ -88,6 +92,9 @@ public class AcademyCraft {
 	public void init(FMLInitializationEvent event) {
 		netHandler.registerMessage(MsgControl.Handler.class, MsgControl.class, getNextChannelID(), Side.SERVER);
 		netHandler.registerMessage(MsgDeveloperPlayer.Handler.class, MsgDeveloperPlayer.class, getNextChannelID(), Side.CLIENT);
+		netHandler.registerMessage(MsgSyncToClient.Request.Handler.class, MsgSyncToClient.Request.class, getNextChannelID(), Side.SERVER);
+		netHandler.registerMessage(MsgSyncToClient.Handler.class, MsgSyncToClient.class, getNextChannelID(), Side.CLIENT);
+		netHandler.registerMessage(MsgSyncToServer.Handler.class, MsgSyncToServer.class, getNextChannelID(), Side.SERVER);
 		proxy.init();
 	}
 	
@@ -98,8 +105,10 @@ public class AcademyCraft {
 	
 	@EventHandler()
 	public void serverStarting(FMLServerStartingEvent event) {
-		CommandHandler commandManager = (CommandHandler) event.getServer()
+		CommandHandler cm = (CommandHandler) event.getServer()
 				.getCommandManager();
+		
+		cm.registerCommand(new CommandAim());
 	}
 	
 	public static int getNextChannelID() {

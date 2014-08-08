@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.ability.client.model.ModelBipedAP;
+import cn.misaka.ability.system.client.hud.AIMIndicator;
 import cn.misaka.ability.system.data.APDataMain;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -25,7 +26,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 import net.minecraftforge.client.event.sound.SoundEvent;
@@ -47,7 +50,14 @@ public class APEventListener {
 		if(pstat != null && pstat.isActivated && player.getCurrentEquippedItem() == null) {
 			event.setCanceled(true);
 		}
-		System.out.println(player.worldObj.isRemote + " " + player.yOffset);
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
+		if(event.type == ElementType.CROSSHAIRS) {
+			AIMIndicator.drawHud(event.resolution);
+		}
 	}
 
 }

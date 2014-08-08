@@ -12,16 +12,19 @@ package cn.misaka.ability.api.data;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import cn.misaka.ability.system.data.PlayerDataUpdater;
+
 import com.google.gson.*;
 
 /**
  * 单个玩家的能力信息。（基类）
- * @author WeAthFolD
+ * @author WeAthFolD, Alan
  *
  */
 public abstract class PlayerData {
@@ -34,34 +37,25 @@ public abstract class PlayerData {
 	public int
 		current_cp;
 	
-	public boolean isActivated;
-	
-	EntityPlayer thePlayer;
-	
+	public boolean[] skill_open;
+	public float[] skill_exp;
 	
 	/**
-	 * MAJOR：最大CP、等级、能力class、
-	 * CONTROL：技能操作状态（当前预设id和四个预设）（CLIENT ONLY）
-	 * REALTIME：
-	 * ALL：所有
-	 * 注意可以用flag位运算进行叠加。
+	 * 当前能力是否被激活
 	 */
-	public enum EnumPlayerData {
-		MAJOR(1), CONTROL(1 << 1), REALTIME(1 << 2),
-		ALL(MAJOR.flag | CONTROL.flag | REALTIME.flag);
-		
-		public int flag = 0x00;
-		EnumPlayerData(int bin) {
-			flag = bin;
-		}
-	}
+	public boolean isActivated;
+	
+	
+	EntityPlayer thePlayer;
 
 	public PlayerData(EntityPlayer player) {
 		thePlayer = player;
 	}
 	
-	public void onUpdate() {
-	}
+	/**
+	 * 从nbt加载数据或发送同步请求。
+	 */
+	protected abstract void loadData();
 
 	/**
 	 * 返回当前数据是否（总体上）处于良好情况
@@ -69,26 +63,72 @@ public abstract class PlayerData {
 	public abstract boolean isDataStateGood();
 	
 	/**
-	 * 返回某几类数据是否处于良好情况
-	 * @param flag 参照 @EnumPlayerData 的flag进行计算。
+	 * 没tick运行。检查数据完整性，并选择性进行同步。，
 	 */
-	public abstract boolean isDataStateGood(int flag);
+	public abstract void updateTick();
+	
+	public void fromAbilityData(PlayerDataUpdater data) {
+		fromAbilityData(data, 0x03);
+	}
+	
+	public void fromAbilityData(PlayerDataUpdater data, int flag) {
+		if(data == null) {
+			System.err.println("Attempting to load ability data from a NULL pointer");
+			return;
+		}
+		if((flag & 0x01) != 0) {
+			classid = data.classid;
+			level = data.level;
+			max_cp = data.maxCP;
+		}
+		if((flag & 0x02) != 0) {
+			skill_open = data.ac_skill_open;
+			skill_exp = data.ac_skill_exp;
+		}
+	}
+	
+	public PlayerDataUpdater toUpdater() {
+		return new PlayerDataUpdater(thePlayer, classid, level, max_cp, skill_open, skill_exp);
+	}
+	
+	public void saveData() {
+		saveUpdater(thePlayer, toUpdater());
+	}
+	
+	public EntityPlayer getPlayer() {
+		return thePlayer;
+	}
+	
+	//-----------------STATIC METHODS(LOAD AND SAVE)----------------------
+	
+	public static PlayerData getPlayerData(EntityPlayer player) {
+		PlayerData data;
+		if(player.worldObj.isRemote) {
+			data = new PlayerDataClient(player);
+			
+		} else {
+			data = new PlayerDataServer(player);
+		}
+		return data;
+	}
+	
 	/**
 	 * 接下来是json与数据间的转换
 	*/
-    public static String data2json(AbilityData a){
+    private static String data2json(PlayerDataUpdater a){
     	Gson g = new Gson();
     	return g.toJson(a);
     }
-    public static AbilityData json2data(String json){
+    
+    private static PlayerDataUpdater json2data(String json){
     	Gson g = new Gson();
-    	return g.fromJson(json, AbilityData.class);
+    	return g.fromJson(json, PlayerDataUpdater.class);
     }
     /**
      * 接下来就是鸡冻人心的读取和存储分了，啪啪啪
     */
-    public static void saveAbility(EntityPlayer p,AbilityData a) throws IOException{
-    	String s = getSavePath();
+    public static void saveUpdater(EntityPlayer p, PlayerDataUpdater a) {
+    	String s = getUpdaterSavePath();
     	s += File.separator + "AbilityData"; //+ File.separator + p.getCommandSenderName() + ".ac";
     	System.out.println(s);
     	File f = new File(s);
@@ -97,36 +137,47 @@ public abstract class PlayerData {
     	}
     	s += File.separator + p.getCommandSenderName() + ".ac";
     	f = new File(s);
-    	if(!f.exists()){
-    		f.createNewFile();
+    	try {
+    		if(!f.exists()){
+        		f.createNewFile();
+        	}
+        	FileWriter fw = new FileWriter(f);
+        	fw.write(data2json(a));
+        	fw.close();
+    	} catch(Exception e) {
+    		System.err.println("Encountered a problem while saving player ability data");
     	}
-    	FileWriter fw = new FileWriter(f);
-    	fw.write(data2json(a));
-    	fw.close();
     }
-    public static AbilityData getAbility(EntityPlayer p) throws IOException{
-    	String s = getSavePath();
+    
+    public static PlayerDataUpdater getUpdater(EntityPlayer p) {
+    	String s = getUpdaterSavePath();
     	s += File.separator + "AbilityData"; //+ File.separator + p.getCommandSenderName() + ".ac";
     	System.out.println(s);
     	File f = new File(s);
     	if(!f.exists()){
-    		return new AbilityData(p,(byte)0,(byte)0,0,new boolean[3],new float[3]);
+    		return new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
     	}
     	s += File.separator + p.getCommandSenderName() + ".ac";
     	f = new File(s);
     	if(!f.exists()){
-    		return new AbilityData(p,(byte)0,(byte)0,0,new boolean[3],new float[3]);
+    		return new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
     	}
-    	FileReader fr = new FileReader(f);
-    	char[] temp = new char[1024];
-    	String json = new String(temp,0,fr.read(temp));
-    	fr.close();
-    	return json2data(json);
+    	try {
+    		FileReader fr = new FileReader(f);
+    		char[] temp = new char[1024];
+    		String json = new String(temp, 0, fr.read(temp));
+    		fr.close();
+    		return json2data(json);
+    	} catch(Exception e) {
+    		System.err.println("Encountered a problem while reading player ability data.");
+    	}
+    	return null;
     }
+    
 	/**
 	 * 用于定位世界的保存路径
 	*/
-	public static String getSavePath(){
+	public static String getUpdaterSavePath(){
     	String runDir = System.getProperty("user.dir");
     	System.out.println(runDir);
     	//String[] mcDir = runDir.split(".minecraft");
