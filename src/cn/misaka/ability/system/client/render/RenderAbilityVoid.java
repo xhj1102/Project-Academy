@@ -67,7 +67,7 @@ public class RenderAbilityVoid implements IItemRenderer {
 				render = skl.getSkillRender();
 		}
 		
-		render.onRender(player, pstat.getSkillStates(pstat.activateSkill), pdata, tp);
+		render.onRender(player, pstat.getSkillStat(pstat.activateSkill), pdata, tp);
 	}
 
 }

@@ -10,8 +10,13 @@
  */
 package cn.misaka.ability.api.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.config.Configuration;
 import cn.misaka.ability.system.control.preset.ControlPreset;
+import cn.misaka.ability.system.control.preset.ControlPreset.Entry;
 import cn.misaka.ability.system.data.PlayerDataUpdater;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
 import cn.misaka.core.AcademyCraft;
@@ -42,24 +47,25 @@ public final class PlayerDataClient extends PlayerData {
 		return initialized;
 	}
 	
-	public ControlPreset.Entry[] getCurrentPreset() {
-		return new ControlPreset.Entry[4];
-	}
+	//public ControlPreset.Entry getP
 	
+	@Override
 	public void fromAbilityData(PlayerDataUpdater data, int flag) {
 		this.initialized = true;
+		System.out.println("Client received Server pack");
 		super.fromAbilityData(data, flag);
 	}
 
 	@Override
-	protected void loadData() {
-	}
+	protected void loadData() { }
 
 	@Override
 	public void updateTick() {
 		if(!initialized && ++ticker == APGeneralProps.SYNC_FREQ) {
-			AcademyCraft.netHandler.sendToServer(new MsgSyncToClient.Request());
+			System.out.println("Sending sync request");
+			AcademyCraft.netHandler.sendToServer(new MsgSyncToClient.Request(0x03));
 		}
 	}
+	
 
 }

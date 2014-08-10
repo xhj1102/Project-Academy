@@ -19,3 +19,7 @@ tile.ability_developer.name=Ability Developer
 
 #CreativeTabs
 itemGroup.AcademyCraft=AcademyCraft
+
+#abilities
+skill.test1.name=Test Skill 1
+skill.test2.name=Test Skill 2

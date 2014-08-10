@@ -10,57 +10,48 @@
  */
 package cn.misaka.ability.system.network.message;
 
+import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import net.minecraft.entity.player.EntityPlayer;
-import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.system.data.APDataMain;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 /**
- * 由客户端发送的信息同步。其实就是isActivated
  * @author WeAthFolD
- *
  */
-public class MsgSyncToServer implements IMessage {
+public class MsgDeveloperDismount implements IMessage {
 	
-	public boolean isActivated;
 
-	/**
-	 * 
-	 */
-	public MsgSyncToServer(PlayerData data) {
-		isActivated = data.isActivated;
+
+	public MsgDeveloperDismount() {
 	}
-	
-	public MsgSyncToServer() {}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.network.simpleimpl.IMessage#fromBytes(io.netty.buffer.ByteBuf)
-	 */
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		isActivated = buf.readBoolean();
+
 	}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.network.simpleimpl.IMessage#toBytes(io.netty.buffer.ByteBuf)
-	 */
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeBoolean(isActivated);
 	}
 	
-	public static class Handler implements IMessageHandler<MsgSyncToServer, IMessage> {
+	public static class Handler implements IMessageHandler<MsgDeveloperDismount, IMessage> {
 
 		@Override
-		public IMessage onMessage(MsgSyncToServer message,
+		public IMessage onMessage(MsgDeveloperDismount message,
 				MessageContext ctx) {
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
-			PlayerData data = APDataMain.loadPlayerData(player);
-			data.isActivated = message.isActivated;
-			System.out.println("Activation change server" + data.isActivated);
+			System.out.println("Dismounting sync");
+			TileEntity tile = player.worldObj.getTileEntity(MathHelper.floor_double(player.posX),
+					MathHelper.floor_double(player.posY),
+					MathHelper.floor_double(player.posZ));
+			if(tile != null && tile instanceof TileAbilityDeveloper) {
+				((TileAbilityDeveloper)tile).disMount();
+			} else
+				System.err.println("Didn't find server instance while trying to dismount AbilityDeveloper");
 			return null;
 		}
 		

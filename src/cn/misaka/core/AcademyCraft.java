@@ -18,11 +18,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.register.LIGuiHandler;
+import cn.misaka.ability.classes.test.ClassTest;
 import cn.misaka.ability.client.gui.GuiAbilityDeveloper;
+import cn.misaka.ability.system.AbilityMain;
 import cn.misaka.ability.system.command.CommandAim;
-import cn.misaka.ability.system.event.APEventListener;
-import cn.misaka.ability.system.event.APTickEvents;
+import cn.misaka.ability.system.control.APControlMain;
+import cn.misaka.ability.system.event.APSEventListener;
+import cn.misaka.ability.system.event.APSTickEvents;
 import cn.misaka.ability.system.network.message.MsgControl;
+import cn.misaka.ability.system.network.message.MsgDeveloperDismount;
 import cn.misaka.ability.system.network.message.MsgDeveloperPlayer;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
 import cn.misaka.ability.system.network.message.MsgSyncToServer;
@@ -80,10 +84,16 @@ public class AcademyCraft {
 		
 		APBlocks.init(config);
 		APItems.init(config);
-		FMLCommonHandler.instance().bus().register(new APTickEvents());
+		APControlMain.init(config);
+		FMLCommonHandler.instance().bus().register(new APSTickEvents());
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 		guiHandler.addGuiElement(APClientProps.GUI_ID_ABILITY_DEV, new GuiAbilityDeveloper.Element());
-		MinecraftForge.EVENT_BUS.register(new APEventListener());
+		
+		//能力注册BEGIN
+		AbilityMain.registerAbility(new ClassTest(1));
+		//能力注册END
+		
+		MinecraftForge.EVENT_BUS.register(new APSEventListener());
 		
 		proxy.preInit();
 	}
@@ -95,6 +105,7 @@ public class AcademyCraft {
 		netHandler.registerMessage(MsgSyncToClient.Request.Handler.class, MsgSyncToClient.Request.class, getNextChannelID(), Side.SERVER);
 		netHandler.registerMessage(MsgSyncToClient.Handler.class, MsgSyncToClient.class, getNextChannelID(), Side.CLIENT);
 		netHandler.registerMessage(MsgSyncToServer.Handler.class, MsgSyncToServer.class, getNextChannelID(), Side.SERVER);
+		netHandler.registerMessage(MsgDeveloperDismount.Handler.class, MsgDeveloperDismount.class, getNextChannelID(), Side.SERVER);
 		proxy.init();
 	}
 	
@@ -107,8 +118,8 @@ public class AcademyCraft {
 	public void serverStarting(FMLServerStartingEvent event) {
 		CommandHandler cm = (CommandHandler) event.getServer()
 				.getCommandManager();
-		
 		cm.registerCommand(new CommandAim());
+		proxy.commandInit(cm);
 	}
 	
 	public static int getNextChannelID() {

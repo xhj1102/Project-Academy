@@ -11,6 +11,7 @@
 package cn.misaka.ability.system.data;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import cn.misaka.ability.api.data.PlayerData;
@@ -36,15 +37,22 @@ public class APDataMain {
 		return data;
 	}
 	
-	static int tickUntilUpdate = 40;
 	public static void onTick(boolean isRemote) {
 		HashMap<EntityPlayer, PlayerData> map = getDataMap(isRemote);
+		for(PlayerData data : map.values()) {
+			data.updateTick();
+		}
 		if(isRemote) {
-			if(--tickUntilUpdate == 0) {
-				tickUntilUpdate = 40;
-			}
 		} else {
 			
+		}
+	}
+	
+	public static void savePlayerData(boolean isRemote) {
+		if(!isRemote) {
+			for(Map.Entry<EntityPlayer, PlayerData> entry : getDataMap(false).entrySet()) {
+				PlayerData.saveUpdater(entry.getKey(), entry.getValue().toUpdater());
+			}
 		}
 	}
 	

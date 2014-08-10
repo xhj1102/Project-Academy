@@ -11,6 +11,7 @@
 package cn.misaka.ability.system.event;
 
 import cn.misaka.ability.system.control.APControlMain;
+import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
 import net.minecraft.client.Minecraft;
@@ -29,12 +30,13 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  *
  */
-public class APTickEvents {
+public class APSTickEvents {
 
 	@SubscribeEvent
 	public void onServerTick(ServerTickEvent event) {
 		if(event.phase == Phase.END) {
 			APControlMain.onTick(false);
+			APDataMain.onTick(false);
 		}
 	}
 	
@@ -43,6 +45,7 @@ public class APTickEvents {
 	public void onClientTick(ClientTickEvent event) {
 		if(event.phase == Phase.START) {
 			APControlMain.onTick(true);
+			APDataMain.onTick(true);
 			
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 			if(player != null) //(&& ability is activated)

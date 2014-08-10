@@ -10,6 +10,7 @@
  */
 package cn.misaka.ability.api.ability;
 
+import cn.misaka.ability.system.control.preset.Pair;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
@@ -35,6 +36,7 @@ public abstract class AbilityClass {
 	public AbilityClass(String name, int id) {
 		unl_name = name;
 		this.id = id;
+		initClass();
 	}
 	
 	protected void initClass() {
@@ -43,10 +45,14 @@ public abstract class AbilityClass {
 	}
 	
 	public AbilityLevel getLevel(int id) {
+		if(id >= ability_levels.length)
+			return null;
 		return ability_levels[id];
 	}
 	
 	public AbilitySkill getSkill(int id) {
+		if(id >= ability_skills.length)
+			return null;
 		return ability_skills[id];
 	}
 	
@@ -60,10 +66,10 @@ public abstract class AbilityClass {
 	
 	@SideOnly(Side.CLIENT)
 	/**
-	 * 获取能力系Logo
+	 * 获取Hud贴图的覆盖。贴图的位置必须和模板贴图严格一致，first为logo框，second为CP框
 	 * @return
 	 */
-	public abstract ResourceLocation getClassLogo();
+	public abstract Pair<ResourceLocation, ResourceLocation> getHudTextureOverride();
 	
 	/**
 	 * 获取经过translate的系名。

@@ -13,6 +13,7 @@ package cn.misaka.ability.system.command;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import cn.liutils.api.command.LICommandBase;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
@@ -27,7 +28,7 @@ import net.minecraft.util.ChatComponentTranslation;
  * @author WeAthFolD
  *
  */
-public class CommandAim extends CommandBase {
+public class CommandAim extends LICommandBase {
 	
 	private static HashMap<String, Field> fldMap = new HashMap<String, Field>();
 	
@@ -109,10 +110,6 @@ public class CommandAim extends CommandBase {
 	
 	private String getSetUsage() {
 		return "/aim set [key] [value]";
-	}
-	
-	private void sendChat(ICommandSender ics, String st) {
-		ics.addChatMessage(new ChatComponentTranslation(st));
 	}
 
 }

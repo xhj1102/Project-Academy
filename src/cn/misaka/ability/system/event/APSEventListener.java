@@ -16,7 +16,9 @@ import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.ability.client.model.ModelBipedAP;
 import cn.misaka.ability.system.client.hud.AIMIndicator;
+import cn.misaka.ability.system.control.APControlMain;
 import cn.misaka.ability.system.data.APDataMain;
+import cn.misaka.core.AcademyCraft;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
@@ -33,14 +35,15 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.WorldEvent;
 
 /**
  * @author WeAthFolD
  *
  */
-public class APEventListener {
+public class APSEventListener {
 	
-	public APEventListener() {
+	public APSEventListener() {
 	}
 
 	@SubscribeEvent
@@ -58,6 +61,12 @@ public class APEventListener {
 		if(event.type == ElementType.CROSSHAIRS) {
 			AIMIndicator.drawHud(event.resolution);
 		}
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onWorldSave(WorldEvent.Save event) {
+		APControlMain.saveToConfig(AcademyCraft.config);
 	}
 
 }

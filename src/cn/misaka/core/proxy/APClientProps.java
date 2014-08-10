@@ -10,6 +10,10 @@
  */
 package cn.misaka.core.proxy;
 
+import java.net.URL;
+import java.util.Properties;
+
+import cn.misaka.core.AcademyCraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
@@ -26,6 +30,11 @@ public class APClientProps {
 		TEX_GUI_ABILITY_DEVELOPER = src("academy:textures/guis/ability_dev.png"),
 		TEX_HUD_CPBAR = src("academy:textures/guis/cpbar.png"),
 		TEX_HUD_LOGO = src("academy:textures/guis/logo.png");
+	
+	//Ability Textures
+	public static final ResourceLocation
+		SKL_TEST_1 = src("academy:textures/abilities/test/skill1.png"),
+		SKL_TEST_2 = src("academy:textures/abilities/test/skill2.png");
 		
 	//OBJ models
 	public static final
@@ -34,7 +43,6 @@ public class APClientProps {
 	//GUI IDs
 	public static final int
 		GUI_ID_ABILITY_DEV = 0;
-	
 	
 	private static ResourceLocation src(String s) {
 		return new ResourceLocation(s);

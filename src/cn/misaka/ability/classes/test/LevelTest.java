@@ -8,23 +8,32 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.control.preset;
+package cn.misaka.ability.classes.test;
+
+import cn.misaka.ability.api.ability.AbilityLevel;
+import cn.misaka.ability.api.ability.AbilitySkill;
 
 /**
  * @author WeAthFolD
  *
  */
-public class Pair<U, V> {
-	public U first;
-	public V second;
+public class LevelTest extends AbilityLevel {
 	
-	public Pair(U k, V v) {
-		first = k;
-		second = v;
+	public LevelTest(int id) {
+		super(id);
 	}
-	
-	public String toString() {
-		return first + "," + second;
+
+	/* (non-Javadoc)
+	 * @see cn.misaka.ability.api.ability.AbilityLevel#canStudySkill(cn.misaka.ability.api.ability.AbilitySkill, int)
+	 */
+	@Override
+	public boolean canStudySkill(AbilitySkill skill, int id) {
+		return id == 0 || id == 1;
 	}
-	
+
+	@Override
+	public boolean isSkillDefaultActivated(AbilitySkill skill, int id) {
+		return id == 0 || id == 1;
+	}
+
 }

@@ -74,6 +74,10 @@ public class MsgSyncToClient implements IMessage {
 	 */
 	@Override
 	public void toBytes(ByteBuf buf) {
+		if((flag& 0x02) != 0 && (updater.ac_skill_exp == null || updater.ac_skill_open == null)) {
+			System.err.println("Trying to sync skill Infs while they are null, BUGGED!");
+			flag -= 0x02;
+		}
 		buf.writeByte(flag);
 		if((flag & 0x01) != 0) {
 			buf.writeByte(updater.classid);
@@ -108,6 +112,10 @@ public class MsgSyncToClient implements IMessage {
 	public static class Request implements IMessage {
 		
 		public byte flag;
+		
+		public Request(int flag) {
+			this.flag = (byte) flag;
+		}
 
 		public Request() {}
 
@@ -128,6 +136,7 @@ public class MsgSyncToClient implements IMessage {
 
 			@Override
 			public IMessage onMessage(Request message, MessageContext ctx) {
+				System.out.println("Retrieved sync request");
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				AcademyCraft.netHandler.sendTo(new MsgSyncToClient(APDataMain.loadPlayerData(player), message.flag), player);
 				return null;

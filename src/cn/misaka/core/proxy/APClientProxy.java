@@ -10,6 +10,7 @@
  */
 package cn.misaka.core.proxy;
 
+import net.minecraft.command.CommandHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.MinecraftForgeClient;
 
@@ -22,6 +23,7 @@ import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.ability.client.model.ModelBipedAP;
 import cn.misaka.ability.client.render.entity.RenderPlayerAP;
 import cn.misaka.ability.client.render.tile.RenderAbilityDeveloper;
+import cn.misaka.ability.system.client.key.KeySkillActivation;
 import cn.misaka.ability.system.client.key.KeySkillControl;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
 import cn.misaka.core.register.APItems;
@@ -40,6 +42,7 @@ public class APClientProxy extends APCommonProxy {
 		LIKeyProcess.addKey("AP_MR", LIKeyProcess.MOUSE_RIGHT, false, new KeySkillControl(1));
 		LIKeyProcess.addKey("AP_R", Keyboard.KEY_R, false, new KeySkillControl(2));
 		LIKeyProcess.addKey("AP_F", Keyboard.KEY_F, false, new KeySkillControl(3));
+		LIKeyProcess.addKey("AP_ACTIVATE", Keyboard.KEY_V, false, new KeySkillActivation());
 	}
 	
 	@Override
@@ -47,6 +50,10 @@ public class APClientProxy extends APCommonProxy {
 		MinecraftForgeClient.registerItemRenderer(APItems.itemVoid, new RenderAbilityVoid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAbilityDeveloper.class, new RenderAbilityDeveloper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerAP());
+	}
+	
+	public void commandInit(CommandHandler cm) {
+		
 	}
 
 }

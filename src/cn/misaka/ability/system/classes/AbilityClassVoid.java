@@ -8,22 +8,24 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.core.proxy;
+package cn.misaka.ability.system.classes;
 
-import net.minecraft.command.CommandHandler;
+import net.minecraft.util.ResourceLocation;
+import cn.misaka.ability.api.ability.AbilityClass;
+import cn.misaka.ability.system.control.preset.Pair;
 
 /**
- * @author Administrator
- *
+ * @author WeAthFolD
  */
-public class APCommonProxy {
+public class AbilityClassVoid extends AbilityClass {
 
-	public void preInit() {}
-	
-	public void init() {}
-	
-	public void postInit() {}
-	
-	public void commandInit(CommandHandler cm) {}
+	public AbilityClassVoid(int id) {
+		super("NULL", id);
+	}
+
+	@Override
+	public Pair<ResourceLocation, ResourceLocation> getHudTextureOverride() {
+		return null;
+	}
 
 }

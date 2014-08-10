@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.ability.client.model.ModelBipedAP;
-import cn.misaka.ability.system.event.APEventListener;
+import cn.misaka.ability.system.event.APSEventListener;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;

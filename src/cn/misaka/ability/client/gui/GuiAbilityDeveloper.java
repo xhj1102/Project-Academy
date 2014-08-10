@@ -16,6 +16,9 @@ import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.liutils.api.register.IGuiElement;
 import cn.liutils.api.util.DebugUtils;
+import cn.misaka.ability.block.tile.TileAbilityDeveloper;
+import cn.misaka.ability.system.network.message.MsgDeveloperDismount;
+import cn.misaka.core.AcademyCraft;
 import cn.misaka.core.proxy.APClientProps;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
@@ -39,18 +42,25 @@ public class GuiAbilityDeveloper extends GuiScreen {
 		@Override
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
-			return new GuiAbilityDeveloper();
+			return new GuiAbilityDeveloper((TileAbilityDeveloper) world.getTileEntity(x, y, z));
 		}
 		
 	}
+	
+	TileAbilityDeveloper myTile;
 
 	/**
 	 * 
 	 */
-	public GuiAbilityDeveloper() {
+	public GuiAbilityDeveloper(TileAbilityDeveloper tile) {
+		myTile = tile;
 	}
 	
-	public void onGuiClosed() {}
+	public void onGuiClosed() {
+		System.out.println("onGuiClosed");
+//		myTile.disMount();
+		//AcademyCraft.netHandler.sendToServer(new MsgDeveloperDismount()); //自动下来~ 
+	}
 	
     public void drawScreen(int par1, int par2, float par3)
     {

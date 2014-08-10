@@ -17,8 +17,21 @@ public abstract class AbilityLevel {
 		levelid = id;
 	}
 	
+	/**
+	 * 在本级别某能力是否可以被学习？
+	 * @param skill
+	 * @param id
+	 * @return
+	 */
 	public abstract boolean canStudySkill(AbilitySkill skill, int id);
-	public abstract AbilitySkill[] getDefaultActivatedSkill();
+	
+	/**
+	 * 在本级别某能力是否默认被激活？
+	 * @param skill
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean isSkillDefaultActivated(AbilitySkill skill, int id);
 	
 	public void onPlayerUpdate(World world, EntityPlayer player, PlayerControlData ctrl) {
 		//DO NOTHING BY DEFAULT

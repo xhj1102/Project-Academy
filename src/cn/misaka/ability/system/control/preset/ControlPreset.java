@@ -10,6 +10,8 @@
  */
 package cn.misaka.ability.system.control.preset;
 
+import cn.misaka.ability.system.control.APControlMain;
+
 /**
  * @author WeAthFolD
  *
@@ -25,8 +27,15 @@ public class ControlPreset  {
 			super(k, v);
 		}
 		
+		public static Entry fromString(String s) {
+			String[] ss = s.split(",");
+			if(ss.length != 2) {
+				throw new RuntimeException("AcademyCraft splitting entry config failed, maybe an invalid modifying?");
+			}
+			return new Entry(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]));
+		}
 	}
 	
-	public Entry[] settings = new Entry[4];
+	public Entry[] settings = new Entry[APControlMain.KEYS];
 
 }

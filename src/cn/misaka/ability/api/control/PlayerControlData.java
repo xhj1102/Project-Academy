@@ -20,7 +20,7 @@ public class PlayerControlData {
 	 * @return 按键状态是否“真正的”改变。
 	 */
 	public boolean onKeyStateChange(int ability_id, int max_keys, int keyid, boolean isDown) {
-		SkillControlStat stat = loadKeyStates(ability_id, max_keys);
+		SkillControlStat stat = loadSkillStat(ability_id, max_keys);
 		boolean preStat = stat.isKeyDown(keyid);
 		stat.setKeyDown(keyid, isDown);
 		return preStat != isDown;
@@ -34,8 +34,8 @@ public class PlayerControlData {
 		activateSkill = skillID;
 	}
 	
-	public SkillControlStat loadKeyStates(int ability_id, int max_keys) {
-		SkillControlStat states = getSkillStates(ability_id);
+	public SkillControlStat loadSkillStat(int ability_id, int max_keys) {
+		SkillControlStat states = getSkillStat(ability_id);
 		if(states == null) {
 			states = new SkillControlStat();
 			keyStateMap.put(Integer.valueOf(ability_id), states);
@@ -44,11 +44,11 @@ public class PlayerControlData {
 	}
 	
 	public boolean getKeyState(int ability_id, int subkey) {
-		SkillControlStat states = getSkillStates(ability_id);
+		SkillControlStat states = getSkillStat(ability_id);
 		return states == null ? false : states.isKeyDown(subkey);
 	}
 	
-	public SkillControlStat getSkillStates(int ability_id) {
+	public SkillControlStat getSkillStat(int ability_id) {
 		return keyStateMap.get(Integer.valueOf(ability_id));
 	}
 

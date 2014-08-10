@@ -152,16 +152,21 @@ public abstract class PlayerData {
     public static PlayerDataUpdater getUpdater(EntityPlayer p) {
     	String s = getUpdaterSavePath();
     	s += File.separator + "AbilityData"; //+ File.separator + p.getCommandSenderName() + ".ac";
-    	System.out.println(s);
+    	System.out.println("Saving www " + s);
     	File f = new File(s);
+    	
+    	PlayerDataUpdater updater;
     	if(!f.exists()){
-    		return new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
+    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
+    		saveUpdater(p, updater);
     	}
     	s += File.separator + p.getCommandSenderName() + ".ac";
     	f = new File(s);
     	if(!f.exists()){
-    		return new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
+    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
+    		saveUpdater(p, updater);
     	}
+    	
     	try {
     		FileReader fr = new FileReader(f);
     		char[] temp = new char[1024];
