@@ -12,14 +12,15 @@ package cn.misaka.ability.system.control;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import cn.liutils.api.util.GenericUtils;
 import cn.misaka.ability.api.ability.AbilityClass;
 import cn.misaka.ability.api.ability.AbilityLevel;
 import cn.misaka.ability.api.ability.AbilitySkill;
@@ -27,17 +28,13 @@ import cn.misaka.ability.api.control.PlayerControlData;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.api.data.PlayerDataClient;
-import cn.misaka.ability.api.data.PlayerDataHelper;
 import cn.misaka.ability.system.control.preset.ControlPreset;
 import cn.misaka.ability.system.control.preset.ControlPreset.Entry;
 import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.ability.system.network.message.MsgControl;
 import cn.misaka.core.AcademyCraft;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * 操作控制统合。
@@ -81,7 +78,7 @@ public class APControlMain {
 	public static void onSkillKeyChanged(EntityPlayer player, int skill_id, int key_id, boolean isDown) {
 		PlayerControlData ctrl = loadControlData(player);
 		PlayerData data = APDataMain.loadPlayerData(player);
-		AbilityClass cls = PlayerDataHelper.getAbilityClass(data);
+		AbilityClass cls = data.getAbilityClass();
 		if(cls == null) {
 			System.err.println("Can't find player ability class while control has changed, this is a bug!");
 			return;
@@ -103,7 +100,7 @@ public class APControlMain {
 			PlayerData data = APDataMain.loadPlayerData(player);
 			if(data == null || !data.isDataStateGood()) continue;
 			
-			AbilityClass ability = PlayerDataHelper.getAbilityClass(data);
+			AbilityClass ability = data.getAbilityClass();
 			PlayerControlData ctrl = entry.getValue();
 			if(ability == null) {
 				System.err.println("Can't find player ability class while doing tickUpdate. This is a BUG!");
@@ -128,6 +125,14 @@ public class APControlMain {
 		}
 	}
 	
+	public static ControlPreset getPreset(int id) {
+		return GenericUtils.safeFetchFrom(controlPresets, id);
+	}
+	
+	public static void setPresetID(int id) {
+		current_preset_id = id;
+	}
+	
 	@SideOnly(Side.CLIENT)
 	private static List<ControlPreset> controlPresets = new ArrayList<ControlPreset>();
 	
@@ -135,7 +140,10 @@ public class APControlMain {
 		for(int i = 0; i < PRESETS; i++) {
 			ControlPreset cp = new ControlPreset();
 			for(int j = 0; j < KEYS; j++)
-				cp.settings[j] = Entry.fromString(conf.get("controls", "preset_" + i + "_" + j, "0,0").getString());
+				cp.settings[j] = Entry.fromString(
+						conf.get("controls", "preset_" + i + "_" + j, "0,0").getString()
+						);
+			controlPresets.add(cp);
 		}
 	}
 	
@@ -146,6 +154,14 @@ public class APControlMain {
 				conf.get("controls", "preset_" + i + "_" + j, "0,0").set(ss[j]);;
 		}
 		conf.save();
+	}
+	
+	public static int getCurrentPresetID() {
+		return current_preset_id;
+	}
+	
+	public static ControlPreset getCurrentPreset() {
+		return controlPresets.get(current_preset_id);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -167,7 +183,7 @@ public class APControlMain {
 		PlayerDataClient data = (PlayerDataClient) APDataMain.loadPlayerData(player);
 		System.out.println("OnKeyChangedClient");
 		if(data != null && data.isActivated && data.isDataStateGood()) {
-			ControlPreset preset = controlPresets.get(current_preset_id);
+			ControlPreset preset = getCurrentPreset();
 			System.out.println("OnKeyDown " + keyid + ", " + "skillID " + preset.settings[keyid].first + ", keyID " + preset.settings[keyid].second);
 			onSkillKeyChanged(player, preset.settings[keyid].first, preset.settings[keyid].second, down); //解读为skill局部的id
 			AcademyCraft.netHandler.sendToServer(new MsgControl(preset.settings[keyid].first, preset.settings[keyid].second, down));

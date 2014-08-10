@@ -82,6 +82,8 @@ public class AcademyCraft {
 		log.info("Copyright (c) Lambda Innovation, 2013-2014");
 		log.info("http://www.lambdacraft.cn");
 		
+		config = new Configuration(event.getSuggestedConfigurationFile());
+		
 		APBlocks.init(config);
 		APItems.init(config);
 		APControlMain.init(config);

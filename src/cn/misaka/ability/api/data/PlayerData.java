@@ -18,6 +18,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import cn.misaka.ability.api.ability.AbilityClass;
+import cn.misaka.ability.system.AbilityMain;
 import cn.misaka.ability.system.data.PlayerDataUpdater;
 
 import com.google.gson.*;
@@ -98,6 +100,11 @@ public abstract class PlayerData {
 	public EntityPlayer getPlayer() {
 		return thePlayer;
 	}
+	
+	public AbilityClass getAbilityClass() {
+		//System.out.println("Fetching abilityclass " + this.isDataStateGood());
+		return this.isDataStateGood() ? AbilityMain.getAbility(classid) : null;
+ 	}
 	
 	//-----------------STATIC METHODS(LOAD AND SAVE)----------------------
 	

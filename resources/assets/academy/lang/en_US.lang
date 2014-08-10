@@ -20,6 +20,13 @@ tile.ability_developer.name=Ability Developer
 #CreativeTabs
 itemGroup.AcademyCraft=AcademyCraft
 
-#abilities
+#Abilities
 skill.test1.name=Test Skill 1
 skill.test2.name=Test Skill 2
+
+#Commands
+aimctrl.presetinf=Preset %s : %s
+aimctrl.curpreset=Current Preset ID: %s
+aimctrl.classinit=Player Ability class uninitialized.
+setting.successful=Setting successful.
+setting.outofbounds=Input out of bounds.

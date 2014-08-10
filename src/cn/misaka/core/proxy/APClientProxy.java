@@ -26,6 +26,7 @@ import cn.misaka.ability.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.ability.system.client.key.KeySkillActivation;
 import cn.misaka.ability.system.client.key.KeySkillControl;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
+import cn.misaka.ability.system.command.CommandControlModification;
 import cn.misaka.core.register.APItems;
 
 /**
@@ -53,7 +54,7 @@ public class APClientProxy extends APCommonProxy {
 	}
 	
 	public void commandInit(CommandHandler cm) {
-		
+		cm.registerCommand(new CommandControlModification());
 	}
 
 }

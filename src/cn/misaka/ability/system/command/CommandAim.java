@@ -12,6 +12,7 @@ package cn.misaka.ability.system.command;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import cn.liutils.api.command.LICommandBase;
 import cn.misaka.ability.api.data.PlayerData;
@@ -25,8 +26,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 
 /**
+ * 反射大法好
  * @author WeAthFolD
- *
  */
 public class CommandAim extends LICommandBase {
 	
@@ -37,6 +38,7 @@ public class CommandAim extends LICommandBase {
 			fldMap.put("classid", PlayerData.class.getField("classid"));
 			fldMap.put("level", PlayerData.class.getField("level"));
 			fldMap.put("cp", PlayerData.class.getField("max_cp"));
+			fldMap.put("current_cp", PlayerData.class.getField("current_cp"));
 		} catch (Exception e) {
 			
 		}
@@ -62,7 +64,7 @@ public class CommandAim extends LICommandBase {
 	 */
 	@Override
 	public String getCommandUsage(ICommandSender var1) {
-		return "/aim [set][status][develop]";
+		return "/aim [set][status][develop][view]";
 	}
 
 	/* (non-Javadoc)
@@ -70,6 +72,7 @@ public class CommandAim extends LICommandBase {
 	 */
 	@Override
 	public void processCommand(ICommandSender ics, String[] args) {
+		EntityPlayerMP player = this.getCommandSenderAsPlayer(ics);
 		if(args.length == 0) {
 			sendChat(ics, "Not enough arguments");
 		} else {
@@ -80,7 +83,6 @@ public class CommandAim extends LICommandBase {
 					if(!fldMap.containsKey(args[1])) {
 						sendChat(ics, "Didn't find the corresponding field.");
 					} else {
-						EntityPlayerMP player = this.getCommandSenderAsPlayer(ics);
 						if(player != null) {
 							PlayerData data = APDataMain.loadPlayerData(player);
 							try {
@@ -99,6 +101,15 @@ public class CommandAim extends LICommandBase {
 				
 			} else if(args[0].equals("develop")) {
 				//TODO: Invoke Ability Dev functions
+			} else if(args[0].equals("view")) {
+				PlayerData data = APDataMain.loadPlayerData(player);
+				try {
+					for(Entry<String, Field> entry : fldMap.entrySet()) {
+						this.sendChat(ics, entry.getKey() + ": " + entry.getValue().get(data));
+					}
+				} catch(Exception e) {}
+			} else {
+				
 			}
 		}
 	}
