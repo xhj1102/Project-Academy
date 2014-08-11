@@ -10,10 +10,6 @@
  */
 package cn.misaka.core.proxy;
 
-import java.net.URL;
-import java.util.Properties;
-
-import cn.misaka.core.AcademyCraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;

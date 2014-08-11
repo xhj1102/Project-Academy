@@ -15,12 +15,8 @@ import org.lwjgl.opengl.GL11;
 import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.liutils.api.register.IGuiElement;
-import cn.liutils.api.util.DebugUtils;
 import cn.misaka.ability.block.tile.TileAbilityDeveloper;
-import cn.misaka.ability.system.network.message.MsgDeveloperDismount;
-import cn.misaka.core.AcademyCraft;
 import cn.misaka.core.proxy.APClientProps;
-import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -56,13 +52,15 @@ public class GuiAbilityDeveloper extends GuiScreen {
 		myTile = tile;
 	}
 	
+	@Override
 	public void onGuiClosed() {
 		System.out.println("onGuiClosed");
 //		myTile.disMount();
 		//AcademyCraft.netHandler.sendToServer(new MsgDeveloperDismount()); //自动下来~ 
 	}
 	
-    public void drawScreen(int par1, int par2, float par3)
+    @Override
+	public void drawScreen(int par1, int par2, float par3)
     {
     	this.drawDefaultBackground();
     	HudUtils.setTextureResolution(512, 512);

@@ -10,21 +10,14 @@
  */
 package cn.misaka.ability.block.tile;
 
-import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
-
 import cn.liutils.api.util.EntityUtils;
 import cn.misaka.ability.block.BlockAbilityDeveloper;
 import cn.misaka.ability.system.network.message.MsgDeveloperPlayer;
 import cn.misaka.core.AcademyCraft;
 import cn.misaka.core.register.APBlocks;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
 /**
@@ -83,7 +76,7 @@ public class TileAbilityDeveloper extends TileEntity {
 	}
 	
 	private void setPosition() {
-		ForgeDirection dir = APBlocks.ability_developer.getFacingDirection(getBlockMetadata());
+		ForgeDirection dir = BlockAbilityDeveloper.getFacingDirection(getBlockMetadata());
 		mountPlayer.yOffset = 1.00F;
 		mountPlayer.motionX = mountPlayer.motionY = mountPlayer.motionZ = 0.0;
 		double x = xCoord + 0.5,

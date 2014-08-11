@@ -15,7 +15,6 @@ import cn.misaka.ability.api.ability.AbilityClass;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.system.control.APControlMain;
 import cn.misaka.ability.system.control.preset.ControlPreset;
-import cn.misaka.ability.system.control.preset.ControlPreset.Entry;
 import cn.misaka.ability.system.data.APDataMain;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -41,7 +40,7 @@ public class CommandControlModification extends LICommandBase {
 	
 	@Override
 	public void processCommand(ICommandSender ics, String[] var2) {
-		EntityPlayer player = this.getCommandSenderAsPlayer(ics);
+		EntityPlayer player = CommandBase.getCommandSenderAsPlayer(ics);
 		if(var2.length == 0) {
 			
 			this.sendChat(ics, getCommandUsage(ics));

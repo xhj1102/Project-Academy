@@ -10,21 +10,14 @@
  */
 package cn.misaka.ability.client.render.tile;
 
-import java.util.Iterator;
-
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.util.RenderUtils;
+import cn.misaka.ability.block.BlockAbilityDeveloper;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.register.APBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -43,7 +36,7 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 		int meta = te.getBlockMetadata();
 		if((meta & 0x01) == 1) return; //Render only HEAD
 		float scale = 0.0215F;
-		ForgeDirection dir = APBlocks.ability_developer.getFacingDirection(te.blockMetadata);
+		ForgeDirection dir = BlockAbilityDeveloper.getFacingDirection(te.blockMetadata);
 		
 		GL11.glPushMatrix(); {
 			RenderUtils.loadTexture(APClientProps.TEX_MDL_ABILITY_DEVELOPER);

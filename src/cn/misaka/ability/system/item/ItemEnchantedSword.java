@@ -4,28 +4,22 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import cn.misaka.ability.api.enchantment.APEnchantType;
-import cn.misaka.ability.api.enchantment.APEnchantment;
+import cn.misaka.ability.api.enchant.APEnchantType;
+import cn.misaka.ability.api.enchant.APEnchantment;
+import cn.misaka.ability.api.enchant.PlayerEnchantStatus;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class ItemEnchantedSword extends ItemSword {
 
-	/**
-	 * 一个空类，用于创建附魔后的物品
-	 */
-	
-	public APEnchantType enchant;
-	public ItemStack item;
 	public final static Random rand = new Random();
 	
 	/**
@@ -37,23 +31,33 @@ public class ItemEnchantedSword extends ItemSword {
 	 * @param item1
 	 * 			原物品
 	 */
-	public ItemEnchantedSword(ToolMaterial material, APEnchantType enchant1, ItemStack item1) {
+	public ItemEnchantedSword(ToolMaterial material) {
 		super(material);
-		enchant = enchant1;
-		item = item1;
 	}
+	
+    @Override
+	@SideOnly(Side.CLIENT)
+    public IIcon getIconIndex(ItemStack stack)
+    {
+    	Item item = Item.getItemById(stack.stackTagCompound.getInteger("preID"));
+    	return item == null ? null : item.getIconIndex(stack);
+    }
 	
 	/**
 	 * 攻击加强&耐久加强
 	 */
 	@Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase attackedEntity, 
-    		EntityLivingBase player) {
-		ItemSword item = (ItemSword) APEnchantment.itemForJudge.getItem();
-		float sworddamage = item.func_150931_i() + enchant.damage;
+    		EntityLivingBase player2) {
+		if(!(player2 instanceof EntityPlayer)) return false;
+		EntityPlayer player = (EntityPlayer) player2;
+		PlayerEnchantStatus stat = APEnchantment.loadEnchantStatus(player);
+		ItemSword item = (ItemSword) stat.itemBeforeEnchant.getItem();
+		APEnchantType ench = stat.getEnchantment();
+		float sworddamage = item.func_150931_i() + ench.damage;
 		attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(player), 
 			sworddamage);
-		damageItemRandom(par1ItemStack, enchant, player); //耐久加强
+		damageItemRandom(par1ItemStack, ench, player); //耐久加强
 		return true;
 	}
 	
@@ -61,11 +65,13 @@ public class ItemEnchantedSword extends ItemSword {
 	 * 方块破坏
 	 */
 	@Override
-    public boolean onBlockDestroyed(ItemStack p_150894_1_, World p_150894_2_, Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_)
+    public boolean onBlockDestroyed(ItemStack p_150894_1_, World p_150894_2_, Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase player2)
     {
-        if ((double)p_150894_3_.getBlockHardness(p_150894_2_, p_150894_4_, p_150894_5_, p_150894_6_) != 0.0D)
+		if(!(player2 instanceof EntityPlayer)) return false;
+		EntityPlayer player = (EntityPlayer) player2;
+        if (p_150894_3_.getBlockHardness(p_150894_2_, p_150894_4_, p_150894_5_, p_150894_6_) != 0.0D)
         {
-            damageItemRandom(p_150894_1_, enchant, p_150894_7_);
+            damageItemRandom(p_150894_1_, APEnchantment.loadEnchantStatus(player).getEnchantment(), player);
         }
         return true;
     }
@@ -76,7 +82,6 @@ public class ItemEnchantedSword extends ItemSword {
     @Override
     @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = item.getIconIndex();
 	}
     
     /**

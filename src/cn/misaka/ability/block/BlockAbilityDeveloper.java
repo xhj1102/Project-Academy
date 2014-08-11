@@ -10,8 +10,6 @@
  */
 package cn.misaka.ability.block;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cn.liutils.core.proxy.LIClientProps;
@@ -19,20 +17,16 @@ import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.core.AcademyCraft;
 import cn.misaka.core.proxy.APClientProps;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -85,7 +79,7 @@ public class BlockAbilityDeveloper extends BlockContainer {
 	@Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack)
     {
-        int l = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int l = MathHelper.floor_double(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         int metadata = l << 1;
 
         world.setBlockMetadataWithNotify(x, y, z, metadata, 0x02);
@@ -101,7 +95,8 @@ public class BlockAbilityDeveloper extends BlockContainer {
         }
     }
     
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
+    @Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
     	super.onNeighborBlockChange(world, x, y, z, block);
     	int metadata = world.getBlockMetadata(x, y, z);

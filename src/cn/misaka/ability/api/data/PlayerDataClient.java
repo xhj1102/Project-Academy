@@ -10,13 +10,7 @@
  */
 package cn.misaka.ability.api.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.config.Configuration;
-import cn.misaka.ability.system.control.preset.ControlPreset;
-import cn.misaka.ability.system.control.preset.ControlPreset.Entry;
 import cn.misaka.ability.system.data.PlayerDataUpdater;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
 import cn.misaka.core.AcademyCraft;

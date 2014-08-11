@@ -40,7 +40,7 @@ public class APCreativeTab extends CreativeTabs {
 	 */
 	@Override
 	public Item getTabIconItem() {
-		return APItems.itemLogo;
+		return APItems.logo;
 	}
 
 }

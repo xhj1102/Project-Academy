@@ -16,8 +16,6 @@ import net.minecraft.server.MinecraftServer;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
-
 import cn.misaka.ability.api.ability.AbilityClass;
 import cn.misaka.ability.system.AbilityMain;
 import cn.misaka.ability.system.data.PlayerDataUpdater;

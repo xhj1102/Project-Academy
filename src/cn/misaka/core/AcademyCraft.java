@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.command.CommandHandler;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.register.LIGuiHandler;

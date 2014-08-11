@@ -8,21 +8,20 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.item;
-
-import cn.misaka.core.AcademyCraft;
-import net.minecraft.item.Item;
+package cn.misaka.ability.api.client.render.enchant;
 
 /**
- * @author KSkun
- * 硬币什么的功能之后再加吧
+ * TODO：加内容
+ * @author WeAthFolD
+ *
  */
-public class ItemCoin extends Item {
-	
-	public ItemCoin() {
-		setUnlocalizedName("ap_coin");
-		setTextureName("academy:coin-front");
-		setCreativeTab(AcademyCraft.cct);
+public class APEnchantRender {
+
+	/**
+	 * 
+	 */
+	public APEnchantRender() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

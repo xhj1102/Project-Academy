@@ -10,9 +10,6 @@
  */
 package cn.misaka.ability.client.model;
 
-import org.lwjgl.opengl.GL11;
-
-import cn.liutils.api.util.GenericUtils;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 
@@ -49,13 +46,15 @@ public class ModelBipedAP extends ModelBiped {
 		super(par1, par2, par3, par4);
 	}
 	
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    @Override
+	public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
     {
     	//GL11.glRotated(90, 1F, 0F, 0F);
     	super.render(par1Entity, par2, par3, par4, par5, par6, par7);
     }
     
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    @Override
+	public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
     {
     	this.bipedHead.rotateAngleX = wrap(par7Entity.rotationPitch + 15F, 10, 60) * PI_DIV_180;
     	this.bipedHead.rotateAngleY = wrap(par7Entity.rotationYaw % 360F, -45, 45) * PI_DIV_180;

@@ -40,6 +40,7 @@ public class SkillTest1 extends AbilitySkill {
 		return APClientProps.SKL_TEST_1;
 	}
 	
+	@Override
 	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlData mctrl) {
 		System.out.println("SkillTest1 onKeyStateChange to " +  stat.isKeyDown(kid) + "at " + world.isRemote + " Side");
 	}

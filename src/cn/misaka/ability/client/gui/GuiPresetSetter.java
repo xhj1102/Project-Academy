@@ -1,3 +1,5 @@
+package cn.misaka.ability.client.gui;
+
 public class GuiPresetSetter {
 	private int tempX, tempY, key;
 

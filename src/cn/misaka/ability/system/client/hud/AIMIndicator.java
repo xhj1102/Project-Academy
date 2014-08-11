@@ -17,14 +17,9 @@ import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.ability.api.data.PlayerDataClient;
 import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.core.proxy.APClientProps;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
 /**
  * @author WeAthFolD

@@ -13,15 +13,11 @@ package cn.misaka.ability.client.render.entity;
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.util.RenderUtils;
-import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.ability.client.model.ModelBipedAP;
-import cn.misaka.ability.system.event.APSEventListener;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -41,7 +37,8 @@ public class RenderPlayerAP extends RenderPlayer {
 	
 	private static final float rotations[] = new float[] { 0, 90, 180, -90 };
 	
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    @Override
+	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
     	EntityPlayer player = (EntityPlayer) par1Entity;
     	

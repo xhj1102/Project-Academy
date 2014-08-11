@@ -55,7 +55,7 @@ public class APSTickEvents {
 	
 	private void equipVoid(EntityPlayer player) {
 		if(player.getCurrentEquippedItem() == null) {
-			player.setCurrentItemOrArmor(0, new ItemStack(APItems.itemVoid));
+			player.setCurrentItemOrArmor(0, new ItemStack(APItems.abilityVoid));
 		}
 	}
 	

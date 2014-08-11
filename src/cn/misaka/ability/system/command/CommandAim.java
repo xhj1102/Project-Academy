@@ -23,7 +23,6 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ChatComponentTranslation;
 
 /**
  * 反射大法好
@@ -72,7 +71,7 @@ public class CommandAim extends LICommandBase {
 	 */
 	@Override
 	public void processCommand(ICommandSender ics, String[] args) {
-		EntityPlayerMP player = this.getCommandSenderAsPlayer(ics);
+		EntityPlayerMP player = CommandBase.getCommandSenderAsPlayer(ics);
 		if(args.length == 0) {
 			sendChat(ics, "Not enough arguments");
 		} else {
@@ -115,7 +114,7 @@ public class CommandAim extends LICommandBase {
 	}
 	
 	private void showStatus(ICommandSender ics) {
-		EntityPlayer player = this.getCommandSenderAsPlayer(ics);
+		EntityPlayer player = CommandBase.getCommandSenderAsPlayer(ics);
 		//TODO
 	}
 	

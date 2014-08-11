@@ -12,6 +12,7 @@ package cn.misaka.core.proxy;
 
 import net.minecraft.command.CommandHandler;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.input.Keyboard;
@@ -26,6 +27,7 @@ import cn.misaka.ability.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.ability.system.client.key.KeySkillActivation;
 import cn.misaka.ability.system.client.key.KeySkillControl;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
+import cn.misaka.ability.system.client.render.RenderItemEnchanted;
 import cn.misaka.ability.system.command.CommandControlModification;
 import cn.misaka.core.register.APItems;
 
@@ -48,11 +50,14 @@ public class APClientProxy extends APCommonProxy {
 	
 	@Override
 	public void init() {
-		MinecraftForgeClient.registerItemRenderer(APItems.itemVoid, new RenderAbilityVoid());
+		MinecraftForgeClient.registerItemRenderer(APItems.abilityVoid, new RenderAbilityVoid());
+		for(Item it : APItems.enchantedSword)
+			MinecraftForgeClient.registerItemRenderer(it, new RenderItemEnchanted());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAbilityDeveloper.class, new RenderAbilityDeveloper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerAP());
 	}
 	
+	@Override
 	public void commandInit(CommandHandler cm) {
 		cm.registerCommand(new CommandControlModification());
 	}

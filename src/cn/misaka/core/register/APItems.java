@@ -27,50 +27,58 @@ import net.minecraftforge.common.config.Configuration;
 public class APItems {
 	
 	public static Item 
-		itemVoid,
-		itemLogo,
-		itemAPRecord1,
-		itemAPRecord2,
-		itemAPRecord3,
-		itemCoin,
+		abilityVoid,
+		logo,
+		record1,
+		record2,
+		record3,
+		coin,
 		//H即High, M即Medium, L即Low.
-		itemCapsuleH,
-		itemCapsuleM,
-		itemCapsuleL,
-		itemTabletH,
-		itemTabletM,
-		itemTabletL,
-		itemNeedle;
+		capsuleH,
+		capsuleM,
+		capsuleL,
+		tabletH,
+		tabletM,
+		tabletL,
+		needle;
+	
+	public static Item
+		enchantedSword[],
+		enchantedTool[];
 
 	public static void init(Configuration conf) {
-		itemVoid = new ItemVoid();
-		itemLogo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
-		itemAPRecord1 = new ItemAPRecord("ac1", 1).setUnlocalizedName("ap_record1");
-		itemAPRecord2 = new ItemAPRecord("ac2", 2).setUnlocalizedName("ap_record2");
-		itemAPRecord3 = new ItemAPRecord("ac3", 3).setUnlocalizedName("ap_record3");
-		itemCoin = new ItemCoin();
-		itemCapsuleH = new ItemCapsule(1).setUnlocalizedName("ability_capsule1");
-		itemCapsuleM = new ItemCapsule(2).setUnlocalizedName("ability_capsule2");
-		itemCapsuleL = new ItemCapsule(3).setUnlocalizedName("ability_capsule3");
-		itemTabletH = new ItemTablet(1).setUnlocalizedName("ability_tablet1");
-		itemTabletM = new ItemTablet(2).setUnlocalizedName("ability_tablet2");
-		itemTabletL = new ItemTablet(3).setUnlocalizedName("ability_tablet3");
-		itemNeedle = new ItemNeedle();
+		abilityVoid = new ItemVoid();
+		logo = new Item().setUnlocalizedName("ap_logo").setTextureName("academy:logo");
+		record1 = new ItemAPRecord("ac1", 1).setUnlocalizedName("ap_record1");
+		record2 = new ItemAPRecord("ac2", 2).setUnlocalizedName("ap_record2");
+		record3 = new ItemAPRecord("ac3", 3).setUnlocalizedName("ap_record3");
+		coin = new ItemCoin();
+		capsuleH = new ItemCapsule(1).setUnlocalizedName("ability_capsule1");
+		capsuleM = new ItemCapsule(2).setUnlocalizedName("ability_capsule2");
+		capsuleL = new ItemCapsule(3).setUnlocalizedName("ability_capsule3");
+		tabletH = new ItemTablet(1).setUnlocalizedName("ability_tablet1");
+		tabletM = new ItemTablet(2).setUnlocalizedName("ability_tablet2");
+		tabletL = new ItemTablet(3).setUnlocalizedName("ability_tablet3");
+		needle = new ItemNeedle();
 		
 		
-		GameRegistry.registerItem(itemVoid, "ability_void");
-		GameRegistry.registerItem(itemLogo, "ap_logo");
-		GameRegistry.registerItem(itemAPRecord1, "ap_record1");
-		GameRegistry.registerItem(itemAPRecord2, "ap_record2");
-		GameRegistry.registerItem(itemAPRecord3, "ap_record3");
-		GameRegistry.registerItem(itemCoin, "ap_coin");
-		GameRegistry.registerItem(itemCapsuleH, "ability_capsule1");
-		GameRegistry.registerItem(itemCapsuleM, "ability_capsule2");
-		GameRegistry.registerItem(itemCapsuleL, "ability_capsule3");
-		GameRegistry.registerItem(itemTabletH, "ability_tablet1");
-		GameRegistry.registerItem(itemTabletM, "ability_tablet2");
-		GameRegistry.registerItem(itemTabletL, "ability_tablet3");
-		GameRegistry.registerItem(itemNeedle, "ap_needle");
+		GameRegistry.registerItem(abilityVoid, "ability_void");
+		GameRegistry.registerItem(logo, "ap_logo");
+		GameRegistry.registerItem(record1, "ap_record1");
+		GameRegistry.registerItem(record2, "ap_record2");
+		GameRegistry.registerItem(record3, "ap_record3");
+		GameRegistry.registerItem(coin, "ap_coin");
+		GameRegistry.registerItem(capsuleH, "ability_capsule1");
+		GameRegistry.registerItem(capsuleM, "ability_capsule2");
+		GameRegistry.registerItem(capsuleL, "ability_capsule3");
+		GameRegistry.registerItem(tabletH, "ability_tablet1");
+		GameRegistry.registerItem(tabletM, "ability_tablet2");
+		GameRegistry.registerItem(tabletL, "ability_tablet3");
+		GameRegistry.registerItem(needle, "ap_needle");
+	}
+	
+	public static Item getEnchantedSword(Item.ToolMaterial mat) {
+		return enchantedSword[mat.ordinal()];
 	}
 
 }

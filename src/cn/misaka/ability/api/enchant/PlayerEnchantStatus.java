@@ -8,21 +8,29 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.item;
+package cn.misaka.ability.api.enchant;
 
-import cn.misaka.core.AcademyCraft;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 /**
- * @author KSkun
- * 硬币什么的功能之后再加吧
+ * @author WeAthFolD
+ *
  */
-public class ItemCoin extends Item {
+public class PlayerEnchantStatus {
+
+	/**
+	 * 玩家当前是否在进行临时附魔。
+	 */
+	public boolean isEnchanting;
 	
-	public ItemCoin() {
-		setUnlocalizedName("ap_coin");
-		setTextureName("academy:coin-front");
-		setCreativeTab(AcademyCraft.cct);
+	public int enchatSlotID;
+	
+	public ItemStack itemBeforeEnchant;
+	
+	public int enchantID;
+	
+	public APEnchantType getEnchantment() {
+		return APEnchantment.getEnchantment(enchantID);
 	}
 
 }

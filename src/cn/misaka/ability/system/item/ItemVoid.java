@@ -11,9 +11,6 @@
 package cn.misaka.ability.system.item;
 
 import cn.liutils.core.LIUtilsMod;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -31,6 +28,7 @@ public class ItemVoid extends Item {
 		setTextureName(LIUtilsMod.DEBUG ? "academy:void" : "academy:blank");
 	}
 	
+	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
 		EntityPlayer player = (EntityPlayer) par3Entity;
 		player.isSwingInProgress = false;
@@ -40,12 +38,14 @@ public class ItemVoid extends Item {
 		}
 	}
 	
-    public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player)
+    @Override
+	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player)
     {
     	return !player.capabilities.isCreativeMode;
     }
     
-    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
+    @Override
+	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
     {
         return true;
     }

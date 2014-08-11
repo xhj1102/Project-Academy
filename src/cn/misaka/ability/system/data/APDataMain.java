@@ -15,8 +15,6 @@ import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.api.data.PlayerDataClient;
-import cn.misaka.ability.api.data.PlayerDataServer;
 
 /**
  * @author WeAthFolD

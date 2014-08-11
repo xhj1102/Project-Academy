@@ -1,10 +1,7 @@
 package cn.misaka.ability.system.item;
 
 import java.util.Random;
-import java.util.Set;
-
-import cn.misaka.ability.api.enchantment.APEnchantType;
-import cn.misaka.ability.api.enchantment.APEnchantment;
+import cn.misaka.ability.api.enchant.APEnchantType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -13,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -23,7 +19,7 @@ public class ItemEnchantedTool extends ItemTool {
 	public APEnchantType enchant;
 	public ItemStack item;
 	public static float tooldamage;
-	public Random rand;
+	private static final Random rand = new Random();
 
 	public ItemEnchantedTool(ToolMaterial material, APEnchantType enchant1, ItemStack item1) {
 		super(tooldamage, material, null);
@@ -37,7 +33,7 @@ public class ItemEnchantedTool extends ItemTool {
 	@Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase attackedEntity, 
     	EntityLivingBase player) {
-		ItemTool item1 = (ItemTool) APEnchantment.itemForJudge.getItem();
+		ItemTool item1 = null;//(ItemTool) APEnchantment.itemForJudge.getItem();
 		tooldamage = (float) ((AttributeModifier) item1.getItemAttributeModifiers()
 				.get(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName()))
 				.getAmount() + enchant.damage;
@@ -53,7 +49,7 @@ public class ItemEnchantedTool extends ItemTool {
 	@Override
     public boolean onBlockDestroyed(ItemStack p_150894_1_, World p_150894_2_, Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_)
     {
-        if ((double)p_150894_3_.getBlockHardness(p_150894_2_, p_150894_4_, p_150894_5_, p_150894_6_) != 0.0D)
+        if (p_150894_3_.getBlockHardness(p_150894_2_, p_150894_4_, p_150894_5_, p_150894_6_) != 0.0D)
         {
             damageItemRandom(p_150894_1_, enchant, p_150894_7_);
         }
