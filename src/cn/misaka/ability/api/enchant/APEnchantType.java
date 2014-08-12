@@ -8,11 +8,11 @@ public abstract class APEnchantType {
 	
 	public float 
 		damage,
-		endure;
-	
-	public boolean 
-		fire,
+		endure,
 		repel;
+	
+	public int
+		fire;
 	
 	@SideOnly(Side.CLIENT)
 	public abstract APEnchantRender getEnchantRender();

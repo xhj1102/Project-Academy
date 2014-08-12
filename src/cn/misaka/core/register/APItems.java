@@ -40,7 +40,8 @@ public class APItems {
 		tabletH,
 		tabletM,
 		tabletL,
-		needle;
+		needle,
+		enchantedOther;
 	
 	public static Item
 		enchantedSword[],
@@ -79,6 +80,10 @@ public class APItems {
 	
 	public static Item getEnchantedSword(Item.ToolMaterial mat) {
 		return enchantedSword[mat.ordinal()];
+	}
+	
+	public static Item getEnchantedTool(Item.ToolMaterial mat) {
+		return enchantedTool[mat.ordinal()];
 	}
 
 }

@@ -41,8 +41,8 @@ public class APEnchantment {
 			dechangeItemFromPlayer(player);
 		ItemStack curStack = player.getCurrentEquippedItem();
 		//检查当前物品是否能被附魔
-		if(curStack == null || !(curStack.getItem() instanceof ItemSword || curStack.getItem() instanceof ItemTool)) {
-			System.err.println("Trying to timed-enchant a null or unsupported item, process aborting.");
+		if(curStack == null) {
+			System.err.println("Trying to timed-enchant a null item, process aborting.");
 			return;
 		}
 		
@@ -60,11 +60,15 @@ public class APEnchantment {
 	}
 	
 	private static Item getEnchantItem(Item item0) {
-		if(item0 instanceof ItemSword)
+		if(item0 instanceof ItemSword) {
 			return APItems.enchantedSword[ToolMaterial.valueOf(((ItemSword)item0).getToolMaterialName()).ordinal()];
-		if(item0 instanceof ItemTool);
-			//return APItems.enchantedSword;
-		return null;
+		} else {
+			if(item0 instanceof ItemTool) {
+				return APItems.enchantedTool[ToolMaterial.valueOf(((ItemTool)item0).getToolMaterialName()).ordinal()];
+			} else {
+				return APItems.enchantedOther;
+			}
+		}
 	}
 	
 	/**
@@ -115,5 +119,6 @@ public class APEnchantment {
 	public static APEnchantType getEnchantment(int id) {
 		return GenericUtils.safeFetchFrom(typeList, id);
 	}
+	
 	
 }

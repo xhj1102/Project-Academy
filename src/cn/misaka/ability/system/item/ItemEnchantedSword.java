@@ -4,11 +4,13 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cn.liutils.api.util.Motion3D;
 import cn.misaka.ability.api.enchant.APEnchantType;
 import cn.misaka.ability.api.enchant.APEnchantment;
 import cn.misaka.ability.api.enchant.PlayerEnchantStatus;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -26,10 +28,6 @@ public class ItemEnchantedSword extends ItemSword {
 	 * 构造器
 	 * @param material
 	 * 			工具材质
-	 * @param enchant1
-	 * 			附魔信息
-	 * @param item1
-	 * 			原物品
 	 */
 	public ItemEnchantedSword(ToolMaterial material) {
 		super(material);
@@ -57,6 +55,16 @@ public class ItemEnchantedSword extends ItemSword {
 		float sworddamage = item.func_150931_i() + ench.damage;
 		attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(player), 
 			sworddamage);
+		if(ench.fire != 0) { //火焰附加
+			if(!attackedEntity.isBurning())attackedEntity.setFire(ench.fire);
+		}
+		if(ench.repel != 0) { //击退
+			double factor = ench.repel;
+			Motion3D motion = new Motion3D(player, true);
+			attackedEntity.motionX += motion.motionX * factor;
+			attackedEntity.motionY += motion.motionY * factor;
+			attackedEntity.motionZ += motion.motionZ * factor;
+		}
 		damageItemRandom(par1ItemStack, ench, player); //耐久加强
 		return true;
 	}
@@ -65,8 +73,9 @@ public class ItemEnchantedSword extends ItemSword {
 	 * 方块破坏
 	 */
 	@Override
-    public boolean onBlockDestroyed(ItemStack p_150894_1_, World p_150894_2_, Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase player2)
-    {
+    public boolean onBlockDestroyed(ItemStack p_150894_1_, World p_150894_2_, 
+    		Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, 
+    		EntityLivingBase player2) {
 		if(!(player2 instanceof EntityPlayer)) return false;
 		EntityPlayer player = (EntityPlayer) player2;
         if (p_150894_3_.getBlockHardness(p_150894_2_, p_150894_4_, p_150894_5_, p_150894_6_) != 0.0D)
@@ -75,15 +84,7 @@ public class ItemEnchantedSword extends ItemSword {
         }
         return true;
     }
-	
-	/**
-	 * 获得原物品图标
-	 */
-    @Override
-    @SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister) {
-	}
-    
+
     /**
      * 实现耐久增强
      */
@@ -98,5 +99,13 @@ public class ItemEnchantedSword extends ItemSword {
     			item.damageItem(1, player);
     		}
     	}
+    }
+    
+    /**
+     * 异常检测处理
+     */
+    @Override
+    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
+    	if(!par5)APEnchantment.dechangeItemFromPlayer((EntityPlayer) par3Entity);
     }
 }
