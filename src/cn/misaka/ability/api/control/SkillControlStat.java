@@ -17,12 +17,24 @@ package cn.misaka.ability.api.control;
 public class SkillControlStat {
 
 	private boolean[] keyDown;
+	private int[] keyTick;
 	
 	public final int maxKeys;
 	
 	public SkillControlStat(int max) {
 		maxKeys = max;
 		keyDown = new boolean[max];
+		keyTick = new int[max];
+	}
+	
+	public void onUpdate() {
+		for(int i = 0; i < maxKeys; i++) {
+			keyTick[i] = keyDown[i] ? keyTick[i] + 1 : 0;
+		}
+	}
+	
+	public int getKeyTick(int kid) {
+		return keyTick[kid];
 	}
 	
 	/**

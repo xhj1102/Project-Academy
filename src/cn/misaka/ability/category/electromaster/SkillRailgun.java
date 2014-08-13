@@ -8,7 +8,7 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.category.test;
+package cn.misaka.ability.category.electromaster;
 
 import net.minecraft.util.ResourceLocation;
 import cn.misaka.ability.api.ability.AbilitySkill;
@@ -18,31 +18,20 @@ import cn.misaka.core.proxy.APClientProps;
  * @author WeAthFolD
  *
  */
-public class SkillTest2 extends AbilitySkill {
+public class SkillRailgun extends AbilitySkill {
 
-	/**
-	 * @param name
-	 */
-	public SkillTest2() {
-		super("skill.test2.name");
+	public SkillRailgun() {
+		super("skill.elec.railgun");
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.api.ability.AbilitySkill#getLogo()
-	 */
 	@Override
 	public ResourceLocation getLogo() {
-		return APClientProps.SKL_TEST_2;
-	}
-	
-	@Override
-	public int getMaxKeys() {
-		return 1;
+		return APClientProps.ELEC_RAILGUN;
 	}
 
 	@Override
 	public int getSuggestKey(int skillKeyID) {
-		return 1;
+		return 0;
 	}
 
 }

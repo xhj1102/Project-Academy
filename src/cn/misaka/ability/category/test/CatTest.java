@@ -49,6 +49,11 @@ public class CatTest extends AbilityCategory {
 				new SkillTest2()
 		};
 	}
+
+	@Override
+	public ResourceLocation getLogo() {
+		return null;
+	}
 	
 
 }

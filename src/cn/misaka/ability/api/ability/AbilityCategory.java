@@ -77,7 +77,7 @@ public abstract class AbilityCategory {
 	 * 获取经过translate的系名。
 	 * @return
 	 */
-	public final String getClassNameForDisplay() {
+	public final String getCategoryNameForDisplay() {
 		return StatCollector.translateToLocal(unl_name);
 	}
 	

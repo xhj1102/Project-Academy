@@ -119,6 +119,7 @@ public class APControlMain {
 			for(int k = 0; k < ability.ability_skills.length; k++) {
 				AbilitySkill skl = ability.ability_skills[k];
 				SkillControlStat st = ctrl.loadSkillStat(k, ability.getMaxSkills());
+				st.onUpdate();
 				if(skl.isSkillActivated(player.worldObj, player, st, ctrl)) {
 					if(!skl.onSkillTick(player.worldObj, player, st, ctrl)) {
 						st.clear();

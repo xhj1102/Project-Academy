@@ -72,6 +72,8 @@ public abstract class AbilitySkill {
 		return 0;
 	}
 	
+	public abstract int getSuggestKey(int skillKeyID);
+	
 	/**
 	 * 该技能是否会“打断”其他技能的动作？
 	 * @return

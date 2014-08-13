@@ -1,4 +1,9 @@
-package cn.misaka.ability.clinet.gui;
+package cn.misaka.ability.client.gui;
+
+import org.lwjgl.opengl.GL11;
+
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 
 
 /**
@@ -7,7 +12,7 @@ package cn.misaka.ability.clinet.gui;
  */
 public class GuiPresetSetter extends GuiScreen {
 	
-    private int tempX, tempY, key；
+    private int tempX, tempY, key;
 	public final int xSizeOfTexture = 176;
 	public final int ySizeOfTexture = 88;
     
@@ -18,12 +23,12 @@ public class GuiPresetSetter extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		is.controlList.clear();
+		//thisis.controlList.clear();
 
 		int posX = (this.width - xSizeOfTexture) / 2;
 		int posY = (this.height - ySizeOfTexture) / 2;
 
-		this.controlList.add(new GuiButton(0, posX+ 40, posY + 40, 100, 20, "placeholder"));
+		//this.controlList.add(new GuiButton(0, posX+ 40, posY + 40, 100, 20, "placeholder"));
 	}
     
     @Override
@@ -31,9 +36,9 @@ public class GuiPresetSetter extends GuiScreen {
 		this.drawDefaultBackground();
         // Draws the GUI itself and handle yoooo
 		
-		int var4 = this.mc.renderEngine.getTexture(null); // To be completed!
+		//int var4 = this.mc.renderEngine.getTexture(null); // To be completed!
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.mc.renderEngine.bindTexture(var4);
+		//this.mc.renderEngine.bindTexture(var4);
 
 		int posX = (this.width - xSizeOfTexture) / 2;
 		int posY = (this.height - ySizeOfTexture) / 2;
@@ -44,6 +49,9 @@ public class GuiPresetSetter extends GuiScreen {
     }
     
 	@Override
+	/**
+	 * 建议使用LIGuiButton
+	 */
 	protected void actionPerformed(GuiButton guibutton) {
 		if(guibutton.id >= 1 && guibutton.id <= 99) onMenuChanged(guibutton.id);
 		if(guibutton.id >= 100 && guibutton.id <= 199) onChildMenuChanged(guibutton.id - 100);

@@ -24,7 +24,9 @@ public class APClientProps {
 		TEX_MDL_ABILITY_DEVELOPER = src("academy:textures/models/ability_developer.png"),
 		TEX_GUI_ABILITY_DEVELOPER = src("academy:textures/guis/ability_dev.png"),
 		TEX_HUD_CPBAR = src("academy:textures/guis/cpbar.png"),
-		TEX_HUD_LOGO = src("academy:textures/guis/logo.png");
+		TEX_HUD_LOGO = src("academy:textures/guis/logo.png"),
+		TEX_COIN_FRONT = src("academy:textures/items/coin-front.png"),
+		TEX_COIN_BACK = src("academy:textures/items/coin-back.png");
 	
 	//Ability Textures
 	public static final ResourceLocation
@@ -42,6 +44,17 @@ public class APClientProps {
 		src("academy:textures/effects/elearc1.png"),
 		src("academy:textures/effects/elearc2.png")
 	};
+	
+	//Abilities
+	public static final ResourceLocation
+		ELEC_LOGO = src("academy:textures/abilities/electromaster/main.png"),
+		ELEC_ATTACK = src("academy:textures/abilities/electromaster/attack_large.png"),
+		ELEC_ATTRACT = src("academy:textures/abilities/electromaster/attraction.png"),
+		ELEC_CHARGE = src("academy:textures/abilities/electromaster/itemcharge.png"),
+		ELEC_VIEWMINE = src("academy:textures/abilities/electromaster/mineview.png"),
+		ELEC_MOVE = src("academy:textures/abilities/electromaster/moving.png"),
+		ELEC_RAILGUN = src("academy:textures/abilities/electromaster/railgun.png"),
+		ELEC_SWORD = src("academy:textures/abilities/electromaster/sword.png");
 	
 	//GUI IDs
 	public static final int

@@ -54,4 +54,9 @@ public class SkillTest1 extends AbilitySkill {
 		return 1;
 	}
 
+	@Override
+	public int getSuggestKey(int skillKeyID) {
+		return 0; 
+	}
+
 }
