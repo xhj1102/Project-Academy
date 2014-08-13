@@ -11,9 +11,12 @@
 package cn.misaka.ability.entity.fx;
 
 import cn.liutils.api.util.Motion3D;
+import cn.misaka.core.proxy.APClientProps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 /**
@@ -24,6 +27,7 @@ import net.minecraft.world.World;
 public class EntityArcFX extends Entity {
 	
 	public double length;
+	public ResourceLocation[] texture = APClientProps.ANIM_ARC_LONG;
 
 	public EntityArcFX(World world, EntityPlayer player, double dist) {
 		super(world);
@@ -33,6 +37,17 @@ public class EntityArcFX extends Entity {
 		this.rotationPitch = player.rotationPitch;
 		this.rotationYaw = player.rotationYaw;
 		this.ignoreFrustumCheck = true;
+	}
+	
+	public EntityArcFX(World world, EntityPlayer player) {
+		super(world);
+		MovingObjectPosition res = player.rayTrace(100.0, 1.0F);
+		
+	}
+	
+	public EntityArcFX setTexture(ResourceLocation... r) {
+		texture = r;
+		return this;
 	}
 
 	@Override

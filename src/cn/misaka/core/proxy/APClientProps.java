@@ -54,7 +54,8 @@ public class APClientProps {
 		ELEC_VIEWMINE = src("academy:textures/abilities/electromaster/mineview.png"),
 		ELEC_MOVE = src("academy:textures/abilities/electromaster/moving.png"),
 		ELEC_RAILGUN = src("academy:textures/abilities/electromaster/railgun.png"),
-		ELEC_SWORD = src("academy:textures/abilities/electromaster/sword.png");
+		ELEC_SWORD = src("academy:textures/abilities/electromaster/sword.png"),
+		ELEC_ARC = src("academy:textures/abilities/electromaster/arc.png");
 	
 	//GUI IDs
 	public static final int

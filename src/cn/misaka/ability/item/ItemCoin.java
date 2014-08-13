@@ -11,6 +11,8 @@
 package cn.misaka.ability.item;
 
 import cn.liutils.api.util.GenericUtils;
+import cn.liutils.api.util.Pair;
+import cn.misaka.ability.category.electromaster.IRailgunQTE;
 import cn.misaka.core.AcademyCraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +25,7 @@ import net.minecraft.world.World;
  * @author KSkun
  * 硬币什么的功能之后再加吧
  */
-public class ItemCoin extends Item {
+public class ItemCoin extends Item implements IRailgunQTE {
 	
 	public static final int THROWING_TIME = 40;
 	
@@ -47,7 +49,6 @@ public class ItemCoin extends Item {
     		if(++ticks >= THROWING_TIME) {
     			nbt.setBoolean("isThrowing", false);
     			nbt.setInteger("throwTick", 0);
-    			System.out.println("Fell!");
     		} else nbt.setInteger("throwTick", ticks);
     	}
     }
@@ -60,8 +61,25 @@ public class ItemCoin extends Item {
     	
     	nbt.setBoolean("isThrowing", true);
 		nbt.setInteger("throwTick", 0);
-		System.out.println("Up!");
         return stack;
     }
+
+	@Override
+	public boolean isQTEinProgress(ItemStack stack) {
+		NBTTagCompound nbt = GenericUtils.loadCompound(stack);
+		return nbt.getBoolean("isThrowing");
+	}
+
+	@Override
+	public float getQTEProgress(ItemStack stack) {
+		NBTTagCompound nbt = GenericUtils.loadCompound(stack);
+		return ((float)nbt.getInteger("throwTick")) / THROWING_TIME;
+	}
+
+	Pair<Float, Float> range = new Pair<Float, Float>(0.7F, 0.9F);
+	@Override
+	public Pair<Float, Float> getAcceptedRange() {
+		return range;
+	}
 
 }

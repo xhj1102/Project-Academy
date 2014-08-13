@@ -12,6 +12,7 @@ package cn.misaka.ability.category.electromaster;
 
 import net.minecraft.util.ResourceLocation;
 import cn.misaka.ability.api.ability.AbilitySkill;
+import cn.misaka.core.proxy.APClientProps;
 
 /**
  * @author WeAthFolD
@@ -19,20 +20,18 @@ import cn.misaka.ability.api.ability.AbilitySkill;
  */
 public class SkillItemCharge extends AbilitySkill {
 
-	/**
-	 * @param name
-	 */
 	public SkillItemCharge() {
 		super("skill.elec.itemchg");
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.api.ability.AbilitySkill#getLogo()
-	 */
 	@Override
 	public ResourceLocation getLogo() {
-		// TODO Auto-generated method stub
-		return null;
+		return APClientProps.ELEC_CHARGE;
+	}
+
+	@Override
+	public int getSuggestKey(int skillKeyID) {
+		return 3;
 	}
 
 }

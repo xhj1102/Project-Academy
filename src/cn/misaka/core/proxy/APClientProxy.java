@@ -57,7 +57,7 @@ public class APClientProxy extends APCommonProxy {
 		MinecraftForgeClient.registerItemRenderer(APItems.coin, new RenderCoin());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAbilityDeveloper.class, new RenderAbilityDeveloper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerAP());
-		RenderingRegistry.registerEntityRenderingHandler(EntityArcFX.class, new RenderArcAnim(APClientProps.ANIM_ARC_LONG));
+		RenderingRegistry.registerEntityRenderingHandler(EntityArcFX.class, new RenderArcAnim());
 	}
 	
 	@Override

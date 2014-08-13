@@ -10,28 +10,33 @@
  */
 package cn.misaka.ability.category.electromaster;
 
-import net.minecraft.util.ResourceLocation;
-import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.core.proxy.APClientProps;
+import cn.liutils.api.util.Pair;
+import net.minecraft.item.ItemStack;
 
 /**
+ * 可以被超电磁炮用qte的方式射出的物品，需要实现这个接口。
  * @author WeAthFolD
  *
  */
-public class SkillElectricAttraction extends AbilitySkill {
-
-	public SkillElectricAttraction() {
-		super("skill.elec.attract");
-	}
-
-	@Override
-	public ResourceLocation getLogo() {
-		return APClientProps.ELEC_ATTRACT;
-	}
-
-	@Override
-	public int getSuggestKey(int skillKeyID) {
-		return 2;
-	}
-
+public interface IRailgunQTE {
+	
+	/**
+	 * 当前物品是否被抛起
+	 * @param stack
+	 * @return
+	 */
+	boolean isQTEinProgress(ItemStack stack);
+	/**
+	 * 获取进度。0.0为刚刚抛弃，1.0为落下前瞬间。
+	 * @param stack
+	 * @return
+	 */
+	float getQTEProgress(ItemStack stack);
+	
+	/**
+	 * 获取容许的进度误差区间。
+	 * @return
+	 */
+	Pair<Float, Float> getAcceptedRange();
+	
 }

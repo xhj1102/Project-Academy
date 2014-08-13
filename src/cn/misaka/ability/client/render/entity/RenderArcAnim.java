@@ -28,18 +28,11 @@ import net.minecraft.util.Vec3;
  */
 public class RenderArcAnim extends Render {
 	
-	private ResourceLocation[] tiles;
 	int rate = 2;
 	float halfHeight = 0.5F;
 	float ratio = 5F;
 	boolean disableLight = true;
 	
-	/**
-	 * 
-	 */
-	public RenderArcAnim(ResourceLocation... texs) {
-		tiles = texs;
-	}
 	
 	public RenderArcAnim setRate(int rt) {
 		rate = rt;
@@ -64,7 +57,9 @@ public class RenderArcAnim extends Render {
 	@Override
 	public void doRender(Entity var1, double var2, double var4, double var6,
 			float var8, float var9) {
-		int frame = (var1.ticksExisted / rate) % tiles.length;
+		
+		EntityArcFX arc = (EntityArcFX) var1;
+		int frame = (var1.ticksExisted / rate) % arc.texture.length;
 		halfHeight = .8F;
 		rate = 2;
 		GL11.glEnable(GL11.GL_BLEND);
@@ -76,7 +71,7 @@ public class RenderArcAnim extends Render {
 		GL11.glPushMatrix(); {
 			if(disableLight)
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
-			RenderUtils.loadTexture(tiles[frame]);
+			RenderUtils.loadTexture(arc.texture[frame]);
 			double len = ((EntityArcFX)var1).length;
 			Vec3 v1 = RenderUtils.newV3(0, -halfHeight, 0),
 				v2 = RenderUtils.newV3(0, halfHeight, 0),

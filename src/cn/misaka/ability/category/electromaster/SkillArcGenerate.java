@@ -12,6 +12,7 @@ package cn.misaka.ability.category.electromaster;
 
 import net.minecraft.util.ResourceLocation;
 import cn.misaka.ability.api.ability.AbilitySkill;
+import cn.misaka.core.proxy.APClientProps;
 
 /**
  * @author WeAthFolD
@@ -31,8 +32,12 @@ public class SkillArcGenerate extends AbilitySkill {
 	 */
 	@Override
 	public ResourceLocation getLogo() {
-		// TODO Auto-generated method stub
-		return null;
+		return APClientProps.ELEC_ARC;
+	}
+
+	@Override
+	public int getSuggestKey(int skillKeyID) {
+		return 0;
 	}
 
 }

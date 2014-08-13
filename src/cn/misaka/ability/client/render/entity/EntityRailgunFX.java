@@ -8,30 +8,35 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.category.electromaster;
+package cn.misaka.ability.client.render.entity;
 
-import net.minecraft.util.ResourceLocation;
-import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.core.proxy.APClientProps;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import cn.misaka.ability.entity.fx.EntityArcFX;
 
 /**
  * @author WeAthFolD
  *
  */
-public class SkillElectricAttraction extends AbilitySkill {
+public class EntityRailgunFX extends EntityArcFX {
 
-	public SkillElectricAttraction() {
-		super("skill.elec.attract");
+	/**
+	 * @param world
+	 * @param player
+	 * @param dist
+	 */
+	public EntityRailgunFX(World world, EntityPlayer player, double dist) {
+		super(world, player, dist);
+		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public ResourceLocation getLogo() {
-		return APClientProps.ELEC_ATTRACT;
-	}
-
-	@Override
-	public int getSuggestKey(int skillKeyID) {
-		return 2;
+	/**
+	 * @param world
+	 * @param player
+	 */
+	public EntityRailgunFX(World world, EntityPlayer player) {
+		super(world, player);
+		// TODO Auto-generated constructor stub
 	}
 
 }

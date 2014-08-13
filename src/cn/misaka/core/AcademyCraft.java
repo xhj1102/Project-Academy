@@ -17,6 +17,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.register.LIGuiHandler;
+import cn.misaka.ability.category.electromaster.CatElectroMaster;
 import cn.misaka.ability.category.test.CatTest;
 import cn.misaka.ability.client.gui.GuiAbilityDeveloper;
 import cn.misaka.ability.system.AbilityMain;
@@ -116,6 +117,7 @@ public class AcademyCraft {
 		
 		//能力注册BEGIN
 		AbilityMain.registerAbility(new CatTest(1));
+		AbilityMain.registerAbility(new CatElectroMaster(2));
 		//能力注册END
 		
 		guiHandler.addGuiElement(APClientProps.GUI_ID_ABILITY_DEV, new GuiAbilityDeveloper.Element());

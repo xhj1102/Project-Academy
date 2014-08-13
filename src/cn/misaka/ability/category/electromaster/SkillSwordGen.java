@@ -12,6 +12,7 @@ package cn.misaka.ability.category.electromaster;
 
 import net.minecraft.util.ResourceLocation;
 import cn.misaka.ability.api.ability.AbilitySkill;
+import cn.misaka.core.proxy.APClientProps;
 
 /**
  * @author WeAthFolD
@@ -26,13 +27,14 @@ public class SkillSwordGen extends AbilitySkill {
 		super("skill.elec.swordgen");
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.api.ability.AbilitySkill#getLogo()
-	 */
 	@Override
 	public ResourceLocation getLogo() {
-		// TODO Auto-generated method stub
-		return null;
+		return APClientProps.ELEC_SWORD;
+	}
+
+	@Override
+	public int getSuggestKey(int skillKeyID) {
+		return 3;
 	}
 
 }
