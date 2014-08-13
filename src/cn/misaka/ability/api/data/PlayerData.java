@@ -11,6 +11,7 @@
 package cn.misaka.ability.api.data;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 
 import java.io.File;
@@ -21,6 +22,8 @@ import cn.misaka.ability.api.ability.AbilityCategory;
 import cn.misaka.ability.api.ability.AbilityLevel;
 import cn.misaka.ability.system.AbilityMain;
 import cn.misaka.ability.system.data.PlayerDataUpdater;
+import cn.misaka.ability.system.network.message.MsgSyncToClient;
+import cn.misaka.core.AcademyCraft;
 
 import com.google.gson.*;
 
@@ -96,7 +99,8 @@ public abstract class PlayerData {
 	}
 	
 	public void onStateChanged() {
-		if(skill_open == null || skill_exp == null) {
+		if(skill_open == null || skill_exp == null || skill_open.length != getAbilityClass().getMaxSkills() 
+				|| skill_exp.length != getAbilityClass().getMaxSkills()) {
 			System.err.println("Creating new skill information for pre is null");
 			resetSkillInf();
 		}
@@ -111,6 +115,9 @@ public abstract class PlayerData {
 		skill_exp = new float[cat.getMaxSkills()];
 		for(int i = 0; i > cat.getMaxSkills(); i++) {
 			skill_open[i] = alevel.isSkillDefaultActivated(i);
+		}
+		if(!thePlayer.worldObj.isRemote) {
+			AcademyCraft.netHandler.sendTo(new MsgSyncToClient(this, 0x02), (EntityPlayerMP) thePlayer);
 		}
 	}
 	

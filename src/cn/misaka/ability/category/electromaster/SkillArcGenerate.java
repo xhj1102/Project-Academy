@@ -10,8 +10,16 @@
  */
 package cn.misaka.ability.category.electromaster;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import cn.liutils.api.util.GenericUtils;
+import cn.liutils.api.util.Motion3D;
 import cn.misaka.ability.api.ability.AbilitySkill;
+import cn.misaka.ability.api.control.PlayerControlStat;
+import cn.misaka.ability.api.control.SkillControlStat;
+import cn.misaka.ability.entity.fx.EntitySurroundArcFX;
 import cn.misaka.core.proxy.APClientProps;
 
 /**
@@ -34,10 +42,26 @@ public class SkillArcGenerate extends AbilitySkill {
 	public ResourceLocation getLogo() {
 		return APClientProps.ELEC_ARC;
 	}
+	
+	@Override
+	public int getMaxKeys() {
+		return 1;
+	}
 
 	@Override
 	public int getSuggestKey(int skillKeyID) {
 		return 0;
+	}
+	
+	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlStat mctrl) {
+		if(stat.isKeyDown(0) && world.isRemote) {
+			Motion3D mot = new Motion3D(player, true);
+			
+			MovingObjectPosition pos = GenericUtils.rayTraceEntities(null, world, mot.getPosVec(world), mot.move(30).getPosVec(world), player);
+			if(pos != null) {
+				world.spawnEntityInWorld(new EntitySurroundArcFX(pos.entityHit));
+			}
+		}
 	}
 
 }

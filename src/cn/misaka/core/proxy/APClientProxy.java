@@ -24,9 +24,11 @@ import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import cn.misaka.ability.client.model.ModelBipedAP;
 import cn.misaka.ability.client.render.entity.RenderArcAnim;
 import cn.misaka.ability.client.render.entity.RenderPlayerAP;
+import cn.misaka.ability.client.render.entity.RenderSurroundArc;
 import cn.misaka.ability.client.render.item.RenderCoin;
 import cn.misaka.ability.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.ability.entity.fx.EntityArcFX;
+import cn.misaka.ability.entity.fx.EntitySurroundArcFX;
 import cn.misaka.ability.system.client.key.KeySkillActivation;
 import cn.misaka.ability.system.client.key.KeySkillControl;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
@@ -58,6 +60,7 @@ public class APClientProxy extends APCommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAbilityDeveloper.class, new RenderAbilityDeveloper());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerAP());
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcFX.class, new RenderArcAnim());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySurroundArcFX.class, new RenderSurroundArc());
 	}
 	
 	@Override
