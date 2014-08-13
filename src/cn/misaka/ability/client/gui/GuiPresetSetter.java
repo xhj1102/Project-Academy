@@ -43,7 +43,15 @@ public class GuiPresetSetter extends GuiScreen {
 		super.drawScreen(par1, par2, par3);
     }
     
-    
+	@Override
+	protected void actionPerformed(GuiButton guibutton) {
+		if(guibutton.id >= 1 && guibutton.id <= 99) onMenuChanged(guibutton.id);
+		if(guibutton.id >= 100 && guibutton.id <= 199) onChildMenuChanged(guibutton.id - 100);
+		if(guibutton.id >= 200 && guibutton.id <= 299) {
+			onPresetKeyChanged(guibutton.id - 200);
+			confirmPresetKeyChange();
+		}
+	}
     
     public void onMenuChanged(int i) {
 	    this.tempX = i;
