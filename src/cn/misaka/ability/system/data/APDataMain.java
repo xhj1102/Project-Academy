@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import cn.misaka.ability.api.data.PlayerData;
 
 /**
+ * 玩家数据存储的核心，负责PlayerData管理。
  * @author WeAthFolD
  *
  */
@@ -29,7 +30,7 @@ public class APDataMain {
 		HashMap<EntityPlayer, PlayerData> dataMap = getDataMap(player.worldObj.isRemote);
 		PlayerData data = dataMap.get(player);
 		if(data == null) {
-			data = PlayerData.getPlayerData(player);
+			data = PlayerData.createPlayerData(player);
 			dataMap.put(player, data);
 		}
 		return data;
@@ -39,10 +40,6 @@ public class APDataMain {
 		HashMap<EntityPlayer, PlayerData> map = getDataMap(isRemote);
 		for(PlayerData data : map.values()) {
 			data.updateTick();
-		}
-		if(isRemote) {
-		} else {
-			
 		}
 	}
 	

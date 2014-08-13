@@ -15,8 +15,7 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 
 /**
- * @author WeAthFolD
- *
+ * 一些客户端的信息，存放贴图、模型路径等
  */
 public class APClientProps {
 
@@ -35,6 +34,14 @@ public class APClientProps {
 	//OBJ models
 	public static final
 		IModelCustom MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj"));
+	
+	//Animations
+	public static final ResourceLocation
+		ANIM_ARC_LONG[] = {
+		src("academy:textures/effects/elearc0.png"),
+		src("academy:textures/effects/elearc1.png"),
+		src("academy:textures/effects/elearc2.png")
+	};
 	
 	//GUI IDs
 	public static final int

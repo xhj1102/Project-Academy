@@ -34,7 +34,7 @@ public class AIMIndicator {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		HudUtils.setZLevel(-90);
-		drawLogo(sr.getScaledWidth(), sr.getScaledHeight(), data.classid);
+		drawLogo(sr.getScaledWidth(), sr.getScaledHeight(), data.getCategory());
 		//if(data.isActivated) 
 			drawCPBar(sr.getScaledWidth(), sr.getScaledHeight(), data);
 		GL11.glDisable(GL11.GL_BLEND);
@@ -56,7 +56,7 @@ public class AIMIndicator {
 		final int LENGTH = 512, HEIGHT = 52;
 		final float SCALE = 0.3F;
 		final int SCR_LEN = (int) (LENGTH * SCALE), SCR_HGT = (int) (HEIGHT * SCALE);
-		int length = data.max_cp == 0 ? 400 : data.current_cp * LENGTH / data.max_cp,
+		int length = (int) (data.max_cp == 0 ? 400 : data.current_cp * LENGTH / data.max_cp),
 				scr_length = (int) (length * SCALE),
 				bar_height = 49;
 		HudUtils.setTextureResolution(512, 104);

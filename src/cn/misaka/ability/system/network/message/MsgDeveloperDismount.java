@@ -44,7 +44,6 @@ public class MsgDeveloperDismount implements IMessage {
 		public IMessage onMessage(MsgDeveloperDismount message,
 				MessageContext ctx) {
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
-			System.out.println("Dismounting sync");
 			TileEntity tile = player.worldObj.getTileEntity(MathHelper.floor_double(player.posX),
 					MathHelper.floor_double(player.posY),
 					MathHelper.floor_double(player.posZ));

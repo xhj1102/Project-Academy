@@ -12,10 +12,6 @@ package cn.misaka.core.proxy;
 
 import net.minecraft.command.CommandHandler;
 
-/**
- * @author Administrator
- *
- */
 public class APCommonProxy {
 
 	public void preInit() {}

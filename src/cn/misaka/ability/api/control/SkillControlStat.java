@@ -16,7 +16,14 @@ package cn.misaka.ability.api.control;
  */
 public class SkillControlStat {
 
-	private boolean[] keyDown = new boolean[4];
+	private boolean[] keyDown;
+	
+	public final int maxKeys;
+	
+	public SkillControlStat(int max) {
+		maxKeys = max;
+		keyDown = new boolean[max];
+	}
 	
 	/**
 	 * @return true if ANY key is down

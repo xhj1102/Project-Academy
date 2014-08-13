@@ -1,13 +1,12 @@
 package cn.misaka.ability.api.ability;
 
-import cn.misaka.ability.api.control.PlayerControlData;
+import cn.misaka.ability.api.control.PlayerControlStat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 /**
  * 能力等级。主要提供当前技能的可学习信息。
  * @author WeAthFolD
- *
  */
 public abstract class AbilityLevel {
 	
@@ -31,9 +30,9 @@ public abstract class AbilityLevel {
 	 * @param id
 	 * @return
 	 */
-	public abstract boolean isSkillDefaultActivated(AbilitySkill skill, int id);
+	public abstract boolean isSkillDefaultActivated(int id);
 	
-	public void onPlayerUpdate(World world, EntityPlayer player, PlayerControlData ctrl) {
+	public void onPlayerUpdate(World world, EntityPlayer player, PlayerControlStat ctrl) {
 		//DO NOTHING BY DEFAULT
 	}
 

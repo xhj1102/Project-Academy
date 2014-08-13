@@ -8,32 +8,32 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.api.data;
+package cn.misaka.ability.category.test;
 
-import net.minecraft.entity.player.EntityPlayer;
+import cn.misaka.ability.api.ability.AbilityLevel;
+import cn.misaka.ability.api.ability.AbilitySkill;
 
 /**
- * 服务端玩家数据。
+ * @author WeAthFolD
+ *
  */
-public class PlayerDataServer extends PlayerData {
+public class LevelTest extends AbilityLevel {
+	
+	public LevelTest(int id) {
+		super(id);
+	}
 
-	public PlayerDataServer(EntityPlayer player) {
-		super(player);
+	/* (non-Javadoc)
+	 * @see cn.misaka.ability.api.ability.AbilityLevel#canStudySkill(cn.misaka.ability.api.ability.AbilitySkill, int)
+	 */
+	@Override
+	public boolean canStudySkill(AbilitySkill skill, int id) {
+		return id == 0 || id == 1;
 	}
 
 	@Override
-	protected void loadData() {
-		this.fromAbilityData(PlayerData.getUpdater(thePlayer));
-	}
-
-	@Override
-	public boolean isDataStateGood() {
-		return true; //Loaded then good
-	}
-
-	@Override
-	public void updateTick() {
-		//SERVER DOSEN'T QUITE DO ANYTHING
+	public boolean isSkillDefaultActivated(int id) {
+		return id == 0 || id == 1;
 	}
 
 }

@@ -17,18 +17,13 @@ import cn.misaka.core.AcademyCraft;
 import cn.misaka.core.proxy.APGeneralProps;
 
 /**
- * TODO: Waiting to be done
+ * 客户端玩家数据
  * @author WeAthFolD
- *
  */
 public final class PlayerDataClient extends PlayerData {
 	
 	public boolean initialized = false;
-	private int ticker = 0;
 	
-	/**
-	 * @param player
-	 */
 	public PlayerDataClient(EntityPlayer player) {
 		super(player);
 	}
@@ -41,22 +36,22 @@ public final class PlayerDataClient extends PlayerData {
 		return initialized;
 	}
 	
-	//public ControlPreset.Entry getP
-	
 	@Override
 	public void fromAbilityData(PlayerDataUpdater data, int flag) {
 		this.initialized = true;
-		System.out.println("Client received Server pack");
+		System.out.println("Client received server pack");
 		super.fromAbilityData(data, flag);
 	}
 
 	@Override
 	protected void loadData() { }
 
+	
+	private int ticker = 0;
 	@Override
 	public void updateTick() {
 		if(!initialized && ++ticker == APGeneralProps.SYNC_FREQ) {
-			System.out.println("Sending sync request");
+			System.out.println("Client sending sync request");
 			AcademyCraft.netHandler.sendToServer(new MsgSyncToClient.Request(0x03));
 		}
 	}

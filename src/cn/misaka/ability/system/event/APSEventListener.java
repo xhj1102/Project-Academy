@@ -54,6 +54,7 @@ public class APSEventListener {
 	@SideOnly(Side.CLIENT)
 	public void onWorldSave(WorldEvent.Save event) {
 		APControlMain.saveToConfig(AcademyCraft.config);
+		APDataMain.savePlayerData(false);
 	}
 
 }

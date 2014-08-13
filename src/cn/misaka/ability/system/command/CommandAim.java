@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import cn.liutils.api.command.LICommandBase;
+import cn.liutils.api.util.Pair;
+import cn.misaka.ability.api.data.ModifierInitialize;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
@@ -30,14 +32,22 @@ import net.minecraft.entity.player.EntityPlayerMP;
  */
 public class CommandAim extends LICommandBase {
 	
-	private static HashMap<String, Field> fldMap = new HashMap<String, Field>();
+	private static HashMap<String, DataType> fldMap = new HashMap<String, DataType>();
+	
+	private static class DataType extends Pair<Field, Boolean> {
+
+		public DataType(Field k, Boolean v) {
+			super(k, v);
+		}
+		
+	}
 	
 	static {
 		try {
-			fldMap.put("classid", PlayerData.class.getField("classid"));
-			fldMap.put("level", PlayerData.class.getField("level"));
-			fldMap.put("cp", PlayerData.class.getField("max_cp"));
-			fldMap.put("current_cp", PlayerData.class.getField("current_cp"));
+			fldMap.put("catid", new DataType(PlayerData.class.getDeclaredField("catid"), true));
+			fldMap.put("level", new DataType(PlayerData.class.getDeclaredField("level"), true));
+			fldMap.put("cp", new DataType(PlayerData.class.getField("max_cp"), false));
+			fldMap.put("current_cp", new DataType(PlayerData.class.getField("current_cp"), false));
 		} catch (Exception e) {
 			
 		}
@@ -85,7 +95,12 @@ public class CommandAim extends LICommandBase {
 						if(player != null) {
 							PlayerData data = APDataMain.loadPlayerData(player);
 							try {
-								fldMap.get(args[1]).set(data, Integer.valueOf(args[2]));
+								DataType dt = fldMap.get(args[1]);
+								Field field = dt.first;
+								field.setAccessible(true);
+								field.set(data, Integer.valueOf(args[2]));
+								if(dt.second)
+									data.onStateChanged();
 								AcademyCraft.netHandler.sendTo(new MsgSyncToClient(data, 0x01), player);
 								sendChat(ics, "setting successful");
 							} catch (NumberFormatException e) {
@@ -100,11 +115,18 @@ public class CommandAim extends LICommandBase {
 				
 			} else if(args[0].equals("develop")) {
 				//TODO: Invoke Ability Dev functions
+				PlayerData data = APDataMain.loadPlayerData(player);
+				new ModifierInitialize().applyModification(player, data);
+				AcademyCraft.netHandler.sendTo(new MsgSyncToClient(data, 0x01), player);
+				
 			} else if(args[0].equals("view")) {
 				PlayerData data = APDataMain.loadPlayerData(player);
 				try {
-					for(Entry<String, Field> entry : fldMap.entrySet()) {
-						this.sendChat(ics, entry.getKey() + ": " + entry.getValue().get(data));
+					for(Entry<String, DataType> entry : fldMap.entrySet()) {
+						DataType dt = entry.getValue();
+						System.out.println("Fetching " + dt.toString());
+						dt.first.setAccessible(true);
+						this.sendChat(ics, entry.getKey() + ": " + entry.getValue().first.get(data));
 					}
 				} catch(Exception e) {}
 			} else {

@@ -10,14 +10,20 @@
  */
 package cn.misaka.ability.system.client.render;
 
+import org.lwjgl.opengl.GL11;
+
+import cn.liutils.api.client.util.RenderUtils;
+import cn.misaka.ability.api.ability.AbilityCategory;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.client.render.SkillRender;
 import cn.misaka.ability.api.client.render.SkillRender.SkillRenderType;
-import cn.misaka.ability.api.control.PlayerControlData;
+import cn.misaka.ability.api.control.PlayerControlStat;
+import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.system.AbilityMain;
 import cn.misaka.ability.system.control.APControlMain;
 import cn.misaka.ability.system.data.APDataMain;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
@@ -28,6 +34,8 @@ import net.minecraftforge.client.IItemRenderer;
  */
 public class RenderAbilityVoid implements IItemRenderer {
 
+	protected static ModelBiped model = new ModelBiped();
+	
 	/**
 	 * 
 	 */
@@ -57,15 +65,69 @@ public class RenderAbilityVoid implements IItemRenderer {
 		SkillRenderType tp = type == ItemRenderType.EQUIPPED_FIRST_PERSON ? SkillRenderType.FIRSTPERSON : SkillRenderType.EQUIPPED;
 		EntityPlayer player = (EntityPlayer) data[1];
 		PlayerData pdata = APDataMain.loadPlayerData(player);
-		PlayerControlData pstat = APControlMain.loadControlData(player);
-		SkillRender render = AbilitySkill.DEFAULT_SKILL_RENDER;
-		if(pstat.activateSkill >= 0 && pdata != null) {
-			AbilitySkill skl = AbilityMain.getAbility(pdata.classid).getSkill(pstat.activateSkill);
-			if(skl.useRender())
-				render = skl.getSkillRender();
-		}
+		PlayerControlStat pstat = APControlMain.loadControlData(player);
+		if(!pdata.isDataStateGood()) return;
+
+		GL11.glPushMatrix(); {
+			
+			AbilityCategory ac = pdata.getAbilityClass();
+			
+			if(ac != null) { //遍历skill渲染器然后执行渲染
+				for(int i = 0; i < ac.getMaxSkills(); i++) {
+					AbilitySkill skl = ac.getSkill(i);
+					SkillControlStat sklstat = pstat.getSkillStat(i);
+					if(sklstat != null && skl.isSkillActivated(player.worldObj, player, sklstat, pstat)) 
+						skl.getSkillRender().onRender(player, sklstat, pdata, tp);
+				}
+			}
+			
+			if(type == ItemRenderType.EQUIPPED_FIRST_PERSON)
+				renderHand(player);
+			
+		} GL11.glPopMatrix();
+	}
+	
+	public static final void renderHand(EntityPlayer player) {
 		
-		render.onRender(player, pstat.getSkillStat(pstat.activateSkill), pdata, tp);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glPushMatrix();
+
+		RenderUtils.renderEnchantGlint_Equip();
+		RenderUtils.loadTexture("minecraft:textures/entity/steve.png");
+		GL11.glRotated(-23.75, 0.0F, 0.0F, 1.0F);
+		GL11.glRotated(21.914, 0.0F, 1.0F, 0.0F);
+		GL11.glRotated(32.75, 1.0F, 0.0F, 0.0F);
+		GL11.glTranslatef(.758F, -.072F, -.402F);
+		GL11.glColor3f(1.0F, 1.0F, 1.0F);
+
+		model.onGround = 0.0F;
+		model.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		model.bipedRightArm.render(0.0625F);
+
+		
+		GL11.glPopMatrix();
+		GL11.glEnable(GL11.GL_CULL_FACE);
+	}
+
+	protected static final void renderHand2(EntityPlayer player) {
+		GL11.glPushMatrix();
+
+		GL11.glDisable(GL11.GL_CULL_FACE);
+
+		RenderUtils.renderEnchantGlint_Equip();
+		RenderUtils.loadTexture("minecraft:textures/entity/steve.png");
+		GL11.glRotated(-23.75, 0.0F, 0.0F, 1.0F);
+		GL11.glRotated(21.914, 0.0F, 1.0F, 0.0F);
+		GL11.glRotated(32.75, 1.0F, 0.0F, 0.0F);
+		GL11.glTranslatef(.758F, -.072F, -.402F);
+		GL11.glColor3f(0.0F, 1.0F, 1.0F);
+
+		model.onGround = 0.0F;
+		model.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		model.bipedRightArm.render(0.0625F);
+		
+		GL11.glPopMatrix();
+		GL11.glEnable(GL11.GL_CULL_FACE);
 	}
 
 }

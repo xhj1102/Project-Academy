@@ -8,31 +8,25 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.classes.test;
+package cn.misaka.ability.category.electromaster;
 
 import net.minecraft.util.ResourceLocation;
-import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.core.proxy.APClientProps;
+import cn.liutils.api.util.Pair;
+import cn.misaka.ability.api.ability.AbilityCategory;
 
 /**
  * @author WeAthFolD
  *
  */
-public class SkillTest2 extends AbilitySkill {
+public class CatElectroMaster extends AbilityCategory {
 
-	/**
-	 * @param name
-	 */
-	public SkillTest2() {
-		super("skill.test2.name");
+	public CatElectroMaster(int id) {
+		super("category.railgun", id);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.api.ability.AbilitySkill#getLogo()
-	 */
 	@Override
-	public ResourceLocation getLogo() {
-		return APClientProps.SKL_TEST_2;
+	public Pair<ResourceLocation, ResourceLocation> getHudTextureOverride() {
+		return null;
 	}
 
 }

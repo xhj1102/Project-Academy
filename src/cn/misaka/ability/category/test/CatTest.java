@@ -8,41 +8,47 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.classes.test;
+package cn.misaka.ability.category.test;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import cn.liutils.api.util.Pair;
+import cn.misaka.ability.api.ability.AbilityCategory;
+import cn.misaka.ability.api.ability.AbilityLevel;
 import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.ability.api.control.PlayerControlData;
-import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.core.proxy.APClientProps;
 
 /**
  * @author WeAthFolD
  *
  */
-public class SkillTest1 extends AbilitySkill {
+public class CatTest extends AbilityCategory {
 
-	/**
-	 * @param name
-	 */
-	public SkillTest1() {
-		super("skill.test1.name");
-		// TODO Auto-generated constructor stub
+	
+	private static Pair<ResourceLocation, ResourceLocation> texture = new Pair(APClientProps.TEX_HUD_LOGO, APClientProps.TEX_HUD_CPBAR);
+
+	public CatTest(int id) {
+		super("test", id);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.api.ability.AbilitySkill#getLogo()
-	 */
 	@Override
-	public ResourceLocation getLogo() {
-		return APClientProps.SKL_TEST_1;
+	public Pair<ResourceLocation, ResourceLocation> getHudTextureOverride() {
+		return texture;
 	}
 	
 	@Override
-	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlData mctrl) {
-		System.out.println("SkillTest1 onKeyStateChange to " +  stat.isKeyDown(kid) + "at " + world.isRemote + " Side");
+	protected void initClass() {
+		this.ability_levels = new AbilityLevel[] {
+				new LevelTest(0),
+				new LevelTest(1),
+				new LevelTest(2),
+				new LevelTest(3)
+		};
+		
+		this.ability_skills = new AbilitySkill[] {
+				new SkillTest1(),
+				new SkillTest2()
+		};
 	}
+	
 
 }

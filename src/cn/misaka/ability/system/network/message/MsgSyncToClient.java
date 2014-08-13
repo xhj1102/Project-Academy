@@ -43,17 +43,15 @@ public class MsgSyncToClient implements IMessage {
 	
 	public MsgSyncToClient() {}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.network.simpleimpl.IMessage#fromBytes(io.netty.buffer.ByteBuf)
-	 */
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		flag = buf.readByte();
 		updater = new PlayerDataUpdater();
 		if((flag & 0x01) != 0) {
-			updater.classid = buf.readByte();
+			updater.category = buf.readByte();
 			updater.level = buf.readByte();
 			updater.maxCP = buf.readInt();
+			updater.currentCP = buf.readInt();
 		}
 		
 		if((flag & 0x02) != 0) {
@@ -69,9 +67,6 @@ public class MsgSyncToClient implements IMessage {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.network.simpleimpl.IMessage#toBytes(io.netty.buffer.ByteBuf)
-	 */
 	@Override
 	public void toBytes(ByteBuf buf) {
 		if((flag& 0x02) != 0 && (updater.ac_skill_exp == null || updater.ac_skill_open == null)) {
@@ -80,9 +75,10 @@ public class MsgSyncToClient implements IMessage {
 		}
 		buf.writeByte(flag);
 		if((flag & 0x01) != 0) {
-			buf.writeByte(updater.classid);
+			buf.writeByte(updater.category);
 			buf.writeByte(updater.level);
 			buf.writeInt(updater.maxCP);
+			buf.writeInt(updater.currentCP);
 		}
 		if((flag & 0x02) != 0) {
 			int len = updater.ac_skill_exp.length;

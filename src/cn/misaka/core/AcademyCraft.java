@@ -17,7 +17,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.register.LIGuiHandler;
-import cn.misaka.ability.classes.test.ClassTest;
+import cn.misaka.ability.category.test.CatTest;
 import cn.misaka.ability.client.gui.GuiAbilityDeveloper;
 import cn.misaka.ability.system.AbilityMain;
 import cn.misaka.ability.system.command.CommandAim;
@@ -50,29 +50,51 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 
 /**
- * @author WeAthFolD
- *
+ * AcademyCraft主mod类。
  */
 @Mod(modid = "academy-craft", name = "AcademyCraft", version = AcademyCraft.VERSION)
 public class AcademyCraft {
 	
+	/**
+	 * 当前版本。请记得在每次compile的时候进行更新
+	 */
 	public static final String VERSION = "0.0.1dev";
 	
 	@Instance("academy-craft")
+	/**
+	 * MOD实例
+	 */
 	public static AcademyCraft INSTANCE;
 	
 	@SidedProxy(clientSide = "cn.misaka.core.proxy.APClientProxy", serverSide = "cn.misaka.core.proxy.APCommonProxy")
+	/**
+	 * 加载代理
+	 */
 	public static APCommonProxy proxy;
 	
+	/**
+	 * 日志
+	 */
 	public static Logger log = FMLLog.getLogger();
 	
+	/**
+	 * 设置文件
+	 */
 	public static Configuration config;
 	
+	/**
+	 * 网络发包处理实例
+	 */
 	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(APGeneralProps.NET_CHANNEL);
-	private static int nextNetID = 0;
 	
+	/**
+	 * 创造栏
+	 */
 	public static CreativeTabs cct = new APCreativeTab();
 	
+	/**
+	 * GUI管理器
+	 */
 	public static LIGuiHandler guiHandler = new LIGuiHandler();
 	
 	@EventHandler
@@ -86,21 +108,24 @@ public class AcademyCraft {
 		APBlocks.init(config);
 		APItems.init(config);
 		APControlMain.init(config);
+		
+		//Tick及杂项注册
+		MinecraftForge.EVENT_BUS.register(new APSEventListener());
 		FMLCommonHandler.instance().bus().register(new APSTickEvents());
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
-		guiHandler.addGuiElement(APClientProps.GUI_ID_ABILITY_DEV, new GuiAbilityDeveloper.Element());
 		
 		//能力注册BEGIN
-		AbilityMain.registerAbility(new ClassTest(1));
+		AbilityMain.registerAbility(new CatTest(1));
 		//能力注册END
 		
-		MinecraftForge.EVENT_BUS.register(new APSEventListener());
+		guiHandler.addGuiElement(APClientProps.GUI_ID_ABILITY_DEV, new GuiAbilityDeveloper.Element());
 		
 		proxy.preInit();
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		//网络信息注册
 		netHandler.registerMessage(MsgControl.Handler.class, MsgControl.class, getNextChannelID(), Side.SERVER);
 		netHandler.registerMessage(MsgDeveloperPlayer.Handler.class, MsgDeveloperPlayer.class, getNextChannelID(), Side.CLIENT);
 		netHandler.registerMessage(MsgSyncToClient.Request.Handler.class, MsgSyncToClient.Request.class, getNextChannelID(), Side.SERVER);
@@ -123,6 +148,10 @@ public class AcademyCraft {
 		proxy.commandInit(cm);
 	}
 	
+	private static int nextNetID = 0;
+	/**
+	 * 获取下一个空闲的网络channelID。
+	 */
 	public static int getNextChannelID() {
 		return nextNetID++;
 	}

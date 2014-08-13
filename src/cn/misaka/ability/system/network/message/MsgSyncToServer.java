@@ -27,26 +27,17 @@ public class MsgSyncToServer implements IMessage {
 	
 	public boolean isActivated;
 
-	/**
-	 * 
-	 */
 	public MsgSyncToServer(PlayerData data) {
 		isActivated = data.isActivated;
 	}
 	
 	public MsgSyncToServer() {}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.network.simpleimpl.IMessage#fromBytes(io.netty.buffer.ByteBuf)
-	 */
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		isActivated = buf.readBoolean();
 	}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.network.simpleimpl.IMessage#toBytes(io.netty.buffer.ByteBuf)
-	 */
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeBoolean(isActivated);

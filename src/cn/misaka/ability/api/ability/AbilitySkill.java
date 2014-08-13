@@ -6,7 +6,7 @@ import java.util.List;
 
 import cn.misaka.ability.api.client.control.ControlIndicator;
 import cn.misaka.ability.api.client.render.SkillRender;
-import cn.misaka.ability.api.control.PlayerControlData;
+import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -15,6 +15,10 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+/**
+ * 技能~~提供了玩家操作的各种侦听
+ * @author WeAthFolD
+ */
 public abstract class AbilitySkill {
 	
 	protected final String unl_name;
@@ -22,7 +26,6 @@ public abstract class AbilitySkill {
 	@SideOnly(Side.CLIENT)
 	public static SkillRender DEFAULT_SKILL_RENDER = new SkillRender();
 	
-	@SideOnly(Side.CLIENT)
 	protected List<ControlIndicator> indicators = new ArrayList<ControlIndicator>();
 	
 	public AbilitySkill(String name) {
@@ -37,7 +40,7 @@ public abstract class AbilitySkill {
 	 * @param mctrl
 	 * @return
 	 */
-	public boolean isSkillActivated(World world, EntityPlayer player, SkillControlStat stat, PlayerControlData mctrl) {
+	public boolean isSkillActivated(World world, EntityPlayer player, SkillControlStat stat, PlayerControlStat mctrl) {
 		return stat.isKeyDown();
 	}
 	
@@ -49,7 +52,7 @@ public abstract class AbilitySkill {
 	 * @param kid 状态发生改变的键位id
 	 * @param mctrl
 	 */
-	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlData mctrl) {
+	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlStat mctrl) {
 		
 	}
 	
@@ -61,7 +64,7 @@ public abstract class AbilitySkill {
 	 * @param mctrl
 	 * @return 如果返回false，那么ticker将会停止运行，
 	 */
-	public boolean onSkillTick(World world, EntityPlayer player, SkillControlStat stat, PlayerControlData mctrl) {
+	public boolean onSkillTick(World world, EntityPlayer player, SkillControlStat stat, PlayerControlStat mctrl) {
 		return true;
 	}
 	
@@ -86,28 +89,27 @@ public abstract class AbilitySkill {
 		return true;
 	}
 	
-	/**
-	 * 为当前能力添加操作提示，在GUI的右端显示。
-	 */
-	@SideOnly(Side.CLIENT)
-	protected void addIndications() {
+
+	public final Iterator<ControlIndicator> getControlTips() {
+		return indicators.iterator();
 	}
 	
 	/**
-	 * 返回该Skill对应的手部渲染器。注意请不要每次都创建对象，因为该方法时刻被调用。
-	 * @return
+	 * 为当前能力添加操作提示，在GUI的右端显示。
 	 */
-	@SideOnly(Side.CLIENT)
-	public SkillRender getSkillRender() {
-		return DEFAULT_SKILL_RENDER;
+	protected void addIndications() {
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public abstract ResourceLocation getLogo();
 	
 	@SideOnly(Side.CLIENT)
-	public final Iterator<ControlIndicator> getControlTips() {
-		return indicators.iterator();
+	/**
+	 * 返回该Skill对应的手部渲染器。注意请不要每次都创建对象，因为该方法时刻被调用。
+	 * @return
+	 */
+	public SkillRender getSkillRender() {
+		return DEFAULT_SKILL_RENDER;
 	}
 	
 	public final String getNameForDisplay() {

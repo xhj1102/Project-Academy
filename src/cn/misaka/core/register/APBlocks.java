@@ -16,8 +16,7 @@ import cn.misaka.ability.block.tile.TileAbilityDeveloper;
 import net.minecraftforge.common.config.Configuration;
 
 /**
- * @author WeAthFolD
- *
+ * 方块统一注册
  */
 public class APBlocks {
 

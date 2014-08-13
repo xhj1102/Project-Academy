@@ -10,18 +10,17 @@
  */
 package cn.misaka.ability.api.ability;
 
-import cn.misaka.ability.system.control.preset.Pair;
+import cn.liutils.api.util.Pair;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * 能力总系。提供该系的总体说明，Logo，等级类等信息。
+ * 能力类。提供该系的总体说明，Logo，等级类等信息。
  * @author WeAthFolD
- *
  */
-public abstract class AbilityClass {
+public abstract class AbilityCategory {
 
 	protected final String unl_name;
 	
@@ -33,7 +32,7 @@ public abstract class AbilityClass {
 	 */
 	public final int id;
 	
-	public AbilityClass(String name, int id) {
+	public AbilityCategory(String name, int id) {
 		unl_name = name;
 		this.id = id;
 		initClass();
@@ -70,6 +69,9 @@ public abstract class AbilityClass {
 	 * @return
 	 */
 	public abstract Pair<ResourceLocation, ResourceLocation> getHudTextureOverride();
+	
+	@SideOnly(Side.CLIENT)
+	public abstract ResourceLocation getLogo();
 	
 	/**
 	 * 获取经过translate的系名。

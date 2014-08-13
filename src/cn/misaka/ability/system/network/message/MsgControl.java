@@ -17,18 +17,14 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-/**
- * 
- * @author WeAthFolD
- */
 public class MsgControl implements IMessage {
 
-	public int ability_id;
+	public int skill_id;
 	public int key_id;
 	public boolean downOrUp;
 	
 	public MsgControl(int ability, int key, boolean down) {
-		ability_id = ability;
+		skill_id = ability;
 		key_id = key;
 		downOrUp = down;
 	}
@@ -37,14 +33,14 @@ public class MsgControl implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		ability_id = buf.readByte();
+		skill_id = buf.readByte();
 		key_id = buf.readByte();
 		downOrUp = buf.readBoolean();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeByte(ability_id);
+		buf.writeByte(skill_id);
 		buf.writeByte(key_id);
 		buf.writeBoolean(downOrUp);
 	}
@@ -55,7 +51,7 @@ public class MsgControl implements IMessage {
 		public IMessage onMessage(MsgControl message, MessageContext ctx) {
 			System.out.println("Retrived controlChange message from client");
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
-			APControlMain.onSkillKeyChanged(player, message.ability_id, message.key_id, message.downOrUp);
+			APControlMain.onSkillKeyChanged(player, message.skill_id, message.key_id, message.downOrUp);
 			return null;
 		}
 		

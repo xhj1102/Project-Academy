@@ -8,32 +8,29 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.classes.test;
+package cn.misaka.ability.system.classes;
 
-import cn.misaka.ability.api.ability.AbilityLevel;
-import cn.misaka.ability.api.ability.AbilitySkill;
+import net.minecraft.util.ResourceLocation;
+import cn.liutils.api.util.Pair;
+import cn.misaka.ability.api.ability.AbilityCategory;
 
 /**
  * @author WeAthFolD
- *
  */
-public class LevelTest extends AbilityLevel {
-	
-	public LevelTest(int id) {
-		super(id);
-	}
+public class AbilityCategoryVoid extends AbilityCategory {
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.ability.api.ability.AbilityLevel#canStudySkill(cn.misaka.ability.api.ability.AbilitySkill, int)
-	 */
-	@Override
-	public boolean canStudySkill(AbilitySkill skill, int id) {
-		return id == 0 || id == 1;
+	public AbilityCategoryVoid(int id) {
+		super("NULL", id);
 	}
 
 	@Override
-	public boolean isSkillDefaultActivated(AbilitySkill skill, int id) {
-		return id == 0 || id == 1;
+	public Pair<ResourceLocation, ResourceLocation> getHudTextureOverride() {
+		return null;
+	}
+
+	@Override
+	public ResourceLocation getLogo() {
+		return null;
 	}
 
 }

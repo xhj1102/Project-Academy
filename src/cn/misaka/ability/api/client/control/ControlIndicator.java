@@ -11,16 +11,17 @@
 package cn.misaka.ability.api.client.control;
 
 /**
+ * 玩家的键位操作提示条目。
  * @author WeAthFolD
- *
  */
 public class ControlIndicator {
-
-	/**
-	 * 
-	 */
-	public ControlIndicator() {
-		// TODO Auto-generated constructor stub
+	
+	int[] keyCombos; //该提示对应的skillKey
+	String instruction;
+	
+	public ControlIndicator(String instruct, int[] keys) {
+		keyCombos = keys;
+		instruction = instruct;
 	}
 
 }

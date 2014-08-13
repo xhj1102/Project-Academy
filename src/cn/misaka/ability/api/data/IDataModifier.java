@@ -8,24 +8,14 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.classes;
+package cn.misaka.ability.api.data;
 
-import net.minecraft.util.ResourceLocation;
-import cn.misaka.ability.api.ability.AbilityClass;
-import cn.misaka.ability.system.control.preset.Pair;
+import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * @author WeAthFolD
+ *
  */
-public class AbilityClassVoid extends AbilityClass {
-
-	public AbilityClassVoid(int id) {
-		super("NULL", id);
-	}
-
-	@Override
-	public Pair<ResourceLocation, ResourceLocation> getHudTextureOverride() {
-		return null;
-	}
-
+public interface IDataModifier {
+	public void applyModification(EntityPlayer player, PlayerData data);
 }

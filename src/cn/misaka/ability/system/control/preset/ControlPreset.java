@@ -10,6 +10,7 @@
  */
 package cn.misaka.ability.system.control.preset;
 
+import cn.liutils.api.util.Pair;
 import cn.misaka.ability.system.control.APControlMain;
 
 /**

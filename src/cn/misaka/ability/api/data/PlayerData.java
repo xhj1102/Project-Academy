@@ -16,7 +16,9 @@ import net.minecraft.server.MinecraftServer;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import cn.misaka.ability.api.ability.AbilityClass;
+
+import cn.misaka.ability.api.ability.AbilityCategory;
+import cn.misaka.ability.api.ability.AbilityLevel;
 import cn.misaka.ability.system.AbilityMain;
 import cn.misaka.ability.system.data.PlayerDataUpdater;
 
@@ -25,33 +27,95 @@ import com.google.gson.*;
 /**
  * 单个玩家的能力信息。（基类）
  * @author WeAthFolD, Alan
- *
  */
 public abstract class PlayerData {
 	
-	public int 
-		classid,
-		level,
-		max_cp;
-		
-	public int
-		current_cp;
+	//---------默认数值-----------
+	public static final int
+		INIT_CP[] = new int[] {
+			800, 2000, 3500, 6000, 10000
+		};
+	public static final float
+		RECOVER_SPEED[] = new float[] {
+			0.5F, 1.5F, 2.2F, 3.0F, 4.0F
+		}
+	;
 	
-	public boolean[] skill_open;
-	public float[] skill_exp;
+	
+	//------默认数值END----------
+	
+	protected int 
+		catid, //能力系id
+		level; //玩家等级
+		
+	public int max_cp; //最大cp值
+	public float
+		current_cp; //当前cp值
+	
+	public boolean[] skill_open; //某技能是否被学习
+	public float[] skill_exp; //技能熟练度
 	
 	/**
 	 * 当前能力是否被激活
 	 */
 	public boolean isActivated;
 	
-	
+	/**
+	 * 对应的玩家实例
+	 */
 	EntityPlayer thePlayer;
 
 	public PlayerData(EntityPlayer player) {
 		thePlayer = player;
 	}
 	
+	/**
+	 * 获取CP的恢复速度。单位：CP/Tick
+	 * @return
+	 */
+	public int getCPRecoverSpeed() {
+		return 20;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public int getCategory() {
+		return catid;
+	}
+	
+	public void setLevel(int l) {
+		level = l;
+		onStateChanged();
+	}
+	
+	public void setCategory(int c) {
+		catid = c;
+		onStateChanged();
+	}
+	
+	public void onStateChanged() {
+		if(skill_open == null || skill_exp == null) {
+			System.err.println("Creating new skill information for pre is null");
+			resetSkillInf();
+		}
+	}
+	
+	public void resetSkillInf() {
+		AbilityCategory cat = getAbilityClass();
+		if(cat == null) return;
+		AbilityLevel alevel = cat.getLevel(level);
+		if(alevel == null) return;
+		skill_open = new boolean[cat.getMaxSkills()];
+		skill_exp = new float[cat.getMaxSkills()];
+		for(int i = 0; i > cat.getMaxSkills(); i++) {
+			skill_open[i] = alevel.isSkillDefaultActivated(i);
+		}
+	}
+	
+	
+	//----------------DATA存取------------------
 	/**
 	 * 从nbt加载数据或发送同步请求。
 	 */
@@ -77,18 +141,20 @@ public abstract class PlayerData {
 			return;
 		}
 		if((flag & 0x01) != 0) {
-			classid = data.classid;
+			catid = data.category;
 			level = data.level;
 			max_cp = data.maxCP;
+			current_cp = data.currentCP;
 		}
 		if((flag & 0x02) != 0) {
 			skill_open = data.ac_skill_open;
 			skill_exp = data.ac_skill_exp;
 		}
+		this.onStateChanged();
 	}
 	
 	public PlayerDataUpdater toUpdater() {
-		return new PlayerDataUpdater(thePlayer, classid, level, max_cp, skill_open, skill_exp);
+		return new PlayerDataUpdater(thePlayer, catid, level, max_cp, (int) current_cp, skill_open, skill_exp);
 	}
 	
 	public void saveData() {
@@ -99,36 +165,17 @@ public abstract class PlayerData {
 		return thePlayer;
 	}
 	
-	public AbilityClass getAbilityClass() {
+	public AbilityCategory getAbilityClass() {
 		//System.out.println("Fetching abilityclass " + this.isDataStateGood());
-		return this.isDataStateGood() ? AbilityMain.getAbility(classid) : null;
+		return this.isDataStateGood() ? AbilityMain.getAbility(catid) : null;
  	}
 	
 	//-----------------STATIC METHODS(LOAD AND SAVE)----------------------
 	
-	public static PlayerData getPlayerData(EntityPlayer player) {
-		PlayerData data;
-		if(player.worldObj.isRemote) {
-			data = new PlayerDataClient(player);
-			
-		} else {
-			data = new PlayerDataServer(player);
-		}
-		return data;
+	public static PlayerData createPlayerData(EntityPlayer player) {
+		return player.worldObj.isRemote ? new PlayerDataClient(player) : new PlayerDataServer(player);
 	}
 	
-	/**
-	 * 接下来是json与数据间的转换
-	*/
-    private static String data2json(PlayerDataUpdater a){
-    	Gson g = new Gson();
-    	return g.toJson(a);
-    }
-    
-    private static PlayerDataUpdater json2data(String json){
-    	Gson g = new Gson();
-    	return g.fromJson(json, PlayerDataUpdater.class);
-    }
     /**
      * 接下来就是鸡冻人心的读取和存储分了，啪啪啪
     */
@@ -157,18 +204,18 @@ public abstract class PlayerData {
     public static PlayerDataUpdater getUpdater(EntityPlayer p) {
     	String s = getUpdaterSavePath();
     	s += File.separator + "AbilityData"; //+ File.separator + p.getCommandSenderName() + ".ac";
-    	System.out.println("Saving www " + s);
+    	System.out.println("Aquiring Updater" + s);
     	File f = new File(s);
     	
     	PlayerDataUpdater updater;
     	if(!f.exists()){
-    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
+    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, 0, new boolean[3], new float[3]);
     		saveUpdater(p, updater);
     	}
     	s += File.separator + p.getCommandSenderName() + ".ac";
     	f = new File(s);
     	if(!f.exists()){
-    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, new boolean[3], new float[3]);
+    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, 0, new boolean[3], new float[3]);
     		saveUpdater(p, updater);
     	}
     	
@@ -197,6 +244,19 @@ public abstract class PlayerData {
     		saveDir = runDir + ("\\saves" + File.separator + MinecraftServer.getServer().getFolderName());
     	}
     	return saveDir;
+    }
+	
+	/**
+	* 接下来是json与数据间的转换
+	*/
+    private static String data2json(PlayerDataUpdater a){
+    	Gson g = new Gson();
+    	return g.toJson(a);
+    }
+    
+    private static PlayerDataUpdater json2data(String json){
+    	Gson g = new Gson();
+    	return g.fromJson(json, PlayerDataUpdater.class);
     }
 	
 }

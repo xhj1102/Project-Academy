@@ -10,9 +10,15 @@
  */
 package cn.misaka.ability.system.command;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.liutils.api.command.LICommandBase;
-import cn.misaka.ability.api.ability.AbilityClass;
+import cn.misaka.ability.api.ability.AbilityCategory;
+import cn.misaka.ability.api.control.modifier.IPresetModifier;
+import cn.misaka.ability.api.control.modifier.PresetAutoArrange;
 import cn.misaka.ability.api.data.PlayerData;
+import cn.misaka.ability.api.data.PlayerDataClient;
 import cn.misaka.ability.system.control.APControlMain;
 import cn.misaka.ability.system.control.preset.ControlPreset;
 import cn.misaka.ability.system.data.APDataMain;
@@ -27,6 +33,11 @@ import net.minecraft.entity.player.EntityPlayer;
 public class CommandControlModification extends LICommandBase {
 
 	public CommandControlModification() {}
+	
+	private static Map<String, IPresetModifier> arranges = new HashMap();
+	static {
+		arranges.put("auto", new PresetAutoArrange());
+	}
 
 	@Override
 	public String getCommandName() {
@@ -35,7 +46,7 @@ public class CommandControlModification extends LICommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender var1) {
-		return "/aimctrl {view} {set [presetID] [keyID] [skillID] [skillKeyID]} {preset [id]}";
+		return "/aimctrl {view} {set [presetID] [keyID] [skillID] [skillKeyID]} {preset [id]} {arrange id [arrangeType]}";
 	}
 	
 	@Override
@@ -78,6 +89,22 @@ public class CommandControlModification extends LICommandBase {
 				this.sendWithTranslation(ics, "setting.successful");
 			} else wrongMessage(ics);
 			
+		} else if(var2.length == 3) { 
+			
+			if(var2[0].equals("arrange")) {
+				int presetID = Integer.valueOf(var2[1]);
+				String type = var2[2];
+				if(presetID < 0 || presetID >= APControlMain.PRESETS) {
+					wrongMessage(ics);
+					return;
+				}
+				if(!arranges.containsKey(type)) {
+					wrongMessage(ics);
+					return;
+				}
+				arranges.get(type).applyModification(player, APDataMain.loadPlayerData(player), APControlMain.getPreset(presetID));
+			} else wrongMessage(ics);
+			
 		} else if(var2.length == 5) {
 			
 			if(var2[0].equals("set")) {
@@ -86,7 +113,7 @@ public class CommandControlModification extends LICommandBase {
 					skillID = Integer.valueOf(var2[3]),
 					subKeyID = Integer.valueOf(var2[4]);
 				PlayerData data = APDataMain.loadPlayerData(player);
-				AbilityClass aclass = data.getAbilityClass();
+				AbilityCategory aclass = data.getAbilityClass();
 				if(aclass == null) {
 					this.sendWithTranslation(ics, "aimctrl.classinit");
 					return;

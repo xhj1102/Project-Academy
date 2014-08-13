@@ -8,47 +8,36 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.classes.test;
+package cn.misaka.ability.category.test;
 
 import net.minecraft.util.ResourceLocation;
-import cn.misaka.ability.api.ability.AbilityClass;
-import cn.misaka.ability.api.ability.AbilityLevel;
 import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.ability.system.control.preset.Pair;
 import cn.misaka.core.proxy.APClientProps;
 
 /**
  * @author WeAthFolD
  *
  */
-public class ClassTest extends AbilityClass {
+public class SkillTest2 extends AbilitySkill {
 
-	
-	private static Pair<ResourceLocation, ResourceLocation> texture = new Pair(APClientProps.TEX_HUD_LOGO, APClientProps.TEX_HUD_CPBAR);
-
-	public ClassTest(int id) {
-		super("test", id);
+	/**
+	 * @param name
+	 */
+	public SkillTest2() {
+		super("skill.test2.name");
 	}
 
+	/* (non-Javadoc)
+	 * @see cn.misaka.ability.api.ability.AbilitySkill#getLogo()
+	 */
 	@Override
-	public Pair<ResourceLocation, ResourceLocation> getHudTextureOverride() {
-		return texture;
+	public ResourceLocation getLogo() {
+		return APClientProps.SKL_TEST_2;
 	}
 	
 	@Override
-	protected void initClass() {
-		this.ability_levels = new AbilityLevel[] {
-				new LevelTest(0),
-				new LevelTest(1),
-				new LevelTest(2),
-				new LevelTest(3)
-		};
-		
-		this.ability_skills = new AbilitySkill[] {
-				new SkillTest1(),
-				new SkillTest2()
-		};
+	public int getMaxKeys() {
+		return 1;
 	}
-	
 
 }

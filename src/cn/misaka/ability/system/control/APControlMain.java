@@ -21,10 +21,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.util.GenericUtils;
-import cn.misaka.ability.api.ability.AbilityClass;
+import cn.misaka.ability.api.ability.AbilityCategory;
 import cn.misaka.ability.api.ability.AbilityLevel;
 import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.ability.api.control.PlayerControlData;
+import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.api.data.PlayerDataClient;
@@ -43,7 +43,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class APControlMain {
 	
-	protected static Map<EntityPlayer, PlayerControlData>
+	protected static Map<EntityPlayer, PlayerControlStat>
 		dataMap_client = new HashMap(),
 		dataMap_server = new HashMap();
 	
@@ -56,11 +56,11 @@ public class APControlMain {
 	 * @param player
 	 * @return
 	 */
-	public static PlayerControlData loadControlData(EntityPlayer player) {
-		Map<EntityPlayer, PlayerControlData> map = getMap(player.worldObj);
-		PlayerControlData data = map.get(player);
+	public static PlayerControlStat loadControlData(EntityPlayer player) {
+		Map<EntityPlayer, PlayerControlStat> map = getMap(player.worldObj);
+		PlayerControlStat data = map.get(player);
 		if(data == null) {
-			data = new PlayerControlData();
+			data = new PlayerControlStat();
 			map.put(player, data);
 		}
 		return data;
@@ -71,43 +71,47 @@ public class APControlMain {
 	 * @param player
 	 * @return
 	 */
-	public static PlayerControlData getControlData(EntityPlayer player) {
+	public static PlayerControlStat getControlData(EntityPlayer player) {
 		return getMap(player.worldObj).get(player);
 	}
 	
 	public static void onSkillKeyChanged(EntityPlayer player, int skill_id, int key_id, boolean isDown) {
-		PlayerControlData ctrl = loadControlData(player);
+		PlayerControlStat ctrl = loadControlData(player);
 		PlayerData data = APDataMain.loadPlayerData(player);
-		AbilityClass cls = data.getAbilityClass();
+		AbilityCategory cls = data.getAbilityClass();
 		if(cls == null) {
 			System.err.println("Can't find player ability class while control has changed, this is a bug!");
 			return;
 		}
 		AbilitySkill skl = cls.getSkill(skill_id);
 		if(data.isDataStateGood()) {
-			ctrl.onKeyStateChange(skill_id, skl.getMaxKeys(), key_id, isDown);
+			ctrl.onKeyStateChange(
+					skill_id,
+					skl.getMaxKeys(),
+					key_id,
+					isDown);
 			skl.onKeyStateChange(player.worldObj, player, ctrl.getSkillStat(skill_id), key_id, ctrl);
 		}
 	}
 	
 	public static void onTick(boolean isClient) {
-		Set< Map.Entry<EntityPlayer, PlayerControlData> > set = 
+		Set< Map.Entry<EntityPlayer, PlayerControlStat> > set = 
 				getMap(isClient).entrySet();
 		
-		for(Map.Entry<EntityPlayer, PlayerControlData> entry : set) { 
+		for(Map.Entry<EntityPlayer, PlayerControlStat> entry : set) { 
 			//Go through all the players and their skill states, execute updates
 			EntityPlayer player = entry.getKey();
 			PlayerData data = APDataMain.loadPlayerData(player);
 			if(data == null || !data.isDataStateGood()) continue;
 			
-			AbilityClass ability = data.getAbilityClass();
-			PlayerControlData ctrl = entry.getValue();
+			AbilityCategory ability = data.getAbilityClass();
+			PlayerControlStat ctrl = entry.getValue();
 			if(ability == null) {
 				System.err.println("Can't find player ability class while doing tickUpdate. This is a BUG!");
 				return;
 			}
 			
-			AbilityLevel level = ability.getLevel(data.level);
+			AbilityLevel level = ability.getLevel(data.getLevel());
 			if(level == null)
 				return;
 			level.onPlayerUpdate(player.worldObj, player, ctrl);
@@ -181,20 +185,36 @@ public class APControlMain {
 	public static void onKeyChangedClient(int keyid, boolean down) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer; //Can't be NULL!
 		PlayerDataClient data = (PlayerDataClient) APDataMain.loadPlayerData(player);
-		System.out.println("OnKeyChangedClient");
+		if(data.getCategory() == 0) return;
 		if(data != null && data.isActivated && data.isDataStateGood()) {
-			ControlPreset preset = getCurrentPreset();
-			System.out.println("OnKeyDown " + keyid + ", " + "skillID " + preset.settings[keyid].first + ", keyID " + preset.settings[keyid].second);
-			onSkillKeyChanged(player, preset.settings[keyid].first, preset.settings[keyid].second, down); //解读为skill局部的id
-			AcademyCraft.netHandler.sendToServer(new MsgControl(preset.settings[keyid].first, preset.settings[keyid].second, down));
+			Entry entry = cipher(keyid);
+			if(entry != null) {
+				onSkillKeyChanged(player, entry.first, entry.second, down); //解读为skill局部的id
+				AcademyCraft.netHandler.sendToServer(new MsgControl(entry.first, entry.second, down));
+			}
 		}
 	}
 	
-	private static Map<EntityPlayer, PlayerControlData> getMap(World world) {
+	public static Entry cipher(int keyid) {
+		ControlPreset pres = getCurrentPreset();
+		Entry ent = keyid >= 0 ? pres.settings[keyid] : null;
+		return ent == null ? null : ent.first < 0 ? null : ent;
+	}
+	
+	public static int decipher(Entry entry) {
+		ControlPreset pres = getCurrentPreset();
+		for(int i = 0; i < KEYS; i++) {
+			if(pres.settings[i].first == entry.first && pres.settings[i].second == entry.second)
+				return i;
+		}
+		return -1;
+	}
+	
+	private static Map<EntityPlayer, PlayerControlStat> getMap(World world) {
 		return getMap(world.isRemote);
 	}
 	
-	private static Map<EntityPlayer, PlayerControlData> getMap(boolean isClient) { //好想inline啊
+	private static Map<EntityPlayer, PlayerControlStat> getMap(boolean isClient) { //好想inline啊
 		return isClient ? dataMap_client : dataMap_server;
 	}
 

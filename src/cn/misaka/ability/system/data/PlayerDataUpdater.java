@@ -9,15 +9,17 @@ import net.minecraft.entity.player.EntityPlayer;
 public class PlayerDataUpdater {
 	public String player;
 	public byte level;
-	public byte classid;
+	public byte category;
 	public int maxCP;
 	public boolean[] ac_skill_open;
 	public float[] ac_skill_exp;
+	public int currentCP;
 	
-	public PlayerDataUpdater(EntityPlayer player,int ac_level,int ac_class,int ac_cp,boolean[] ac_skill_open,float[] ac_skill_exp){
+	public PlayerDataUpdater(EntityPlayer player, int cat, int level, int ac_cp,
+			int current_CP, boolean[] ac_skill_open, float[] ac_skill_exp){
 		this.player = player.getCommandSenderName();
-		this.level = (byte) ac_level;
-		this.classid = (byte) ac_class;
+		this.level = (byte) level;
+		this.category = (byte) cat;
 		this.maxCP = ac_cp;
 		this.ac_skill_open = ac_skill_open;
 		this.ac_skill_exp = ac_skill_exp;
