@@ -57,8 +57,8 @@ public abstract class PlayerData {
 	public float
 		current_cp; //当前cp值
 	
-	public boolean[] skill_open; //某技能是否被学习
-	public float[] skill_exp; //技能熟练度
+	protected boolean[] skill_open; //某技能是否被学习
+	protected float[] skill_exp; //技能熟练度
 	
 	/**
 	 * 当前能力是否被激活
@@ -127,6 +127,14 @@ public abstract class PlayerData {
 		AbilityCategory cat = getAbilityCategory();
 		if(cat == null) return null;
 		return cat.ability_levels.length >= level ? null : cat.ability_levels[level];
+	}
+	
+	public boolean isSkillActivated(int id) {
+		return skill_open == null || skill_open.length <= id ? true : skill_open[id];
+	}
+	
+	public float getSkillExp(int id) {
+		return skill_exp == null || skill_exp.length <= id ? 0.0F : skill_exp[id];
 	}
 	
 	

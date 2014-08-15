@@ -45,8 +45,8 @@ public class CatTest extends AbilityCategory {
 		};
 		
 		this.ability_skills = new AbilitySkill[] {
-				new SkillTest1(),
-				new SkillTest2()
+				new SkillTest1(0),
+				new SkillTest2(1)
 		};
 	}
 

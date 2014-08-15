@@ -31,8 +31,8 @@ public class SkillArcGenerate extends AbilitySkill {
 	/**
 	 * @param name
 	 */
-	public SkillArcGenerate() {
-		super("skill.elec.arcgen");
+	public SkillArcGenerate(int id) {
+		super("skill.elec.arcgen", id);
 	}
 
 	/* (non-Javadoc)

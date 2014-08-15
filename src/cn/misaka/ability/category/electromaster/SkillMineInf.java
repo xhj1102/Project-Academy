@@ -21,8 +21,8 @@ import cn.misaka.core.proxy.APClientProps;
 public class SkillMineInf extends AbilitySkill {
 
 	
-	public SkillMineInf() {
-		super("skill.elec.mineinf");
+	public SkillMineInf(int id) {
+		super("skill.elec.mineinf", id);
 	}
 
 	@Override

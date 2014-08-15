@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -28,9 +29,11 @@ public class EntityArcFX extends Entity {
 	
 	public double length;
 	public ResourceLocation[] texture = APClientProps.ANIM_ARC_LONG;
+	private final String playerName;
 
 	public EntityArcFX(World world, EntityPlayer player, double dist) {
 		super(world);
+		playerName = player.getCommandSenderName();
 		Motion3D mo = new Motion3D(player, true);
 		mo.applyToEntity(this);
 		length = dist;
@@ -41,8 +44,19 @@ public class EntityArcFX extends Entity {
 	
 	public EntityArcFX(World world, EntityPlayer player) {
 		super(world);
-		MovingObjectPosition res = player.rayTrace(100.0, 1.0F);
-		
+		playerName = player.getCommandSenderName();
+		MovingObjectPosition res = player.rayTrace(30.0, 1.0F);
+		Motion3D mo = new Motion3D(player, true);
+		mo.applyToEntity(this);
+		length = res == null || res.typeOfHit == MovingObjectType.MISS ? 
+				30.0D : this.getDistance(res.hitVec.xCoord, res.hitVec.yCoord, res.hitVec.zCoord);
+		this.rotationPitch = player.rotationPitch;
+		this.rotationYaw = player.rotationYaw;
+		this.ignoreFrustumCheck = true;
+	}
+	
+	public boolean isPlayerCreator(EntityPlayer player) {
+		return player.getCommandSenderName().equals(playerName);
 	}
 	
 	public EntityArcFX setTexture(ResourceLocation... r) {

@@ -28,10 +28,12 @@ import cn.misaka.ability.system.command.CommandControlModification;
 import cn.misaka.core.register.APItems;
 import cn.misaka.support.block.tile.TileAbilityDeveloper;
 import cn.misaka.support.client.render.entity.RenderArcAnim;
+import cn.misaka.support.client.render.entity.RenderRailgun;
 import cn.misaka.support.client.render.entity.RenderSurroundArc;
 import cn.misaka.support.client.render.item.RenderCoin;
 import cn.misaka.support.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.support.entity.fx.EntityArcFX;
+import cn.misaka.support.entity.fx.EntityRailgunFX;
 import cn.misaka.support.entity.fx.EntitySurroundArcFX;
 
 /**
@@ -59,6 +61,7 @@ public class APClientProxy extends APCommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerAP());
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcFX.class, new RenderArcAnim());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySurroundArcFX.class, new RenderSurroundArc());
+		RenderingRegistry.registerEntityRenderingHandler(EntityRailgunFX.class, new RenderRailgun());
 	}
 	
 	@Override

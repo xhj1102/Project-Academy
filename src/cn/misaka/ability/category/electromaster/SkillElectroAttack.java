@@ -23,8 +23,8 @@ public class SkillElectroAttack extends AbilitySkill {
 	/**
 	 * @param name
 	 */
-	public SkillElectroAttack() {
-		super("skill.elec.attack");
+	public SkillElectroAttack(int id) {
+		super("skill.elec.attack", id);
 	}
 
 

@@ -20,8 +20,8 @@ import cn.misaka.core.proxy.APClientProps;
  */
 public class SkillItemCharge extends AbilitySkill {
 
-	public SkillItemCharge() {
-		super("skill.elec.itemchg");
+	public SkillItemCharge(int id) {
+		super("skill.elec.itemchg", id);
 	}
 
 	@Override

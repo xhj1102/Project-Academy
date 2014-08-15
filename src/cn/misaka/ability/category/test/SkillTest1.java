@@ -28,8 +28,8 @@ public class SkillTest1 extends AbilitySkill {
 	/**
 	 * @param name
 	 */
-	public SkillTest1() {
-		super("skill.test1.name");
+	public SkillTest1(int id) {
+		super("skill.test1.name", id);
 		// TODO Auto-generated constructor stub
 	}
 

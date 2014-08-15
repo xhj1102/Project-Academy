@@ -32,8 +32,8 @@ import cn.misaka.core.proxy.APClientProps;
  */
 public class SkillMoving extends AbilitySkill {
 
-	public SkillMoving() {
-		super("skill.elec.moving");
+	public SkillMoving(int id) {
+		super("skill.elec.moving", id);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class SkillMoving extends AbilitySkill {
 			int x = nbt.getInteger("elec_x"),
 				y = nbt.getInteger("elec_y"),
 				z = nbt.getInteger("elec_z");
-			velocity += getAccel(player, getExp(data), x, y, z);
+			velocity += getAccel(player, data.getSkillExp(skillID), x, y, z);
 			nbt.setDouble("elec_vel", velocity);
 			System.out.println("MOVE " + world.isRemote + " to " + x + ", " + y + ", " + z + " VEL=" + velocity);
 			double dx = x + .5 - player.posX,
@@ -91,7 +91,7 @@ public class SkillMoving extends AbilitySkill {
 		NBTTagCompound nbt = player.getEntityData();
 		PlayerData data = APDataMain.loadPlayerData(player);
 		if(stat.isKeyDown(0)) {
-			MovingObjectPosition pos = player.rayTrace(calculateMaxDist(getExp(data)), 1.0F);
+			MovingObjectPosition pos = player.rayTrace(calculateMaxDist(data.getSkillExp(skillID)), 1.0F);
 			if(pos != null && pos.typeOfHit == MovingObjectType.BLOCK) {
 				if(isBlockApplicable(world, pos.blockX, pos.blockY, pos.blockZ)) {
 					nbt.setInteger("elec_x", pos.blockX);
@@ -116,10 +116,6 @@ public class SkillMoving extends AbilitySkill {
 	private double getAccel(EntityPlayer player, float exp, int x, int y, int z) {
 		double dist = player.getDistanceSq(x + .5, y + .5, z + .5);
 		return getForceFactor(exp) / dist;
-	}
-	
-	private float getExp(PlayerData data) {
-		return data.skill_exp == null ? 0F : data.skill_exp[3];
 	}
 	
 	private float calculateMaxDist(float exp) {

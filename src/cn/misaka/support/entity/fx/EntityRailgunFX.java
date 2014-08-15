@@ -8,33 +8,35 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.category.electromaster;
+package cn.misaka.support.entity.fx;
 
-import net.minecraft.util.ResourceLocation;
-import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.core.proxy.APClientProps;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 
 /**
  * @author WeAthFolD
  *
  */
-public class SkillSwordGen extends AbilitySkill {
+public class EntityRailgunFX extends EntityArcFX {
 
 	/**
-	 * @param name
+	 * @param world
+	 * @param player
+	 * @param dist
 	 */
-	public SkillSwordGen(int id) {
-		super("skill.elec.swordgen", id);
+	public EntityRailgunFX(World world, EntityPlayer player, double dist) {
+		super(world, player, dist);
+		this.setTexture(APClientProps.TEX_EFF_RAILGUN);
 	}
 
-	@Override
-	public ResourceLocation getLogo() {
-		return APClientProps.ELEC_SWORD;
-	}
-
-	@Override
-	public int getSuggestKey(int skillKeyID) {
-		return 3;
+	/**
+	 * @param world
+	 * @param player
+	 */
+	public EntityRailgunFX(World world, EntityPlayer player) {
+		super(world, player);
+		this.setTexture(APClientProps.TEX_EFF_RAILGUN);
 	}
 
 }

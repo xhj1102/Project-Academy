@@ -20,8 +20,8 @@ import cn.misaka.core.proxy.APClientProps;
  */
 public class SkillElectricAttraction extends AbilitySkill {
 
-	public SkillElectricAttraction() {
-		super("skill.elec.attract");
+	public SkillElectricAttraction(int id) {
+		super("skill.elec.attract", id);
 	}
 
 	@Override

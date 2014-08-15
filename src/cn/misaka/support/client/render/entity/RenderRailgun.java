@@ -10,33 +10,29 @@
  */
 package cn.misaka.support.client.render.entity;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import cn.misaka.support.entity.fx.EntityArcFX;
+import net.minecraft.entity.Entity;
 
 /**
  * @author WeAthFolD
  *
  */
-public class EntityRailgunFX extends EntityArcFX {
+public class RenderRailgun extends RenderArcAnim {
 
 	/**
-	 * @param world
-	 * @param player
-	 * @param dist
+	 * 
 	 */
-	public EntityRailgunFX(World world, EntityPlayer player, double dist) {
-		super(world, player, dist);
-		// TODO Auto-generated constructor stub
+	public RenderRailgun() {
+		setHalfHeight(.1F);
+		setRatio(2F);
 	}
-
-	/**
-	 * @param world
-	 * @param player
-	 */
-	public EntityRailgunFX(World world, EntityPlayer player) {
-		super(world, player);
-		// TODO Auto-generated constructor stub
+	
+	@Override
+	public void doRender(Entity var1, double var2, double var4, double var6,
+			float var8, float var9) {
+		setHalfHeight(.09F);
+		setRatio(2F);
+		this.blend = .7F;
+		super.doRender(var1, var2, var4, var6, var8, var9);
 	}
 
 }

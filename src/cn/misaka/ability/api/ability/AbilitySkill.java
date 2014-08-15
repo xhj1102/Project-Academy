@@ -28,8 +28,11 @@ public abstract class AbilitySkill {
 	
 	protected List<ComboIndicator> indicators = new ArrayList<ComboIndicator>();
 	
-	public AbilitySkill(String name) {
+	public final int skillID;
+	
+	public AbilitySkill(String name, int id) {
 		unl_name = name;
+		skillID = id;
 	}
 	
 	/**

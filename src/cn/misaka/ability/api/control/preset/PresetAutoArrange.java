@@ -38,8 +38,7 @@ public class PresetAutoArrange implements IPresetModifier {
 		AbilityCategory cat = data.getAbilityCategory();
 		if(cat == null) return;
 		for(int i = 0; i < cat.getMaxSkills() && nextKey < APControlMain.KEYS; i++) {
-			if(data.skill_open == null) data.resetSkillInf();
-			if(data.skill_open[i]) {
+			if(data.isSkillActivated(i)) {
 				AbilitySkill skl = cat.getSkill(i);
 				for(int j = 0; j < skl.getMaxKeys() && nextKey < APControlMain.KEYS; j++) {
 					preset.settings[nextKey++] = new SkillKey(i, j);

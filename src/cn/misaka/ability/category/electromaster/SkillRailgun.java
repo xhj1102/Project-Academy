@@ -30,8 +30,8 @@ import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.register.APItems;
-import cn.misaka.support.client.render.entity.EntityRailgunFX;
 import cn.misaka.support.entity.EntityRailgun;
+import cn.misaka.support.entity.fx.EntityRailgunFX;
 import cn.misaka.support.entity.fx.EntityRayAttenuate.AttenuateType;
 
 /**
@@ -72,8 +72,8 @@ public class SkillRailgun extends AbilitySkill {
 		acceptEntities.add(new Entry(Blocks.iron_block, ShootType.DIRECT));
 	}
 
-	public SkillRailgun() {
-		super("skill.elec.railgun");
+	public SkillRailgun(int id) {
+		super("skill.elec.railgun", id);
 	}
 
 	@Override
@@ -122,15 +122,16 @@ public class SkillRailgun extends AbilitySkill {
 						if(item0 instanceof ItemBlock) {
 							tpe = AttenuateType.SQUARED;
 							factor = 0.03F;
-							initDamage = 30 + data.skill_exp[6] * 4;
+							initDamage = 30 + data.getSkillExp(skillID) * 4;
 						} else {
 							tpe = AttenuateType.LINEAR;
 							factor = 0.03F;
-							initDamage = 25 + data.skill_exp[6] * 4;
+							initDamage = 25 + data.getSkillExp(skillID) * 4;
 						}
 						world.spawnEntityInWorld(new EntityRailgun(world, player, initDamage).setAttenuateType(tpe));
 						System.out.println("Shooting railgun~");
 					} else {
+						System.out.println("Shooting railgun(Client)~");
 						world.spawnEntityInWorld(new EntityRailgunFX(world, player));
 					}
 				}

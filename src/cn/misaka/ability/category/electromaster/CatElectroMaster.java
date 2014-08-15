@@ -38,14 +38,14 @@ public class CatElectroMaster extends AbilityCategory {
 		};
 		
 		this.ability_skills = new AbilitySkill[] {
-			new SkillArcGenerate(),
-			new SkillItemCharge(),
-			new SkillElectricAttraction(),
-			new SkillMoving(),
-			new SkillElectroAttack(),
-			new SkillSwordGen(),
-			new SkillRailgun(),
-			new SkillMineInf()
+			new SkillArcGenerate(0),
+			new SkillItemCharge(1),
+			new SkillElectricAttraction(2),
+			new SkillMoving(3),
+			new SkillElectroAttack(4),
+			new SkillSwordGen(5),
+			new SkillRailgun(6),
+			new SkillMineInf(7)
 		};
 	}
 

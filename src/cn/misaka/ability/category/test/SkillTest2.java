@@ -23,8 +23,8 @@ public class SkillTest2 extends AbilitySkill {
 	/**
 	 * @param name
 	 */
-	public SkillTest2() {
-		super("skill.test2.name");
+	public SkillTest2(int id) {
+		super("skill.test2.name", id);
 	}
 
 	/* (non-Javadoc)
