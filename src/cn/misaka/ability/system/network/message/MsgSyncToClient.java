@@ -10,8 +10,8 @@
  */
 package cn.misaka.ability.system.network.message;
 
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.ability.system.data.PlayerDataUpdater;
 import cn.misaka.core.AcademyCraft;
 import net.minecraft.client.Minecraft;

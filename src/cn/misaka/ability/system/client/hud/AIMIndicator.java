@@ -14,8 +14,8 @@ import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
-import cn.misaka.ability.api.data.PlayerDataClient;
-import cn.misaka.ability.system.data.APDataMain;
+import cn.misaka.ability.api.APDataMain;
+import cn.misaka.ability.system.data.PlayerDataClient;
 import cn.misaka.core.proxy.APClientProps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -34,7 +34,7 @@ public class AIMIndicator {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		HudUtils.setZLevel(-90);
-		drawLogo(sr.getScaledWidth(), sr.getScaledHeight(), data.getCategory());
+		drawLogo(sr.getScaledWidth(), sr.getScaledHeight(), data.getCategoryID());
 		//if(data.isActivated) 
 			drawCPBar(sr.getScaledWidth(), sr.getScaledHeight(), data);
 		GL11.glDisable(GL11.GL_BLEND);

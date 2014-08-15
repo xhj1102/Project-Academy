@@ -18,9 +18,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+import cn.misaka.ability.api.APCategoryStorage;
 import cn.misaka.ability.api.ability.AbilityCategory;
 import cn.misaka.ability.api.ability.AbilityLevel;
-import cn.misaka.ability.system.AbilityMain;
+import cn.misaka.ability.system.data.PlayerDataClient;
+import cn.misaka.ability.system.data.PlayerDataServer;
 import cn.misaka.ability.system.data.PlayerDataUpdater;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
 import cn.misaka.core.AcademyCraft;
@@ -66,25 +68,17 @@ public abstract class PlayerData {
 	/**
 	 * 对应的玩家实例
 	 */
-	EntityPlayer thePlayer;
+	protected EntityPlayer thePlayer;
 
 	public PlayerData(EntityPlayer player) {
 		thePlayer = player;
 	}
 	
-	/**
-	 * 获取CP的恢复速度。单位：CP/Tick
-	 * @return
-	 */
-	public int getCPRecoverSpeed() {
-		return 20;
-	}
-	
-	public int getLevel() {
+	public int getLevelID() {
 		return level;
 	}
 	
-	public int getCategory() {
+	public int getCategoryID() {
 		return catid;
 	}
 	
@@ -98,16 +92,16 @@ public abstract class PlayerData {
 		onStateChanged();
 	}
 	
-	public void onStateChanged() {
-		if(skill_open == null || skill_exp == null || skill_open.length != getAbilityClass().getMaxSkills() 
-				|| skill_exp.length != getAbilityClass().getMaxSkills()) {
-			System.err.println("Creating new skill information for pre is null");
-			resetSkillInf();
-		}
+	/**
+	 * 获取CP的恢复速度。单位：CP/Tick
+	 * @return
+	 */
+	public float getCPRecoverSpeed() {
+		return RECOVER_SPEED[level];
 	}
 	
 	public void resetSkillInf() {
-		AbilityCategory cat = getAbilityClass();
+		AbilityCategory cat = getAbilityCategory();
 		if(cat == null) return;
 		AbilityLevel alevel = cat.getLevel(level);
 		if(alevel == null) return;
@@ -119,6 +113,20 @@ public abstract class PlayerData {
 		if(!thePlayer.worldObj.isRemote) {
 			AcademyCraft.netHandler.sendTo(new MsgSyncToClient(this, 0x02), (EntityPlayerMP) thePlayer);
 		}
+	}
+	
+	public EntityPlayer getPlayer() {
+		return thePlayer;
+	}
+	
+	public AbilityCategory getAbilityCategory() {
+		return this.isDataStateGood() ? APCategoryStorage.getAbility(catid) : null;
+ 	}
+	
+	public AbilityLevel getLevel() {
+		AbilityCategory cat = getAbilityCategory();
+		if(cat == null) return null;
+		return cat.ability_levels.length >= level ? null : cat.ability_levels[level];
 	}
 	
 	
@@ -134,7 +142,7 @@ public abstract class PlayerData {
 	public abstract boolean isDataStateGood();
 	
 	/**
-	 * 没tick运行。检查数据完整性，并选择性进行同步。，
+	 * 每tick运行。检查数据完整性，并选择性进行同步。，
 	 */
 	public abstract void updateTick();
 	
@@ -142,40 +150,51 @@ public abstract class PlayerData {
 		fromAbilityData(data, 0x03);
 	}
 	
+	/**
+	 * 从DataUpdater中获取玩家能力数据，并设置到this。
+	 */
 	public void fromAbilityData(PlayerDataUpdater data, int flag) {
 		if(data == null) {
 			System.err.println("Attempting to load ability data from a NULL pointer");
 			return;
 		}
+		//同步一般数据
 		if((flag & 0x01) != 0) {
 			catid = data.category;
 			level = data.level;
 			max_cp = data.maxCP;
 			current_cp = data.currentCP;
 		}
+		//同步技能信息
 		if((flag & 0x02) != 0) {
 			skill_open = data.ac_skill_open;
 			skill_exp = data.ac_skill_exp;
 		}
+		//状态更改，进行检查
 		this.onStateChanged();
 	}
 	
+	/**
+	 * 将当前信息转换成Updater以进行传输或保存。
+	 */
 	public PlayerDataUpdater toUpdater() {
 		return new PlayerDataUpdater(thePlayer, catid, level, max_cp, (int) current_cp, skill_open, skill_exp);
 	}
 	
+	/**
+	 * 即时保存数据。
+	 */
 	public void saveData() {
 		saveUpdater(thePlayer, toUpdater());
 	}
 	
-	public EntityPlayer getPlayer() {
-		return thePlayer;
+	public void onStateChanged() {
+		if(skill_open == null || skill_exp == null || skill_open.length != getAbilityCategory().getMaxSkills() 
+				|| skill_exp.length != getAbilityCategory().getMaxSkills()) {
+			System.err.println("Creating new skill information for pre is null");
+			resetSkillInf();
+		}
 	}
-	
-	public AbilityCategory getAbilityClass() {
-		//System.out.println("Fetching abilityclass " + this.isDataStateGood());
-		return this.isDataStateGood() ? AbilityMain.getAbility(catid) : null;
- 	}
 	
 	//-----------------STATIC METHODS(LOAD AND SAVE)----------------------
 	

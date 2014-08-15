@@ -17,17 +17,15 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.register.LIGuiHandler;
+import cn.misaka.ability.api.APCategoryStorage;
+import cn.misaka.ability.api.APControlMain;
 import cn.misaka.ability.category.electromaster.CatElectroMaster;
 import cn.misaka.ability.category.test.CatTest;
-import cn.misaka.ability.client.gui.GuiAbilityDeveloper;
-import cn.misaka.ability.system.AbilityMain;
+import cn.misaka.ability.system.client.gui.GuiAbilityDeveloper;
 import cn.misaka.ability.system.command.CommandAim;
-import cn.misaka.ability.system.control.APControlMain;
 import cn.misaka.ability.system.event.APSEventListener;
 import cn.misaka.ability.system.event.APSTickEvents;
 import cn.misaka.ability.system.network.message.MsgControl;
-import cn.misaka.ability.system.network.message.MsgDeveloperDismount;
-import cn.misaka.ability.system.network.message.MsgDeveloperPlayer;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
 import cn.misaka.ability.system.network.message.MsgSyncToServer;
 import cn.misaka.core.misc.APCreativeTab;
@@ -36,6 +34,8 @@ import cn.misaka.core.proxy.APCommonProxy;
 import cn.misaka.core.proxy.APGeneralProps;
 import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
+import cn.misaka.support.network.message.MsgDeveloperDismount;
+import cn.misaka.support.network.message.MsgDeveloperPlayer;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -116,8 +116,8 @@ public class AcademyCraft {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 		
 		//能力注册BEGIN
-		AbilityMain.registerAbility(new CatTest(1));
-		AbilityMain.registerAbility(new CatElectroMaster(2));
+		APCategoryStorage.registerAbility(new CatTest(1));
+		APCategoryStorage.registerAbility(new CatElectroMaster(2));
 		//能力注册END
 		
 		guiHandler.addGuiElement(APClientProps.GUI_ID_ABILITY_DEV, new GuiAbilityDeveloper.Element());

@@ -13,9 +13,10 @@ package cn.misaka.ability.api.data;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
-import cn.misaka.ability.system.AbilityMain;
+import cn.misaka.ability.api.APCategoryStorage;
 
 /**
+ * 玩家能力的获得——随机安排能力系，并初始化CP等。
  * @author WeAthFolD
  *
  */
@@ -30,7 +31,7 @@ public class ModifierInitialize implements IDataModifier {
 	public void applyModification(EntityPlayer player, PlayerData data) {
 		data.current_cp = data.max_cp = PlayerData.INIT_CP[0];
 		data.level = 0;
-		data.catid = RNG.nextInt(AbilityMain.getMaxAbilities()) + 1;
+		data.catid = RNG.nextInt(APCategoryStorage.getMaxAbilities()) + 1;
 	}
 	
 	

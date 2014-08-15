@@ -27,6 +27,7 @@ public class CatElectroMaster extends AbilityCategory {
 		super("category.railgun", id);
 	}
 	
+	@Override
 	protected void initClass() {
 		this.ability_levels = new AbilityLevel[] {
 				new ElectroMasterLevels.Level1(),

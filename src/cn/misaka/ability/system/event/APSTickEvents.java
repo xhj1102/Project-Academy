@@ -10,8 +10,8 @@
  */
 package cn.misaka.ability.system.event;
 
-import cn.misaka.ability.system.control.APControlMain;
-import cn.misaka.ability.system.data.APDataMain;
+import cn.misaka.ability.api.APControlMain;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
 import net.minecraft.client.Minecraft;

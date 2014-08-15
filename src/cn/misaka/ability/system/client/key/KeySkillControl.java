@@ -14,7 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import cn.liutils.api.client.register.IKeyHandler;
 import cn.liutils.api.util.GenericUtils;
-import cn.misaka.ability.system.control.APControlMain;
+import cn.misaka.ability.api.APControlMain;
 
 /**
  * 技能操作键位。传给APControlMain进行下一步动作。

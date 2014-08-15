@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import cn.misaka.ability.api.client.control.ControlIndicator;
+import cn.misaka.ability.api.client.control.ComboIndicator;
 import cn.misaka.ability.api.client.render.SkillRender;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
@@ -26,7 +26,7 @@ public abstract class AbilitySkill {
 	@SideOnly(Side.CLIENT)
 	public static SkillRender DEFAULT_SKILL_RENDER = new SkillRender();
 	
-	protected List<ControlIndicator> indicators = new ArrayList<ControlIndicator>();
+	protected List<ComboIndicator> indicators = new ArrayList<ComboIndicator>();
 	
 	public AbilitySkill(String name) {
 		unl_name = name;
@@ -92,7 +92,7 @@ public abstract class AbilitySkill {
 	}
 	
 
-	public final Iterator<ControlIndicator> getControlTips() {
+	public final Iterator<ComboIndicator> getControlTips() {
 		return indicators.iterator();
 	}
 	

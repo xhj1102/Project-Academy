@@ -23,16 +23,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cn.liutils.api.util.Pair;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.client.render.entity.EntityRailgunFX;
-import cn.misaka.ability.entity.EntityRailgun;
-import cn.misaka.ability.entity.fx.EntityRayAttenuate.AttenuateType;
-import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.register.APItems;
+import cn.misaka.support.client.render.entity.EntityRailgunFX;
+import cn.misaka.support.entity.EntityRailgun;
+import cn.misaka.support.entity.fx.EntityRayAttenuate.AttenuateType;
 
 /**
  * 哔哩哔哩！
@@ -99,6 +99,7 @@ public class SkillRailgun extends AbilitySkill {
 	 * @param kid 状态发生改变的键位id
 	 * @param mctrl
 	 */
+	@Override
 	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlStat mctrl) {
 		if(stat.isKeyDown(0)) {
 			System.out.println("Attempting to shoot railgun");

@@ -14,14 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.liutils.api.command.LICommandBase;
+import cn.misaka.ability.api.APControlMain;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilityCategory;
-import cn.misaka.ability.api.control.modifier.IPresetModifier;
-import cn.misaka.ability.api.control.modifier.PresetAutoArrange;
+import cn.misaka.ability.api.control.preset.ControlPreset;
+import cn.misaka.ability.api.control.preset.IPresetModifier;
+import cn.misaka.ability.api.control.preset.PresetAutoArrange;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.api.data.PlayerDataClient;
-import cn.misaka.ability.system.control.APControlMain;
-import cn.misaka.ability.system.control.preset.ControlPreset;
-import cn.misaka.ability.system.data.APDataMain;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -113,7 +112,7 @@ public class CommandControlModification extends LICommandBase {
 					skillID = Integer.valueOf(var2[3]),
 					subKeyID = Integer.valueOf(var2[4]);
 				PlayerData data = APDataMain.loadPlayerData(player);
-				AbilityCategory aclass = data.getAbilityClass();
+				AbilityCategory aclass = data.getAbilityCategory();
 				if(aclass == null) {
 					this.sendWithTranslation(ics, "aimctrl.classinit");
 					return;

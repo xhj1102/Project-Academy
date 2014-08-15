@@ -11,8 +11,8 @@
 package cn.misaka.ability.api.control;
 
 /**
+ * 技能的实时操作信息。
  * @author WeAthFolD
- *
  */
 public class SkillControlStat {
 

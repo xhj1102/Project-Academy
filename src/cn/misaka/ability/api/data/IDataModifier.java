@@ -13,8 +13,8 @@ package cn.misaka.ability.api.data;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**
+ * 对玩家数据的快速修改。用于能力开发、升级等的轻量级实现。
  * @author WeAthFolD
- *
  */
 public interface IDataModifier {
 	public void applyModification(EntityPlayer player, PlayerData data);

@@ -12,7 +12,6 @@ package cn.misaka.core.proxy;
 
 import net.minecraft.command.CommandHandler;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.input.Keyboard;
@@ -20,21 +19,20 @@ import org.lwjgl.input.Keyboard;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cn.liutils.core.client.register.LIKeyProcess;
-import cn.misaka.ability.block.tile.TileAbilityDeveloper;
-import cn.misaka.ability.client.model.ModelBipedAP;
-import cn.misaka.ability.client.render.entity.RenderArcAnim;
-import cn.misaka.ability.client.render.entity.RenderPlayerAP;
-import cn.misaka.ability.client.render.entity.RenderSurroundArc;
-import cn.misaka.ability.client.render.item.RenderCoin;
-import cn.misaka.ability.client.render.tile.RenderAbilityDeveloper;
-import cn.misaka.ability.entity.fx.EntityArcFX;
-import cn.misaka.ability.entity.fx.EntitySurroundArcFX;
 import cn.misaka.ability.system.client.key.KeySkillActivation;
 import cn.misaka.ability.system.client.key.KeySkillControl;
+import cn.misaka.ability.system.client.model.ModelBipedAP;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
-import cn.misaka.ability.system.client.render.RenderItemEnchanted;
+import cn.misaka.ability.system.client.render.RenderPlayerAP;
 import cn.misaka.ability.system.command.CommandControlModification;
 import cn.misaka.core.register.APItems;
+import cn.misaka.support.block.tile.TileAbilityDeveloper;
+import cn.misaka.support.client.render.entity.RenderArcAnim;
+import cn.misaka.support.client.render.entity.RenderSurroundArc;
+import cn.misaka.support.client.render.item.RenderCoin;
+import cn.misaka.support.client.render.tile.RenderAbilityDeveloper;
+import cn.misaka.support.entity.fx.EntityArcFX;
+import cn.misaka.support.entity.fx.EntitySurroundArcFX;
 
 /**
  * 客户端的加载代理

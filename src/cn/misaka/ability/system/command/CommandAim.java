@@ -16,9 +16,9 @@ import java.util.Map.Entry;
 
 import cn.liutils.api.command.LICommandBase;
 import cn.liutils.api.util.Pair;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.data.ModifierInitialize;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.ability.system.network.message.MsgSyncToClient;
 import cn.misaka.core.AcademyCraft;
 import net.minecraft.command.CommandBase;

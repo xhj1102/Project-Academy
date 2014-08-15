@@ -19,8 +19,8 @@ import cn.liutils.api.util.Motion3D;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
-import cn.misaka.ability.entity.fx.EntitySurroundArcFX;
 import cn.misaka.core.proxy.APClientProps;
+import cn.misaka.support.entity.fx.EntitySurroundArcFX;
 
 /**
  * @author WeAthFolD
@@ -53,6 +53,7 @@ public class SkillArcGenerate extends AbilitySkill {
 		return 0;
 	}
 	
+	@Override
 	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlStat mctrl) {
 		if(stat.isKeyDown(0) && world.isRemote) {
 			Motion3D mot = new Motion3D(player, true);

@@ -10,10 +10,6 @@
  */
 package cn.misaka.ability.category.electromaster;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
@@ -21,15 +17,13 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cn.liutils.api.util.BlockPos;
 import cn.liutils.api.util.GenericUtils;
-import cn.liutils.api.util.Motion3D;
 import cn.liutils.api.util.PlayerPositionLock;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.system.data.APDataMain;
 import cn.misaka.core.proxy.APClientProps;
 
 /**

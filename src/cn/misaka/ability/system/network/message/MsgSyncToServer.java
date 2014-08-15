@@ -11,8 +11,8 @@
 package cn.misaka.ability.system.network.message;
 
 import net.minecraft.entity.player.EntityPlayer;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.system.data.APDataMain;
 import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

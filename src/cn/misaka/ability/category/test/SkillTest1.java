@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
-import cn.misaka.ability.entity.fx.EntityArcFX;
 import cn.misaka.core.proxy.APClientProps;
+import cn.misaka.support.entity.fx.EntityArcFX;
 
 /**
  * @author WeAthFolD

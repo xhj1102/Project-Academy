@@ -2,6 +2,10 @@ package cn.misaka.ability.api.control;
 
 import java.util.HashMap;
 
+/**
+ * 玩家的操作信息，以SkillControlStat为条目进行存储。
+ * @author WeAthFolD
+ */
 public class PlayerControlStat {
 	
 	public HashMap<Integer, SkillControlStat> keyStateMap = new HashMap();

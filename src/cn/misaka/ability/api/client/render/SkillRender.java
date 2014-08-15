@@ -10,12 +10,8 @@
  */
 package cn.misaka.ability.api.client.render;
 
-import org.lwjgl.opengl.GL11;
-
-import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**

@@ -11,8 +11,8 @@
 package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.block.BlockAbilityDeveloper;
-import cn.misaka.ability.block.tile.TileAbilityDeveloper;
+import cn.misaka.support.block.BlockAbilityDeveloper;
+import cn.misaka.support.block.tile.TileAbilityDeveloper;
 import net.minecraftforge.common.config.Configuration;
 
 /**

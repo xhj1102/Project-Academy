@@ -14,8 +14,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import cn.liutils.api.client.register.IKeyHandler;
 import cn.liutils.api.util.GenericUtils;
-import cn.misaka.ability.api.data.PlayerDataClient;
-import cn.misaka.ability.system.data.APDataMain;
+import cn.misaka.ability.api.APDataMain;
+import cn.misaka.ability.system.data.PlayerDataClient;
 import cn.misaka.ability.system.network.message.MsgSyncToServer;
 import cn.misaka.core.AcademyCraft;
 

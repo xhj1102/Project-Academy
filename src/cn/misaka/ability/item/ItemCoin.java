@@ -35,7 +35,8 @@ public class ItemCoin extends Item implements IRailgunQTE {
 		setCreativeTab(AcademyCraft.cct);
 	}
 	
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
+    @Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
     	NBTTagCompound nbt = GenericUtils.loadCompound(stack);
     	if(!par5) {
     		nbt.setBoolean("isThrowing", false);
@@ -54,7 +55,8 @@ public class ItemCoin extends Item implements IRailgunQTE {
     }
 
 
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    @Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
     	NBTTagCompound nbt = GenericUtils.loadCompound(stack);
     	if(nbt.getBoolean("isThrowing")) return stack;

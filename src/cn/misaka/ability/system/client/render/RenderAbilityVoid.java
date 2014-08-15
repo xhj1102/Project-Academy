@@ -13,16 +13,14 @@ package cn.misaka.ability.system.client.render;
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.util.RenderUtils;
+import cn.misaka.ability.api.APControlMain;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilityCategory;
 import cn.misaka.ability.api.ability.AbilitySkill;
-import cn.misaka.ability.api.client.render.SkillRender;
 import cn.misaka.ability.api.client.render.SkillRender.SkillRenderType;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.data.PlayerData;
-import cn.misaka.ability.system.AbilityMain;
-import cn.misaka.ability.system.control.APControlMain;
-import cn.misaka.ability.system.data.APDataMain;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -70,7 +68,7 @@ public class RenderAbilityVoid implements IItemRenderer {
 
 		GL11.glPushMatrix(); {
 			
-			AbilityCategory ac = pdata.getAbilityClass();
+			AbilityCategory ac = pdata.getAbilityCategory();
 			
 			if(ac != null) { //遍历skill渲染器然后执行渲染
 				for(int i = 0; i < ac.getMaxSkills(); i++) {
