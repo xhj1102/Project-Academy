@@ -72,6 +72,7 @@ public abstract class PlayerData {
 
 	public PlayerData(EntityPlayer player) {
 		thePlayer = player;
+		this.loadData();
 	}
 	
 	public int getLevelID() {
