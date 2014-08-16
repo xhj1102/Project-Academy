@@ -230,6 +230,7 @@ public abstract class PlayerData {
         	FileWriter fw = new FileWriter(f);
         	fw.write(data2json(a));
         	fw.close();
+        	System.out.println("EntityPlayer " + p.getCommandSenderName() + " information successfully saved");
     	} catch(Exception e) {
     		System.err.println("Encountered a problem while saving player ability data");
     	}
@@ -243,20 +244,21 @@ public abstract class PlayerData {
     	
     	PlayerDataUpdater updater;
     	if(!f.exists()){
-    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, 0, new boolean[3], new float[3]);
-    		saveUpdater(p, updater);
+    		System.err.println("Saving folder doesn't exist. Returning NULL PlayerData...");
+    		return null;
     	}
     	s += File.separator + p.getCommandSenderName() + ".ac";
     	f = new File(s);
     	if(!f.exists()){
-    		updater = new PlayerDataUpdater(p, (byte)0, (byte)0, 0, 0, new boolean[3], new float[3]);
-    		saveUpdater(p, updater);
+    		System.err.println("Saving file doesn't exist. Returning NULL PlayerData...");
+    		return null;
     	}
     	
     	try {
+    		System.out.println("Now reading data file...");
     		FileReader fr = new FileReader(f);
-    		char[] temp = new char[1024];
-    		String json = new String(temp, 0, fr.read(temp));
+    		char[] buffer = new char[1024];
+    		String json = new String(buffer, 0, fr.read(buffer));
     		fr.close();
     		return json2data(json);
     	} catch(Exception e) {
