@@ -13,6 +13,8 @@ package cn.misaka.ability.category.electromaster;
 import java.util.HashSet;
 import java.util.Set;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -23,10 +25,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cn.liutils.api.util.Pair;
+import cn.misaka.ability.api.APControlMain;
 import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
+import cn.misaka.ability.api.control.preset.ControlPreset.SkillKey;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.register.APItems;
@@ -137,6 +141,21 @@ public class SkillRailgun extends AbilitySkill {
 				}
 			}
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static boolean isPreparing(PlayerData data) {
+		EntityPlayer player = data.getPlayer();
+		ItemStack stack = player.getCurrentEquippedItem();
+		if(stack != null && stack.getItem() instanceof IRailgunQTE) {
+			IRailgunQTE judge = (IRailgunQTE) stack.getItem();
+			if(judge.isQTEinProgress(stack)) {
+				if(APControlMain.decipher(new SkillKey(6, 0)) != -1) { //Railgun in player control preset
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	private Entry contains(Item item0) {

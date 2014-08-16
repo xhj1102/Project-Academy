@@ -28,7 +28,9 @@ public class APClientProps {
 		TEX_COIN_FRONT = src("academy:textures/items/coin-front.png"),
 		TEX_COIN_BACK = src("academy:textures/items/coin-back.png"),
 		TEX_ARC_SHELL = src("academy:textures/effects/electro_arc_shell.png"),
-		TEX_EFF_RAILGUN = src("academy:textures/effects/railgun.png");
+		TEX_EFF_RAILGUN = src("academy:textures/effects/railgun.png"),
+		TEX_GUI_RAILGUN = src("academy:textures/guis/railgun.png"),
+		TEX_GUI_RAILGUN_PRG = src("academy:textures/guis/railgun_prog.png");
 	
 	//Ability Textures
 	public static final ResourceLocation

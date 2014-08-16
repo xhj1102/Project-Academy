@@ -8,7 +8,7 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.client.gui;
+package cn.misaka.support.client.gui;
 
 import org.lwjgl.opengl.GL11;
 

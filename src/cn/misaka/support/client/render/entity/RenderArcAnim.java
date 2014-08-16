@@ -75,13 +75,13 @@ public class RenderArcAnim extends Render {
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 			RenderUtils.loadTexture(arc.texture[frame]);
 			double len = ((EntityArcFX)var1).length;
-			Vec3 v1 = RenderUtils.newV3(0, -halfHeight, 0),
-				v2 = RenderUtils.newV3(0, halfHeight, 0),
+			Vec3 v1 = RenderUtils.newV3(-.2, -halfHeight, 0),
+				v2 = RenderUtils.newV3(-.2, halfHeight, 0),
 				v3=	RenderUtils.newV3(len, halfHeight, 0),
 				v4 = RenderUtils.newV3(len, -halfHeight, 0),
 				
-				v5 = RenderUtils.newV3(0, 0, -halfHeight),
-				v6 = RenderUtils.newV3(0, 0, halfHeight),
+				v5 = RenderUtils.newV3(-.2, 0, -halfHeight),
+				v6 = RenderUtils.newV3(-.2, 0, halfHeight),
 				v7=	RenderUtils.newV3(len, 0, halfHeight),
 				v8 = RenderUtils.newV3(len, 0, -halfHeight);
 			Tessellator t = Tessellator.instance;

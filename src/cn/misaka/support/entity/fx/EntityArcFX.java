@@ -45,11 +45,11 @@ public class EntityArcFX extends Entity {
 	public EntityArcFX(World world, EntityPlayer player) {
 		super(world);
 		playerName = player.getCommandSenderName();
-		MovingObjectPosition res = player.rayTrace(30.0, 1.0F);
+		MovingObjectPosition res = player.rayTrace(70.0, 1.0F);
 		Motion3D mo = new Motion3D(player, true);
 		mo.applyToEntity(this);
 		length = res == null || res.typeOfHit == MovingObjectType.MISS ? 
-				30.0D : this.getDistance(res.hitVec.xCoord, res.hitVec.yCoord, res.hitVec.zCoord);
+				70.0D : this.getDistance(res.hitVec.xCoord, res.hitVec.yCoord, res.hitVec.zCoord);
 		this.rotationPitch = player.rotationPitch;
 		this.rotationYaw = player.rotationYaw;
 		this.ignoreFrustumCheck = true;

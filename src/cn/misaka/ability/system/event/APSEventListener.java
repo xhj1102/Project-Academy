@@ -10,14 +10,19 @@
  */
 package cn.misaka.ability.system.event;
 
+import cn.liutils.api.util.Pair;
 import cn.misaka.ability.api.APControlMain;
 import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.data.PlayerData;
+import cn.misaka.ability.category.electromaster.IRailgunQTE;
+import cn.misaka.ability.category.electromaster.SkillRailgun;
 import cn.misaka.ability.system.client.hud.AIMIndicator;
 import cn.misaka.core.AcademyCraft;
+import cn.misaka.support.client.gui.GUIRailgun;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -47,6 +52,16 @@ public class APSEventListener {
 	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 		if(event.type == ElementType.CROSSHAIRS) {
 			AIMIndicator.drawHud(event.resolution);
+			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+			
+			if(SkillRailgun.isPreparing(APDataMain.loadPlayerData(player))) {
+				IRailgunQTE qte = (IRailgunQTE) player.getCurrentEquippedItem().getItem();
+				Pair<Float, Float> interval = qte.getAcceptedRange();
+				double m = (interval.first + interval.second) / 2D;
+				GUIRailgun.draw(event.resolution.getScaledWidth(), event.resolution.getScaledHeight(),
+						m, qte.getQTEProgress(player.getCurrentEquippedItem()));
+				event.setCanceled(true);
+			}
 		}
 	}
 	

@@ -198,11 +198,16 @@ public abstract class PlayerData {
 	}
 	
 	public void onStateChanged() {
+		boolean skr = false;
 		if(skill_open == null || skill_exp == null || skill_open.length != getAbilityCategory().getMaxSkills() 
 				|| skill_exp.length != getAbilityCategory().getMaxSkills()) {
 			System.err.println("Creating new skill information for pre is null");
 			resetSkillInf();
+			skr = true;
 		}
+		this.current_cp = this.max_cp;
+		if(!thePlayer.worldObj.isRemote)
+			AcademyCraft.netHandler.sendTo(new MsgSyncToClient(this, skr ? 0x03 : 0x01), (EntityPlayerMP) thePlayer);
 	}
 	
 	//-----------------STATIC METHODS(LOAD AND SAVE)----------------------
