@@ -37,4 +37,8 @@ public class GuiButtonAssignment extends GuiScreen{
     	// ;
     }
 	
+	public void onKeySelect() {
+		
+	}
+	
 }
