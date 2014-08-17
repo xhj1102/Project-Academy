@@ -11,8 +11,8 @@ public class PlayerDataUpdater {
 	public byte level;
 	public byte category;
 	public int maxCP;
-	public boolean[] ac_skill_open;
-	public float[] ac_skill_exp;
+	public boolean[] skillOpen;
+	public float[] skillExp;
 	public int currentCP;
 	
 	public PlayerDataUpdater(EntityPlayer player, int cat, int level, int ac_cp,
@@ -21,8 +21,9 @@ public class PlayerDataUpdater {
 		this.level = (byte) level;
 		this.category = (byte) cat;
 		this.maxCP = ac_cp;
-		this.ac_skill_open = ac_skill_open;
-		this.ac_skill_exp = ac_skill_exp;
+		this.currentCP = current_CP;
+		this.skillOpen = ac_skill_open;
+		this.skillExp = ac_skill_exp;
 	}
 	
 	public PlayerDataUpdater() {}

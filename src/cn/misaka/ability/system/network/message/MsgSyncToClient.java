@@ -56,20 +56,20 @@ public class MsgSyncToClient implements IMessage {
 		
 		if((flag & 0x02) != 0) {
 			int len = buf.readByte();
-			updater.ac_skill_exp = new float[len];
-			updater.ac_skill_open = new boolean[len];
+			updater.skillExp = new float[len];
+			updater.skillOpen = new boolean[len];
 			for(int i = 0; i < len; i++) {
-				updater.ac_skill_open[i] = buf.readBoolean();
+				updater.skillOpen[i] = buf.readBoolean();
 			}
 			for(int i = 0; i < len; i++) {
-				updater.ac_skill_exp[i] = buf.readFloat();
+				updater.skillExp[i] = buf.readFloat();
 			}
 		}
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		if((flag& 0x02) != 0 && (updater.ac_skill_exp == null || updater.ac_skill_open == null)) {
+		if((flag& 0x02) != 0 && (updater.skillExp == null || updater.skillOpen == null)) {
 			System.err.println("Trying to sync skill Infs while they are null, BUGGED!");
 			flag -= 0x02;
 		}
@@ -81,12 +81,12 @@ public class MsgSyncToClient implements IMessage {
 			buf.writeInt(updater.currentCP);
 		}
 		if((flag & 0x02) != 0) {
-			int len = updater.ac_skill_exp.length;
+			int len = updater.skillExp.length;
 			buf.writeByte(len);
 			for(int i = 0; i < len; i++) 
-				buf.writeBoolean(updater.ac_skill_open[i]);
+				buf.writeBoolean(updater.skillOpen[i]);
 			for(int i = 0; i < len; i++) 
-				buf.writeFloat(updater.ac_skill_exp[i]);
+				buf.writeFloat(updater.skillExp[i]);
 		}
 	}
 	
@@ -132,7 +132,7 @@ public class MsgSyncToClient implements IMessage {
 
 			@Override
 			public IMessage onMessage(Request message, MessageContext ctx) {
-				System.out.println("Retrieved sync request");
+				//System.out.println("Retrieved sync request");
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				AcademyCraft.netHandler.sendTo(new MsgSyncToClient(APDataMain.loadPlayerData(player), message.flag), player);
 				return null;

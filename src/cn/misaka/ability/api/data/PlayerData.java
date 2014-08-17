@@ -53,12 +53,11 @@ public abstract class PlayerData {
 		catid, //能力系id
 		level; //玩家等级
 		
-	public int max_cp; //最大cp值
-	public float
-		current_cp; //当前cp值
+	public int maxCP; //最大cp值
+	public float currentCP; //当前cp值
 	
-	protected boolean[] skill_open; //某技能是否被学习
-	protected float[] skill_exp; //技能熟练度
+	protected boolean[] skillOpen; //某技能是否被学习
+	protected float[] skillExp; //技能熟练度
 	
 	/**
 	 * 当前能力是否被激活
@@ -106,10 +105,10 @@ public abstract class PlayerData {
 		if(cat == null) return;
 		AbilityLevel alevel = cat.getLevel(level);
 		if(alevel == null) return;
-		skill_open = new boolean[cat.getMaxSkills()];
-		skill_exp = new float[cat.getMaxSkills()];
+		skillOpen = new boolean[cat.getMaxSkills()];
+		skillExp = new float[cat.getMaxSkills()];
 		for(int i = 0; i > cat.getMaxSkills(); i++) {
-			skill_open[i] = alevel.isSkillDefaultActivated(i);
+			skillOpen[i] = alevel.isSkillDefaultActivated(i);
 		}
 		if(!thePlayer.worldObj.isRemote) {
 			AcademyCraft.netHandler.sendTo(new MsgSyncToClient(this, 0x02), (EntityPlayerMP) thePlayer);
@@ -131,11 +130,24 @@ public abstract class PlayerData {
 	}
 	
 	public boolean isSkillActivated(int id) {
-		return skill_open == null || skill_open.length <= id ? true : skill_open[id];
+		return skillOpen == null || skillOpen.length <= id ? true : skillOpen[id];
 	}
 	
 	public float getSkillExp(int id) {
-		return skill_exp == null || skill_exp.length <= id ? 0.0F : skill_exp[id];
+		return skillExp == null || skillExp.length <= id ? 0.0F : skillExp[id];
+	}
+	
+	/**
+	 * 消耗玩家的计算力值
+	 * @param cp
+	 * @return
+	 */
+	public boolean drainCP(int cp) {
+		if(currentCP >= cp) {
+			currentCP -= cp;
+			System.out.println("Drain CP in " + thePlayer.worldObj.isRemote + ", now cp is " + currentCP);
+			return true;
+		} else return false;
 	}
 	
 	
@@ -171,13 +183,13 @@ public abstract class PlayerData {
 		if((flag & 0x01) != 0) {
 			catid = data.category;
 			level = data.level;
-			max_cp = data.maxCP;
-			current_cp = data.currentCP;
+			maxCP = data.maxCP;
+			currentCP = data.currentCP;
 		}
 		//同步技能信息
 		if((flag & 0x02) != 0) {
-			skill_open = data.ac_skill_open;
-			skill_exp = data.ac_skill_exp;
+			skillOpen = data.skillOpen;
+			skillExp = data.skillExp;
 		}
 		//状态更改，进行检查
 		this.onStateChanged();
@@ -187,7 +199,7 @@ public abstract class PlayerData {
 	 * 将当前信息转换成Updater以进行传输或保存。
 	 */
 	public PlayerDataUpdater toUpdater() {
-		return new PlayerDataUpdater(thePlayer, catid, level, max_cp, (int) current_cp, skill_open, skill_exp);
+		return new PlayerDataUpdater(thePlayer, catid, level, maxCP, (int) currentCP, skillOpen, skillExp);
 	}
 	
 	/**
@@ -199,13 +211,12 @@ public abstract class PlayerData {
 	
 	public void onStateChanged() {
 		boolean skr = false;
-		if(skill_open == null || skill_exp == null || skill_open.length != getAbilityCategory().getMaxSkills() 
-				|| skill_exp.length != getAbilityCategory().getMaxSkills()) {
+		if(skillOpen == null || skillExp == null || skillOpen.length != getAbilityCategory().getMaxSkills() 
+				|| skillExp.length != getAbilityCategory().getMaxSkills()) {
 			System.err.println("Creating new skill information for pre is null");
 			resetSkillInf();
 			skr = true;
 		}
-		this.current_cp = this.max_cp;
 		if(!thePlayer.worldObj.isRemote)
 			AcademyCraft.netHandler.sendTo(new MsgSyncToClient(this, skr ? 0x03 : 0x01), (EntityPlayerMP) thePlayer);
 	}

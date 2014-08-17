@@ -5,7 +5,7 @@ import java.util.List;
 
 import cn.liutils.api.util.GenericUtils;
 import cn.misaka.ability.api.ability.AbilityCategory;
-import cn.misaka.ability.system.classes.AbilityCategoryVoid;
+import cn.misaka.ability.system.category.AbilityCategoryVoid;
 
 /**
  * 存储所有能力类的地方，注册新能力类就在这里进行，实际上就是个List<AbilityCategory> Factory啦

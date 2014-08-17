@@ -63,11 +63,11 @@ public abstract class AbilityCategory {
 		return ability_skills.length;
 	}
 	
-	@SideOnly(Side.CLIENT)
 	/**
 	 * 获取Hud贴图的覆盖。贴图的位置必须和模板贴图严格一致，first为logo框，second为CP框
 	 * @return
 	 */
+	@SideOnly(Side.CLIENT)
 	public abstract Pair<ResourceLocation, ResourceLocation> getHudTextureOverride();
 	
 	@SideOnly(Side.CLIENT)

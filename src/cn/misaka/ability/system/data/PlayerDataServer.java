@@ -34,7 +34,11 @@ public class PlayerDataServer extends PlayerData {
 
 	@Override
 	public void updateTick() {
-		//SERVER DOSEN'T QUITE DO ANYTHING
+		if(currentCP < maxCP) {
+			currentCP += this.RECOVER_SPEED[level];
+			if(currentCP > maxCP)
+				currentCP = maxCP;
+		} 
 	}
 
 }

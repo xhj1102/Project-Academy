@@ -29,7 +29,7 @@ public class ModifierInitialize implements IDataModifier {
 
 	@Override
 	public void applyModification(EntityPlayer player, PlayerData data) {
-		data.current_cp = data.max_cp = PlayerData.INIT_CP[0];
+		data.currentCP = data.maxCP = PlayerData.INIT_CP[0];
 		data.level = 0;
 		data.catid = RNG.nextInt(APCategoryStorage.getMaxAbilities()) + 1;
 	}

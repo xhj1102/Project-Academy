@@ -8,7 +8,7 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.classes;
+package cn.misaka.ability.system.category;
 
 import net.minecraft.util.ResourceLocation;
 import cn.liutils.api.util.Pair;

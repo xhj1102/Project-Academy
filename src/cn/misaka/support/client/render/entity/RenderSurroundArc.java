@@ -10,6 +10,8 @@
  */
 package cn.misaka.support.client.render.entity;
 
+import java.util.Random;
+
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.shape.ShpGeneratorArcSquared;
@@ -39,6 +41,7 @@ public class RenderSurroundArc extends Render {
 		// TODO Auto-generated constructor stub
 	}
 	
+	double[] offset = {0.0D, 0.3D, -0.5D};
     @Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
@@ -47,15 +50,18 @@ public class RenderSurroundArc extends Render {
     	GL11.glDisable(GL11.GL_LIGHTING);
     	GL11.glDisable(GL11.GL_CULL_FACE);
     	GL11.glPushMatrix();
-    	
-    	RenderUtils.loadTexture(APClientProps.TEX_ARC_SHELL);
+    	int id = par1Entity.ticksExisted % 3;
+    	double uvOffset = par1Entity.ticksExisted / 80.0D + offset[id];
+        boolean mirror = new Random(par1Entity.ticksExisted).nextBoolean();
+    	RenderUtils.loadTexture(APClientProps.TEX_ARC_SHELL[par1Entity.ticksExisted % 3]);
     	OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
         Tessellator t = Tessellator.instance;
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, .5F);
+        
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, .7F);
         GL11.glTranslated(par2, par4, par6);
         float s = .05F;
         GL11.glScalef(1.1F, 2.2F, 1.1F);
-        ShpGeneratorArcSquared.drawArc(0.1D, 10, 3.0D);
+        ShpGeneratorArcSquared.drawArc(0.1D, 10, 3.0D, mirror, uvOffset);
         GL11.glScalef(s, s, s);
        
         

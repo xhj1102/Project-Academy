@@ -27,10 +27,11 @@ public class APClientProps {
 		TEX_HUD_LOGO = src("academy:textures/guis/logo.png"),
 		TEX_COIN_FRONT = src("academy:textures/items/coin-front.png"),
 		TEX_COIN_BACK = src("academy:textures/items/coin-back.png"),
-		TEX_ARC_SHELL = src("academy:textures/effects/electro_arc_shell.png"),
 		TEX_EFF_RAILGUN = src("academy:textures/effects/railgun.png"),
 		TEX_GUI_RAILGUN = src("academy:textures/guis/railgun.png"),
-		TEX_GUI_RAILGUN_PRG = src("academy:textures/guis/railgun_prog.png");
+		TEX_GUI_RAILGUN_PRG = src("academy:textures/guis/railgun_prog.png"),
+		TEX_GUI_RAILGUN_DEC = src("academy:textures/guis/dec_railgun.png"),
+		TEX_GUI_LOGO_DMASK = src("academy:textures/guis/logo_depth_mask.png");
 	
 	//Ability Textures
 	public static final ResourceLocation
@@ -47,9 +48,23 @@ public class APClientProps {
 		src("academy:textures/effects/elearc0.png"),
 		src("academy:textures/effects/elearc1.png"),
 		src("academy:textures/effects/elearc2.png")
-	};
+	}, 
+	TEX_ARC_SHELL[] = { 
+		src("academy:textures/effects/arcshell0.png") ,
+		src("academy:textures/effects/arcshell1.png") ,
+		src("academy:textures/effects/arcshell2.png") 
+	},
+	TEX_ELEC_SMALL[] = {
+		src("academy:textures/effects/eles0.png"),
+		src("academy:textures/effects/eles1.png"),
+		src("academy:textures/effects/eles2.png"),
+		src("academy:textures/effects/eles3.png"),
+		src("academy:textures/effects/eles4.png"),
+		src("academy:textures/effects/eles5.png"),
+	}
+	;
 	
-	//Abilities
+	//Railgun Skill
 	public static final ResourceLocation
 		ELEC_LOGO = src("academy:textures/abilities/electromaster/main.png"),
 		ELEC_ATTACK = src("academy:textures/abilities/electromaster/attack_large.png"),

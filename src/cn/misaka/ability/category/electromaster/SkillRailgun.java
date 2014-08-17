@@ -28,10 +28,12 @@ import cn.liutils.api.util.Pair;
 import cn.misaka.ability.api.APControlMain;
 import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilitySkill;
+import cn.misaka.ability.api.client.render.SkillRender;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.control.preset.ControlPreset.SkillKey;
 import cn.misaka.ability.api.data.PlayerData;
+import cn.misaka.ability.category.electromaster.client.SkillRenderArc;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.register.APItems;
 import cn.misaka.support.entity.EntityRailgun;
@@ -75,6 +77,9 @@ public class SkillRailgun extends AbilitySkill {
 		acceptEntities.add(new Entry(Items.iron_ingot, ShootType.DIRECT));
 		acceptEntities.add(new Entry(Blocks.iron_block, ShootType.DIRECT));
 	}
+	
+	@SideOnly(Side.CLIENT)
+	SkillRender render = new SkillRenderArc();
 
 	public SkillRailgun(int id) {
 		super("skill.elec.railgun", id);
@@ -134,9 +139,11 @@ public class SkillRailgun extends AbilitySkill {
 						}
 						world.spawnEntityInWorld(new EntityRailgun(world, player, initDamage).setAttenuateType(tpe));
 						System.out.println("Shooting railgun~");
+						data.drainCP(300);
 					} else {
 						System.out.println("Shooting railgun(Client)~");
 						world.spawnEntityInWorld(new EntityRailgunFX(world, player));
+						data.drainCP(300);
 					}
 				}
 			}
@@ -147,7 +154,8 @@ public class SkillRailgun extends AbilitySkill {
 	public static boolean isPreparing(PlayerData data) {
 		EntityPlayer player = data.getPlayer();
 		ItemStack stack = player.getCurrentEquippedItem();
-		if(stack != null && stack.getItem() instanceof IRailgunQTE) {
+		//if player has railgun ability and current item requires QTE and skill is activated
+		if(data.getCategoryID() == 2 && stack != null && stack.getItem() instanceof IRailgunQTE && data.isActivated) {
 			IRailgunQTE judge = (IRailgunQTE) stack.getItem();
 			if(judge.isQTEinProgress(stack)) {
 				if(APControlMain.decipher(new SkillKey(6, 0)) != -1) { //Railgun in player control preset
@@ -170,6 +178,15 @@ public class SkillRailgun extends AbilitySkill {
 					return ent;
 			}
 		return null;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	/**
+	 * 返回该Skill对应的手部渲染器。注意请不要每次都创建对象，因为该方法时刻被调用。
+	 * @return
+	 */
+	public SkillRender getSkillRender() {
+		return render;
 	}
 
 }

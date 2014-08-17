@@ -39,20 +39,28 @@ public final class PlayerDataClient extends PlayerData {
 	@Override
 	public void fromAbilityData(PlayerDataUpdater data, int flag) {
 		this.initialized = true;
-		System.out.println("Client received server sync");
+		//System.out.println("Client received server sync");
 		super.fromAbilityData(data, flag);
 	}
 
 	@Override
-	protected void loadData() { }
+	protected void loadData() { 
+		
+	}
 
 	
 	private int ticker = 0;
 	@Override
 	public void updateTick() {
+		if(currentCP < maxCP) {
+			currentCP += this.RECOVER_SPEED[level];
+			if(currentCP > maxCP)
+				currentCP = maxCP;
+		} 
 		if(++ticker == APGeneralProps.SYNC_FREQ) {
-			System.out.println("Client sending sync request");
+			//System.out.println("Client sending sync request");
 			AcademyCraft.netHandler.sendToServer(new MsgSyncToClient.Request(0x03));
+			ticker = 0;
 		}
 	}
 	
