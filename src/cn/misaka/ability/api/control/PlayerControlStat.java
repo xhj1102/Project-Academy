@@ -14,7 +14,7 @@ public class PlayerControlStat {
 	}
 	
 	/**
-	 * 当按键状态改变是调用
+	 * 当按键状态改变时调用
 	 * @param skillID
 	 * @param maxKeys
 	 * @param keyid
