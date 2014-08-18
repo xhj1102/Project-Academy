@@ -30,6 +30,9 @@ public abstract class AbilitySkill {
 	
 	public final int skillID;
 	
+	@SideOnly(Side.CLIENT)
+	protected SkillRender skillRender = DEFAULT_SKILL_RENDER;
+	
 	public AbilitySkill(String name, int id) {
 		unl_name = name;
 		skillID = id;
@@ -105,6 +108,14 @@ public abstract class AbilitySkill {
 	protected void addIndications() {
 	}
 	
+	/**
+	 * 是否在玩家当前有手持物品时激活该技能。
+	 * @return
+	 */
+	public boolean useSkillWithItem() {
+		return false;
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public abstract ResourceLocation getLogo();
 	
@@ -113,8 +124,8 @@ public abstract class AbilitySkill {
 	 * 返回该Skill对应的手部渲染器。注意请不要每次都创建对象，因为该方法时刻被调用。
 	 * @return
 	 */
-	public SkillRender getSkillRender() {
-		return DEFAULT_SKILL_RENDER;
+	public final SkillRender getSkillRender() {
+		return this.skillRender;
 	}
 	
 	public final String getNameForDisplay() {

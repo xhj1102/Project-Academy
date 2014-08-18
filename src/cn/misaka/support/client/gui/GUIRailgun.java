@@ -34,6 +34,14 @@ public class GUIRailgun {
 			float upper = -128 * MAJOR_SCALE, size = 256 * MAJOR_SCALE;
 			GL11.glTranslatef(w/2, h/2, 0F);
 			HudUtils.setTextureResolution(256, 256);
+			
+			//我又搞不懂GL的绘制顺序了，谁来救救我
+			
+			GL11.glColor4f(1F, 1F, 1F, .6F);
+			RenderUtils.loadTexture(APClientProps.TEX_GUI_RAILGUN);
+			HudUtils.drawTexturedModalRect(upper, upper, 0, 0, size, size, 256, 256);
+			
+			GL11.glDepthFunc(GL11.GL_EQUAL);
 			GL11.glPushMatrix(); {
 				GL11.glColor4f(1F, 1F, 1F, .5F);
 				RenderUtils.loadTexture(APClientProps.TEX_GUI_RAILGUN_PRG);
@@ -42,11 +50,7 @@ public class GUIRailgun {
 				HudUtils.drawTexturedModalRect(upper2, upper2, 0,
 						0, size2, size2, 256, 256);
 			} GL11.glPopMatrix();
-			
-			GL11.glColor4f(1F, 1F, 1F, .6F);
-			RenderUtils.loadTexture(APClientProps.TEX_GUI_RAILGUN);
-			HudUtils.drawTexturedModalRect(upper, upper, 0, 0, size, size, 256, 256);
-			
+			GL11.glDepthFunc(GL11.GL_LEQUAL);
 		} GL11.glPopMatrix();
 		GL11.glDisable(GL11.GL_BLEND);
 	}

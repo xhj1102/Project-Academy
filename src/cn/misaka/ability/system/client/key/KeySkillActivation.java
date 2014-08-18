@@ -37,7 +37,6 @@ public class KeySkillActivation implements IKeyHandler {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		PlayerDataClient data = (PlayerDataClient) APDataMain.loadPlayerData(player);
 		data.isActivated = !data.isActivated;
-		System.out.println("Activation change client : " + data.isActivated);
 		AcademyCraft.netHandler.sendToServer(new MsgSyncToServer(data));
 	}
 

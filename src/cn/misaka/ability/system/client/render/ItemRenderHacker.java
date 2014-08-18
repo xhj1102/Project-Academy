@@ -93,11 +93,11 @@ public class ItemRenderHacker implements IItemRenderer {
 				
 				AbilityCategory ac = data2.getAbilityCategory();
 				
-				if(ac != null) { //遍历skill渲染器然后执行渲染
+				if(ac != null) { //对手持物品也使用的skill，遍历skill渲染器然后执行渲染
 					for(int i = 0; i < ac.getMaxSkills(); i++) {
 						AbilitySkill skl = ac.getSkill(i);
 						SkillControlStat sklstat = pstat.getSkillStat(i);
-						if(sklstat != null && skl.isSkillActivated(player.worldObj, player, sklstat, pstat)) 
+						if(skl.useSkillWithItem() && sklstat != null && skl.isSkillActivated(player.worldObj, player, sklstat, pstat)) 
 							skl.getSkillRender().onRender(player, sklstat, data2, type2);
 					}
 				}

@@ -18,6 +18,7 @@ import java.util.Set;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import cn.liutils.api.util.GenericUtils;
@@ -30,6 +31,7 @@ import cn.misaka.ability.api.control.preset.ControlPreset;
 import cn.misaka.ability.api.control.preset.ControlPreset.SkillKey;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.system.data.PlayerDataClient;
+import cn.misaka.ability.system.item.ItemVoid;
 import cn.misaka.ability.system.network.message.MsgControl;
 import cn.misaka.core.AcademyCraft;
 import cpw.mods.fml.relauncher.Side;
@@ -190,8 +192,10 @@ public class APControlMain {
 					skl.getMaxKeys(),
 					keyID,
 					isDown);
-			skl.onKeyStateChange(player.worldObj, player, ctrl.getSkillStat(skillID), keyID, ctrl);
-		}
+			ItemStack curStack = player.getCurrentEquippedItem();
+			if(skl.useSkillWithItem() || (curStack == null || curStack.getItem() instanceof ItemVoid))
+				skl.onKeyStateChange(player.worldObj, player, ctrl.getSkillStat(skillID), keyID, ctrl);
+		}	
 	}
 	
 	public static void onTick(boolean isClient) {

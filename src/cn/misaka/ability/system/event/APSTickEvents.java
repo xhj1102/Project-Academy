@@ -77,13 +77,14 @@ public class APSTickEvents {
 		}
 	}
 	
-	
+	@SideOnly(Side.CLIENT)
 	private void equipVoid(EntityPlayer player) {
 		ItemStack curStack = player.getCurrentEquippedItem();
 		if(curStack == null) {
 			player.setCurrentItemOrArmor(0, new ItemStack(APItems.abilityVoid));
 			if(lastOverrideItem != null) {
 				MinecraftForgeClient.registerItemRenderer(lastOverrideItem, lastRenderer);
+				lastOverrideItem = null;
 			}
 		} else if(curStack.getItem() != APItems.abilityVoid) {
 			if(lastOverrideItem != null) {
@@ -95,6 +96,7 @@ public class APSTickEvents {
 		}
 	}
 	
+	@SideOnly(Side.CLIENT)
 	private IItemRenderer getRenderer(Item item) {
 		try {
 			return (IItemRenderer) ((IdentityHashMap)fldRenderMap.get(null)).get(item);

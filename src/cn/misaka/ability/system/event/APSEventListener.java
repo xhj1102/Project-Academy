@@ -51,7 +51,7 @@ public class APSEventListener {
 	@SideOnly(Side.CLIENT)
 	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 		if(event.type == ElementType.CROSSHAIRS) {
-			AIMIndicator.drawHud(event.resolution);
+			
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 			
 			if(SkillRailgun.isPreparing(APDataMain.loadPlayerData(player))) {
@@ -62,6 +62,9 @@ public class APSEventListener {
 						m, qte.getQTEProgress(player.getCurrentEquippedItem()));
 				event.setCanceled(true);
 			}
+			
+		} else if(event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
+			AIMIndicator.drawHud(event.resolution);
 		}
 	}
 	

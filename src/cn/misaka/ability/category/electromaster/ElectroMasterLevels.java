@@ -30,7 +30,7 @@ public class ElectroMasterLevels {
 
 		@Override
 		public boolean canStudySkill(AbilitySkill skill, int id) {
-			return false;
+			return id == 0;
 		}
 
 		@Override

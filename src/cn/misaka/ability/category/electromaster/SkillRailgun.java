@@ -10,7 +10,9 @@
  */
 package cn.misaka.ability.category.electromaster;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import cpw.mods.fml.relauncher.Side;
@@ -25,6 +27,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cn.liutils.api.util.Pair;
+import cn.liutils.api.util.PlayerTicker;
 import cn.misaka.ability.api.APControlMain;
 import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilitySkill;
@@ -34,6 +37,7 @@ import cn.misaka.ability.api.control.SkillControlStat;
 import cn.misaka.ability.api.control.preset.ControlPreset.SkillKey;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.category.electromaster.client.SkillRenderArc;
+import cn.misaka.ability.category.electromaster.client.SkillRenderRailgun;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.core.register.APItems;
 import cn.misaka.support.entity.EntityRailgun;
@@ -71,18 +75,14 @@ public class SkillRailgun extends AbilitySkill {
 		QTE, DIRECT;
 	}
 	
-	private static Set<Entry> acceptEntities = new HashSet();
-	static {
-		acceptEntities.add(new Entry(APItems.coin, ShootType.QTE));
-		acceptEntities.add(new Entry(Items.iron_ingot, ShootType.DIRECT));
-		acceptEntities.add(new Entry(Blocks.iron_block, ShootType.DIRECT));
-	}
-	
-	@SideOnly(Side.CLIENT)
-	SkillRender render = new SkillRenderArc();
+	private Map<Object, ShootType> acceptEntities = new HashMap();
 
 	public SkillRailgun(int id) {
 		super("skill.elec.railgun", id);
+		acceptEntities.put(APItems.coin, ShootType.QTE);
+		acceptEntities.put(Items.iron_ingot, ShootType.DIRECT);
+		acceptEntities.put(Blocks.iron_block, ShootType.DIRECT);
+		this.skillRender = new SkillRenderArc();
 	}
 
 	@Override
@@ -111,39 +111,36 @@ public class SkillRailgun extends AbilitySkill {
 	@Override
 	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlStat mctrl) {
 		if(stat.isKeyDown(0)) {
-			System.out.println("Attempting to shoot railgun");
 			ItemStack stack = player.getCurrentEquippedItem();
 			PlayerData data = APDataMain.loadPlayerData(player);
 			if(stack != null) {
 				Item item0 = stack.getItem();
-				Entry ent = contains(item0);
-				if(ent != null) {
-					if(ent.second == ShootType.QTE) {
+				ShootType type = contains(item0);
+				if(type != null) {
+					if(type == ShootType.QTE) {
 						IRailgunQTE inf = (IRailgunQTE) item0;
 						Pair<Float, Float> range = inf.getAcceptedRange();
 						float prog = inf.getQTEProgress(stack);
 						if(!inf.isQTEinProgress(stack) || prog < range.first || prog > range.second)
 							return;
 					}
-					if(!world.isRemote) {
-						AttenuateType tpe;
-						float factor, initDamage;
-						if(item0 instanceof ItemBlock) {
-							tpe = AttenuateType.SQUARED;
-							factor = 0.03F;
-							initDamage = 30 + data.getSkillExp(skillID) * 4;
+					if(data.drainCP(300)) {
+						if(!world.isRemote) {
+							AttenuateType tpe;
+							float factor, initDamage;
+							if(item0 instanceof ItemBlock) {
+								tpe = AttenuateType.SQUARED;
+								factor = 0.03F;
+								initDamage = 30 + data.getSkillExp(skillID) * 4;
+							} else {
+								tpe = AttenuateType.LINEAR;
+								factor = 0.03F;
+								initDamage = 25 + data.getSkillExp(skillID) * 4;
+							}
+							world.spawnEntityInWorld(new EntityRailgun(world, player, initDamage).setAttenuateType(tpe));
 						} else {
-							tpe = AttenuateType.LINEAR;
-							factor = 0.03F;
-							initDamage = 25 + data.getSkillExp(skillID) * 4;
+							world.spawnEntityInWorld(new EntityRailgunFX(world, player));
 						}
-						world.spawnEntityInWorld(new EntityRailgun(world, player, initDamage).setAttenuateType(tpe));
-						System.out.println("Shooting railgun~");
-						data.drainCP(300);
-					} else {
-						System.out.println("Shooting railgun(Client)~");
-						world.spawnEntityInWorld(new EntityRailgunFX(world, player));
-						data.drainCP(300);
 					}
 				}
 			}
@@ -166,27 +163,22 @@ public class SkillRailgun extends AbilitySkill {
 		return false;
 	}
 	
-	private Entry contains(Item item0) {
-		if(item0 instanceof ItemBlock)
-			for(Entry ent : acceptEntities) {
-				if(ent.first == ((ItemBlock)item0).field_150939_a)
-					return ent;
-			}
-		else
-			for(Entry ent : acceptEntities) {
-				if(ent.first == item0)
-					return ent;
-			}
-		return null;
+	@Override
+	public boolean useSkillWithItem() {
+		return true;
 	}
 	
-	@SideOnly(Side.CLIENT)
-	/**
-	 * 返回该Skill对应的手部渲染器。注意请不要每次都创建对象，因为该方法时刻被调用。
-	 * @return
-	 */
-	public SkillRender getSkillRender() {
-		return render;
+	private ShootType contains(Item item0) {
+		if(item0 instanceof ItemBlock){
+			Block blck = ((ItemBlock)item0).field_150939_a;
+			return acceptEntities.get(blck);
+		} else
+			return acceptEntities.get(item0);
+	}
+	
+	public boolean isSkillActivated(World world, EntityPlayer player, SkillControlStat stat, PlayerControlStat mctrl) {
+		return PlayerTicker.getDeltaTick(player, "railgun", Integer.MAX_VALUE) <= 30 ||
+				isPreparing(APDataMain.loadPlayerData(player));
 	}
 
 }
