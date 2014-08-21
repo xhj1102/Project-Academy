@@ -12,6 +12,7 @@ package cn.misaka.core.proxy;
 
 import net.minecraft.command.CommandHandler;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.input.Keyboard;
@@ -25,13 +26,16 @@ import cn.misaka.ability.system.client.model.ModelBipedAP;
 import cn.misaka.ability.system.client.render.RenderAbilityVoid;
 import cn.misaka.ability.system.client.render.RenderPlayerAP;
 import cn.misaka.ability.system.command.CommandControlModification;
+import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
 import cn.misaka.support.block.tile.TileAbilityDeveloper;
+import cn.misaka.support.block.tile.TileFieldIncrease;
 import cn.misaka.support.client.render.entity.RenderArcAnim;
 import cn.misaka.support.client.render.entity.RenderRailgun;
 import cn.misaka.support.client.render.entity.RenderSurroundArc;
 import cn.misaka.support.client.render.item.RenderCoin;
 import cn.misaka.support.client.render.tile.RenderAbilityDeveloper;
+import cn.misaka.support.client.render.tile.RenderFieldIncrease;
 import cn.misaka.support.entity.fx.EntityArcFX;
 import cn.misaka.support.entity.fx.EntityRailgunFX;
 import cn.misaka.support.entity.fx.EntitySurroundArcFX;
@@ -57,7 +61,9 @@ public class APClientProxy extends APCommonProxy {
 	public void init() {
 		MinecraftForgeClient.registerItemRenderer(APItems.abilityVoid, new RenderAbilityVoid());
 		MinecraftForgeClient.registerItemRenderer(APItems.coin, new RenderCoin());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(APBlocks.ability_developer), new RenderAbilityDeveloper.ItemRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAbilityDeveloper.class, new RenderAbilityDeveloper());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileFieldIncrease.class, new RenderFieldIncrease());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerAP());
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcFX.class, new RenderArcAnim());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySurroundArcFX.class, new RenderSurroundArc());

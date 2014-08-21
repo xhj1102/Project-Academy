@@ -8,7 +8,7 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.item;
+package cn.misaka.support.item;
 
 import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Pair;

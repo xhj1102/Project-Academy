@@ -46,6 +46,7 @@ public class BlockAbilityDeveloper extends BlockContainer {
 		setHardness(2.0F);
 		setCreativeTab(AcademyCraft.cct);
 		setBlockName("ability_developer");
+		setBlockTextureName("academy:ability_developer");
 	}
 	
 	public static ForgeDirection getFacingDirection(int metadata) {
@@ -87,7 +88,7 @@ public class BlockAbilityDeveloper extends BlockContainer {
         ForgeDirection dir = getFacingDirection(metadata); 
         Block b0 = world.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
         if(b0 == Blocks.air || b0 instanceof BlockLiquid)
-        	world.setBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, this, metadata + 1, 0x02); //set the 'tail' block
+        	world.setBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, this, metadata + 1, 0x03); //set the 'tail' block
         else {
         	world.setBlockToAir(x, y, z);
         	if(!world.isRemote)

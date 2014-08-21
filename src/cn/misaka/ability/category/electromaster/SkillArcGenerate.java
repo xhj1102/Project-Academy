@@ -19,6 +19,7 @@ import cn.liutils.api.util.Motion3D;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
+import cn.misaka.ability.category.electromaster.client.SkillRenderArc;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.support.entity.fx.EntitySurroundArcFX;
 
@@ -33,6 +34,7 @@ public class SkillArcGenerate extends AbilitySkill {
 	 */
 	public SkillArcGenerate(int id) {
 		super("skill.elec.arcgen", id);
+		this.skillRender = new SkillRenderArc();
 	}
 
 	/* (non-Javadoc)

@@ -138,6 +138,8 @@ public class SkillRailgun extends AbilitySkill {
 								initDamage = 25 + data.getSkillExp(skillID) * 4;
 							}
 							world.spawnEntityInWorld(new EntityRailgun(world, player, initDamage).setAttenuateType(tpe));
+							if(!player.capabilities.isCreativeMode)
+								player.inventory.decrStackSize(player.inventory.currentItem, 1);
 						} else {
 							world.spawnEntityInWorld(new EntityRailgunFX(world, player));
 						}

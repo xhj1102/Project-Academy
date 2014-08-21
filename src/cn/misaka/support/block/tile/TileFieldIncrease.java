@@ -8,21 +8,21 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.item;
+package cn.misaka.support.block.tile;
 
-import cn.misaka.core.AcademyCraft;
-import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 
 /**
- * @author KSkun
- * 简单的钢针
+ * @author WeAthFolD
+ *
  */
-public class ItemNeedle extends Item {
+public class TileFieldIncrease extends TileEntity {
 
-	public ItemNeedle() {
-		setUnlocalizedName("ap_needle");
-		setCreativeTab(AcademyCraft.cct);
-		setTextureName("academy:needle");
+	/**
+	 * 
+	 */
+	public TileFieldIncrease() {
+		// TODO Auto-generated constructor stub
 	}
-	
+
 }

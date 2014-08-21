@@ -11,12 +11,12 @@
 package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cn.misaka.ability.item.ItemAPRecord;
-import cn.misaka.ability.item.ItemCapsule;
-import cn.misaka.ability.item.ItemCoin;
-import cn.misaka.ability.item.ItemNeedle;
-import cn.misaka.ability.item.ItemTablet;
 import cn.misaka.ability.system.item.*;
+import cn.misaka.support.item.ItemAPRecord;
+import cn.misaka.support.item.ItemCapsule;
+import cn.misaka.support.item.ItemCoin;
+import cn.misaka.support.item.ItemNeedle;
+import cn.misaka.support.item.ItemTablet;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 

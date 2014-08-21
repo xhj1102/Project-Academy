@@ -12,7 +12,7 @@ package cn.misaka.ability.system.client.key;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import cn.liutils.api.client.register.IKeyHandler;
+import cn.liutils.api.client.key.IKeyHandler;
 import cn.liutils.api.util.GenericUtils;
 import cn.misaka.ability.api.APControlMain;
 

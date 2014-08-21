@@ -22,6 +22,8 @@ public class APClientProps {
 	//Textures
 	public static final ResourceLocation
 		TEX_MDL_ABILITY_DEVELOPER = src("academy:textures/models/ability_developer.png"),
+		TEX_MDL_ELEC_CARD = src("academy:textures/models/card.png"),
+		TEX_MDL_MAGNET_MODULE = src("academy:textures/models/magincr.png"),
 		TEX_GUI_ABILITY_DEVELOPER = src("academy:textures/guis/ability_dev.png"),
 		TEX_HUD_CPBAR = src("academy:textures/guis/cpbar.png"),
 		TEX_HUD_LOGO = src("academy:textures/guis/logo.png"),
@@ -40,7 +42,9 @@ public class APClientProps {
 		
 	//OBJ models
 	public static final
-		IModelCustom MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj"));
+		IModelCustom MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj")),
+		MDL_ELEC_CARD = AdvancedModelLoader.loadModel(src("academy:models/card.obj")),
+		MDL_MAGNET_MODULE = AdvancedModelLoader.loadModel(src("academy:models/magincr.obj"));
 	
 	//Animations
 	public static final ResourceLocation

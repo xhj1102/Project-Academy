@@ -12,7 +12,10 @@ package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cn.misaka.support.block.BlockAbilityDeveloper;
+import cn.misaka.support.block.BlockFieldIncrease;
 import cn.misaka.support.block.tile.TileAbilityDeveloper;
+import cn.misaka.support.block.tile.TileFieldIncrease;
+import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 
 /**
@@ -20,14 +23,20 @@ import net.minecraftforge.common.config.Configuration;
  */
 public class APBlocks {
 
-	public static BlockAbilityDeveloper ability_developer;
+	public static Block ability_developer,
+		ad_module_magnet,
+		ad_module_card;
+	
 	
 	public static void init(Configuration conf) {
 		ability_developer = new BlockAbilityDeveloper();
+		ad_module_magnet = new BlockFieldIncrease();
 		
 		GameRegistry.registerBlock(ability_developer, "ability_developer");
+		GameRegistry.registerBlock(ad_module_magnet, "ad_module_fi");
 		
 		GameRegistry.registerTileEntity(TileAbilityDeveloper.class, "tile_ability_developer");
+		GameRegistry.registerTileEntity(TileFieldIncrease.class, "tile_field_increase");
 	}
 
 }

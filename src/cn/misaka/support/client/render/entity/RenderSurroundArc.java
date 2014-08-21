@@ -31,8 +31,6 @@ import net.minecraftforge.client.model.IModelCustom;
  *
  */
 public class RenderSurroundArc extends Render {
-
-	private IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation("academy:models/what.obj"));
 	
 	/**
 	 * 

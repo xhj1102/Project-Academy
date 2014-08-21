@@ -8,32 +8,14 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.ability.system.client.key;
-
-import cn.liutils.api.client.key.IKeyHandler;
+package cn.misaka.support.block;
 
 /**
- * @author Administrator
+ * @author WeAthFolD
  *
  */
-public class KeyWheelplate implements IKeyHandler {
-
-	@Override
-	public void onKeyDown(int keyCode, boolean tickEnd) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onKeyUp(int keyCode, boolean tickEnd) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onKeyTick(int keyCode, boolean tickEnd) {
-		// TODO Auto-generated method stub
-		
-	}
-
+public interface IADModule {
+	boolean placeOnSide();
+	String getModifyAttribute();
+	Object getModifyValue();
 }
