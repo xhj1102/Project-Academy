@@ -25,6 +25,7 @@ public class APCategoryStorage {
 	}
 	
 	public static AbilityCategory getAbility(int id) {
+		if(id == 0) return null;
 		return GenericUtils.safeFetchFrom(categoryList, id);
 	}
 	

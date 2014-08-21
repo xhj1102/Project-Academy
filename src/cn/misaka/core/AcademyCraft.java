@@ -33,7 +33,7 @@ import cn.misaka.core.proxy.APCommonProxy;
 import cn.misaka.core.proxy.APGeneralProps;
 import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
-import cn.misaka.support.client.gui.GuiAbilityDeveloper;
+import cn.misaka.support.client.gui.ad.GuiAbilityDeveloper;
 import cn.misaka.support.network.message.MsgDeveloperDismount;
 import cn.misaka.support.network.message.MsgDeveloperPlayer;
 import cpw.mods.fml.common.FMLCommonHandler;

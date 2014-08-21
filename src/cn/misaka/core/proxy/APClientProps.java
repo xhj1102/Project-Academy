@@ -24,7 +24,6 @@ public class APClientProps {
 		TEX_MDL_ABILITY_DEVELOPER = src("academy:textures/models/ability_developer.png"),
 		TEX_MDL_ELEC_CARD = src("academy:textures/models/card.png"),
 		TEX_MDL_MAGNET_MODULE = src("academy:textures/models/magincr.png"),
-		TEX_GUI_ABILITY_DEVELOPER = src("academy:textures/guis/ability_dev.png"),
 		TEX_HUD_CPBAR = src("academy:textures/guis/cpbar.png"),
 		TEX_HUD_LOGO = src("academy:textures/guis/logo.png"),
 		TEX_COIN_FRONT = src("academy:textures/items/coin-front.png"),
@@ -33,7 +32,9 @@ public class APClientProps {
 		TEX_GUI_RAILGUN = src("academy:textures/guis/railgun.png"),
 		TEX_GUI_RAILGUN_PRG = src("academy:textures/guis/railgun_prog.png"),
 		TEX_GUI_RAILGUN_DEC = src("academy:textures/guis/dec_railgun.png"),
-		TEX_GUI_LOGO_DMASK = src("academy:textures/guis/logo_depth_mask.png");
+		TEX_GUI_LOGO_DMASK = src("academy:textures/guis/logo_depth_mask.png"),
+		TEX_GUI_AD_MAIN = src("academy:textures/guis/ad_main.png"),
+		TEX_GUI_AD_LEARNING = src("academy:textures/guis/ad_learning.png");
 	
 	//Ability Textures
 	public static final ResourceLocation
