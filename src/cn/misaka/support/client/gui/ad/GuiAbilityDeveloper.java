@@ -16,6 +16,7 @@ import java.util.Set;
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.gui.LIGuiButton;
+import cn.liutils.api.client.gui.LIGuiPage;
 import cn.liutils.api.client.gui.LIGuiPart;
 import cn.liutils.api.client.gui.LIGuiScreen;
 import cn.liutils.api.client.util.HudUtils;
@@ -55,41 +56,46 @@ public class GuiAbilityDeveloper extends LIGuiScreen {
 		
 	}
 	
-	public abstract class Page {
-		String lclName;
-		private Set<LIGuiPart> partSet = new HashSet<LIGuiPart>();
-		
-		public final float OFFSET_X = 3.5F, OFFSET_Y = 34.5F,
-				WIDTH = 136.5F, HEIGHT = 146.5F;
-		
-		public Page(String unlocalized_name) {
-			lclName = unlocalized_name;
-			addElements(partSet);
+	private LIGuiPage pageMain = new LIGuiPage("main", 0F, 0F) {
+
+		@Override
+		public void drawPage() {
+		}
+
+		@Override
+		public void addElements(Set<LIGuiPart> set) {
+			set.add(new LIGuiButton("pglf", 89, 7, 8.5F, 7.5F).setTextureOverride(APClientProps.TEX_GUI_AD_MAIN));
+			set.add(new LIGuiButton("pgrt", 216, 7, 8.5F, 7.5F).setTextureOverride(APClientProps.TEX_GUI_AD_MAIN));
+		}
+
+		@Override
+		public void onPartClicked(LIGuiPart part) {
+			System.out.println("prcl");
+			if(part.name.equals("pgrt")) {
+				++pageID;
+				if(pageID == MAX_PAGES)
+					pageID = 0;
+			} else if(part.name.equals("pglf")) {
+				--pageID;
+				if(pageID < 0)
+					pageID = MAX_PAGES - 1;
+			}
 		}
 		
-		public final Set<LIGuiPart> getPart() {
-			return partSet;
-		}
-		
-		public abstract void renderPageArea();
-		
-		public abstract void addElements(Set<LIGuiPart> set);
-		
-		public abstract void onButtonClicked(LIGuiButton button);
-		
-		public final void renderText() {
-			//TODO:Draw the goddamn text!
-		}
-	}
+	};
+	
+	public static final float PG_OFFSET_X = 3.5F, PG_OFFSET_Y = 34.5F,
+			PG_WIDTH = 136.5F, PG_HEIGHT = 146.5F;
 	
 	TileAbilityDeveloper myTile;
 	
 	public static final int MAX_PAGES = 2;
-	private final Page[] pages = {
-		new PageLearning(this),
-		new PageLearning(this),
-		new PageSkillLearning(this)
+	private final LIGuiPage[] pages = {
+		new PageLearning(),
+		new PageLearning(),
+		new PageSkillLearning()
 	};
+	
 	boolean isLearned;
 	int pageID;
 
@@ -101,46 +107,36 @@ public class GuiAbilityDeveloper extends LIGuiScreen {
 		super(228, 180);
 		myTile = tile;
 		isLearned = learned;
-		this.addElements(
-			new LIGuiButton("pgrt", 216, 3, 8, 7).setTextureOverride(APClientProps.TEX_GUI_AD_MAIN),
-			new LIGuiButton("pglf", 89, 3, 8, 7).setTextureOverride(APClientProps.TEX_GUI_AD_MAIN)
-		);
 	}
 	
 	@Override
 	public void onGuiClosed() {
 		System.out.println("onGuiClosed");
-		//		myTile.disMount();
-		//AcademyCraft.netHandler.sendToServer(new MsgDeveloperDismount()); //自动下来~ 
 	}
 	
     @Override
 	public void drawScreen(int par1, int par2, float par3)
     {
-    	this.drawDefaultBackground();
+    	
     	HudUtils.setTextureResolution(512, 512);
     	HudUtils.setZLevel(zLevel);
     	
     	float x0 = this.width / 2F - 114,
     			y0 = this.height / 2F - 93;
-    	GL11.glPushMatrix(); {
-    		GL11.glTranslatef(x0 + 3F, y0 + 33F, 0F);
-    		Page page = getCurrentPage();
-    		page.renderPageArea();
-    	} GL11.glPopMatrix();
+    		
+    	this.drawDefaultBackground();
     	
     	GL11.glEnable(GL11.GL_BLEND);
     	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     	GL11.glColor4f(1F, 1F, 1F, 1F);
-    	this.drawElements();
+    	
+    	this.drawElements(par1, par2);
     	
     	PlayerData data = APDataMain.loadPlayerData(Minecraft.getMinecraft().thePlayer);
     	renderPlayerInf(data, x0, y0);
     	
     	RenderUtils.loadTexture(APClientProps.TEX_GUI_AD_MAIN);
-    	GL11.glColor4f(1F, 1F, 1F, 1F);
-    	HudUtils.drawTexturedModalRect(x0, y0, 1, 1, 228, 184.5F, 456, 369);
-    	super.drawScreen(par1, par2, par3);
+    	HudUtils.drawTexturedModalRect(x0, y0, 0, 0, 228F, 184.5F, 456, 369);
     }
     
     private void renderPlayerInf(PlayerData data, float x0, float y0) {
@@ -156,33 +152,10 @@ public class GuiAbilityDeveloper extends LIGuiScreen {
     		
     	}
     }
-    
-    @Override
-	public Set<LIGuiPart>[] getAdditionalButtons() {
-		return new Set[] { getCurrentPage().partSet };
-	}
 
-    private Page getCurrentPage() {
-    	return pageID == 0 ? 
-    			(isLearned ?  pages[1] : pages[0] ) :
-    			pages[2];
-    }
-    
 	@Override
-	public void onButtonClicked(LIGuiButton button, boolean b) {
-		if(b) {
-			if(button.name.equals("pgrt")) {
-				++pageID;
-				if(pageID == MAX_PAGES)
-					pageID = 0;
-			} else if(button.name.equals("pglf")) {
-				--pageID;
-				if(pageID < 0)
-					pageID = MAX_PAGES - 1;
-			}
-		} else {
-			getCurrentPage().onButtonClicked(button);
-		}
+	public void updateActivatedPages(Set<LIGuiPage> set) {
+		set.add(pageMain);
+		set.add(pageID == 0 ? (isLearned ? pages[1] : pages[0]) : pages[2] );
 	}
-
 }

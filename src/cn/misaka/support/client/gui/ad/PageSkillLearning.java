@@ -12,43 +12,33 @@ package cn.misaka.support.client.gui.ad;
 
 import java.util.Set;
 
-import cn.liutils.api.client.gui.LIGuiButton;
+import cn.liutils.api.client.gui.LIGuiPage;
 import cn.liutils.api.client.gui.LIGuiPart;
-import cn.misaka.support.client.gui.ad.GuiAbilityDeveloper.Page;
 
 /**
  * @author WeAthFolD
  *
  */
-public class PageSkillLearning extends Page {
+public class PageSkillLearning extends LIGuiPage {
 
 	/**
 	 * @param unlocalized_name
 	 */
-	public PageSkillLearning(GuiAbilityDeveloper dev) {
-		dev.super("ad.skilllearning");
+	public PageSkillLearning() {
+		super("ad.learning", GuiAbilityDeveloper.PG_OFFSET_X, GuiAbilityDeveloper.PG_OFFSET_Y);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.support.client.gui.ad.GuiAbilityDeveloper.Page#renderPageArea()
-	 */
 	@Override
-	public void renderPageArea() {
+	public void drawPage() {
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.support.client.gui.ad.GuiAbilityDeveloper.Page#addElements(java.util.Set)
-	 */
 	@Override
 	public void addElements(Set<LIGuiPart> set) {
-	
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.misaka.support.client.gui.ad.GuiAbilityDeveloper.Page#onButtonClicked(cn.liutils.api.client.gui.LIGuiButton)
-	 */
 	@Override
-	public void onButtonClicked(LIGuiButton button) {
+	public void onPartClicked(LIGuiPart part) {
+		
 	}
 
 }

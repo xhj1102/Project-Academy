@@ -15,38 +15,22 @@ import java.util.Set;
 import org.lwjgl.opengl.GL11;
 
 import cn.liutils.api.client.gui.LIGuiButton;
+import cn.liutils.api.client.gui.LIGuiPage;
 import cn.liutils.api.client.gui.LIGuiPart;
 import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.core.proxy.APClientProps;
-import cn.misaka.support.client.gui.ad.GuiAbilityDeveloper.Page;
 
 /**
  * @author WeAthFolD
  *
  */
-public class PageLearning extends Page {
+public class PageLearning extends LIGuiPage {
 
 	final float PRT_OFFX = 53F, PRT_OFFY = 49.5F;
 	
-	public PageLearning(GuiAbilityDeveloper dev) {
-		dev.super("ad.learning");
-	}
-
-	@SuppressWarnings("unused")
-	@Override
-	public void renderPageArea() {
-		GL11.glPushMatrix(); {
-			RenderUtils.loadTexture(APClientProps.TEX_GUI_AD_LEARNING);
-			HudUtils.setTextureResolution(512, 512);
-			HudUtils.drawTexturedModalRect(0, 0, 0, 0, WIDTH, HEIGHT, 2 * WIDTH, 2 * HEIGHT);
-			
-			if(true) { //TODO: Is currently not developing?
-				drawEstimation();
-			} else {
-				
-			}
-		} GL11.glPopMatrix();
+	public PageLearning() {
+		super("ad.learning", GuiAbilityDeveloper.PG_OFFSET_X, GuiAbilityDeveloper.PG_OFFSET_Y);
 	}
 	
 	private void drawEstimation() {
@@ -58,15 +42,34 @@ public class PageLearning extends Page {
 	}
 	
 	@Override
-	public void addElements(Set<LIGuiPart> set) {
-		set.add(new LIGuiButton("lrn_learn", this.OFFSET_X + 34F, OFFSET_Y + 21F, 61.5F, 13.5F)
+	public void addElements(Set<LIGuiPart> set) { 
+		set.add(new LIGuiButton("lrn_learn", 34F, 23F, 61.5F, 13.5F)
 			.setDownCoords(1, 419).setInvaildCoords(1, 477).setTexSize(123F, 27F)
 			.setTextureCoords(1, 448).setTextureOverride(APClientProps.TEX_GUI_AD_LEARNING));
 	}
 
+	@SuppressWarnings("unused")
 	@Override
-	public void onButtonClicked(LIGuiButton button) {
-		System.out.println(button.name + "clicked");
+	public void drawPage() {
+		GL11.glPushMatrix(); {
+			GL11.glTranslatef(0F, -3F, 0F);
+			RenderUtils.loadTexture(APClientProps.TEX_GUI_AD_LEARNING);
+			HudUtils.setTextureResolution(512, 512);
+			HudUtils.drawTexturedModalRect(0, 0, 0, 0, 
+					GuiAbilityDeveloper.PG_WIDTH, GuiAbilityDeveloper.PG_HEIGHT,
+					2 * GuiAbilityDeveloper.PG_WIDTH, 2 * GuiAbilityDeveloper.PG_HEIGHT);
+			
+			if(true) { //TODO: Is currently not developing?
+				drawEstimation();
+			} else {
+				
+			}
+		} GL11.glPopMatrix();
+	}
+
+	@Override
+	public void onPartClicked(LIGuiPart part) {
+		System.out.println("Yahoo!");
 	}
 
 }
