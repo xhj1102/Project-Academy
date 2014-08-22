@@ -16,11 +16,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
+import cn.misaka.ability.api.APDataMain;
 import cn.misaka.ability.api.ability.AbilitySkill;
 import cn.misaka.ability.api.control.PlayerControlStat;
 import cn.misaka.ability.api.control.SkillControlStat;
+import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.ability.category.electromaster.client.SkillRenderArc;
 import cn.misaka.core.proxy.APClientProps;
+import cn.misaka.support.entity.EntityArc;
+import cn.misaka.support.entity.fx.EntityElecArcFX;
 import cn.misaka.support.entity.fx.EntitySurroundArcFX;
 
 /**
@@ -52,9 +56,40 @@ public class SkillArcGenerate extends AbilitySkill {
 
 	@Override
 	public int getSuggestKey(int skillKeyID) {
-		return 0;
+		return 2;
 	}
 	
+	@Override
+	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlStat mctrl) {
+		PlayerData data = APDataMain.loadPlayerData(player);
+		float exp = data.getSkillExp(skillID);
+		if(stat.isKeyDown(0)) {
+			player.getEntityData().setBoolean("ap_arcdown", true);
+			world.spawnEntityInWorld(world.isRemote ? new EntityElecArcFX(world, player, 
+					EntityArc.DST_CONV_RATE * getDamage((int) exp))
+				: new EntityArc(world, player, getDamage((int) exp)));
+		} else {
+			player.getEntityData().setBoolean("ap_arcdown", false);
+		}
+	}
+	
+	public boolean onSkillTick(World world, EntityPlayer player, SkillControlStat stat, PlayerControlStat mctrl) {
+		PlayerData data = APDataMain.loadPlayerData(player);
+		if(!data.drainCP((int) getConsumption((int) data.getSkillExp(skillID)))) {
+			player.getEntityData().setBoolean("ap_arcdown", false);
+		}
+		return false;
+	}
+	
+	private float getConsumption(int exp) {
+		return 10.0F + exp * 0.2F;
+	}
+	
+	private float getDamage(int exp) {
+		return 0.9F + exp * 0.8F;
+	}
+	
+	/*
 	@Override
 	public void onKeyStateChange(World world, EntityPlayer player, SkillControlStat stat, int kid, PlayerControlStat mctrl) {
 		if(stat.isKeyDown(0) && world.isRemote) {
@@ -65,6 +100,6 @@ public class SkillArcGenerate extends AbilitySkill {
 				world.spawnEntityInWorld(new EntitySurroundArcFX(pos.entityHit));
 			}
 		}
-	}
+	}*/
 
 }

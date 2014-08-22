@@ -18,10 +18,13 @@ import cn.liutils.api.client.render.RenderModelItem;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.support.block.BlockAbilityDeveloper;
+import cn.misaka.support.block.IADModuleAttached;
+import cn.misaka.support.block.tile.TileAbilityDeveloper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -59,10 +62,17 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 		
 	}
 	
+	private final Vec3[] offsets = {
+		Vec3.createVectorHelper(0D, 0D, 0D),
+		Vec3.createVectorHelper(0D, 0D, 0D),
+		Vec3.createVectorHelper(0D, 0D, 0D),
+		Vec3.createVectorHelper(0D, 0D, 0D)
+	};
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float subtick) {
 		
 		int meta = te.getBlockMetadata();
+		TileAbilityDeveloper ad = (TileAbilityDeveloper) te;
 		if((meta & 0x01) == 1) return; //Render only HEAD
 		float scale = 0.0215F;
 		ForgeDirection dir = BlockAbilityDeveloper.getFacingDirection(te.blockMetadata);
@@ -74,6 +84,17 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 			
 			GL11.glTranslated(.1D, 0.0D, -0.12D);
 			GL11.glRotatef(rotations[meta >> 1], 0.0F, 1.0F, 0.0F);
+			for(int i = 0; i < 4; i++) {
+				Vec3 off = offsets[i];
+				GL11.glPushMatrix(); {
+					IADModuleAttached mod = ad.sidedModules.get(i);
+					GL11.glTranslated(off.xCoord, off.yCoord, off.zCoord);
+					if(i >= 2)
+						GL11.glRotatef(180F, 0F, 1F, 1F);
+					mod.renderAtOrigin();
+				} GL11.glPopMatrix();
+			}
+			
 			GL11.glScalef(scale, scale, scale);
 			model.renderAll();
 			

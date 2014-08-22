@@ -34,7 +34,9 @@ public class APClientProps {
 		TEX_GUI_RAILGUN_DEC = src("academy:textures/guis/dec_railgun.png"),
 		TEX_GUI_LOGO_DMASK = src("academy:textures/guis/logo_depth_mask.png"),
 		TEX_GUI_AD_MAIN = src("academy:textures/guis/ad_main.png"),
-		TEX_GUI_AD_LEARNING = src("academy:textures/guis/ad_learning.png");
+		TEX_GUI_AD_LEARNING = src("academy:textures/guis/ad_learning.png"),
+		TEX_DBG_STD = src("academy:textures/debug/11.png"),
+		TEX_DBG_31 = src("academy:textures/debug/31.png");
 	
 	//Ability Textures
 	public static final ResourceLocation
@@ -58,6 +60,11 @@ public class APClientProps {
 		src("academy:textures/effects/arcshell0.png") ,
 		src("academy:textures/effects/arcshell1.png") ,
 		src("academy:textures/effects/arcshell2.png") 
+	},
+	TEX_MD_SHELL[] = {
+		src("academy:textures/effects/mdshell0.png") ,
+		src("academy:textures/effects/mdshell1.png") ,
+		src("academy:textures/effects/mdshell2.png") 
 	},
 	TEX_ELEC_SMALL[] = {
 		src("academy:textures/effects/eles0.png"),

@@ -37,6 +37,7 @@ import cn.misaka.support.client.render.item.RenderCoin;
 import cn.misaka.support.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.support.client.render.tile.RenderFieldIncrease;
 import cn.misaka.support.entity.fx.EntityArcFX;
+import cn.misaka.support.entity.fx.EntityElecArcFX;
 import cn.misaka.support.entity.fx.EntityRailgunFX;
 import cn.misaka.support.entity.fx.EntitySurroundArcFX;
 
@@ -68,6 +69,7 @@ public class APClientProxy extends APCommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcFX.class, new RenderArcAnim());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySurroundArcFX.class, new RenderSurroundArc());
 		RenderingRegistry.registerEntityRenderingHandler(EntityRailgunFX.class, new RenderRailgun());
+		RenderingRegistry.registerEntityRenderingHandler(EntityElecArcFX.class, new RenderArcAnim());
 	}
 	
 	@Override

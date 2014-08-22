@@ -124,11 +124,14 @@ public class CommandAim extends LICommandBase {
 				try {
 					for(Entry<String, DataType> entry : fldMap.entrySet()) {
 						DataType dt = entry.getValue();
-						System.out.println("Fetching " + dt.toString());
 						dt.first.setAccessible(true);
 						this.sendChat(ics, entry.getKey() + ": " + entry.getValue().first.get(data));
 					}
 				} catch(Exception e) {}
+			} else if(args[0].equals("ref")) {
+				PlayerData data = APDataMain.loadPlayerData(player);
+				data.currentCP = data.maxCP;
+				AcademyCraft.netHandler.sendTo(new MsgSyncToClient(data, 0x01), player);
 			} else {
 				
 			}

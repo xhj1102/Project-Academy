@@ -55,7 +55,7 @@ public class RenderSurroundArc extends Render {
     	OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
         Tessellator t = Tessellator.instance;
         
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, .7F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, .5F);
         GL11.glTranslated(par2, par4, par6);
         float s = .05F;
         GL11.glScalef(1.1F, 2.2F, 1.1F);

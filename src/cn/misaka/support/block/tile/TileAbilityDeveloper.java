@@ -10,9 +10,16 @@
  */
 package cn.misaka.support.block.tile;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import cn.liutils.api.util.EntityUtils;
 import cn.misaka.core.AcademyCraft;
 import cn.misaka.support.block.BlockAbilityDeveloper;
+import cn.misaka.support.block.IADModule;
+import cn.misaka.support.block.IADModuleAttached;
 import cn.misaka.support.network.message.MsgDeveloperPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +34,22 @@ public class TileAbilityDeveloper extends TileEntity {
 	
 	private EntityPlayer mountPlayer;
 	
+	public static final int MAX_SIDES = 4;
+	public Set<IADModule> plainModules = new HashSet();
+	public List<IADModuleAttached> sidedModules = new ArrayList();
+	
 	public TileAbilityDeveloper() {
+	}
+	
+	public boolean insertModule(IADModule module) {
+		if(module instanceof IADModuleAttached) {
+			if(sidedModules.size() < MAX_SIDES) {
+				sidedModules.add((IADModuleAttached) module);
+				return true;
+			}
+			return false;
+		} else plainModules.add(module);
+		return true;
 	}
 	
 	@Override

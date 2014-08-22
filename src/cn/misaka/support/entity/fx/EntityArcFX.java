@@ -29,11 +29,12 @@ public class EntityArcFX extends Entity {
 	
 	public double length;
 	public ResourceLocation[] texture = APClientProps.ANIM_ARC_LONG;
-	private final String playerName;
+	protected final EntityPlayer player;
+	private Motion3D motion;
 
 	public EntityArcFX(World world, EntityPlayer player, double dist) {
 		super(world);
-		playerName = player.getCommandSenderName();
+		this.player = player;
 		Motion3D mo = new Motion3D(player, true);
 		mo.applyToEntity(this);
 		length = dist;
@@ -44,7 +45,7 @@ public class EntityArcFX extends Entity {
 	
 	public EntityArcFX(World world, EntityPlayer player) {
 		super(world);
-		playerName = player.getCommandSenderName();
+		this.player = player;
 		MovingObjectPosition res = player.rayTrace(70.0, 1.0F);
 		Motion3D mo = new Motion3D(player, true);
 		mo.applyToEntity(this);
@@ -56,7 +57,7 @@ public class EntityArcFX extends Entity {
 	}
 	
 	public boolean isPlayerCreator(EntityPlayer player) {
-		return player.getCommandSenderName().equals(playerName);
+		return player == this.player;
 	}
 	
 	public EntityArcFX setTexture(ResourceLocation... r) {
@@ -72,6 +73,17 @@ public class EntityArcFX extends Entity {
 	public void onUpdate() {
 		++ticksExisted;
 		//啥也不干萌萌哒;w;
+	}
+	
+	protected void updatePosition() {
+		//Only for those who requires constant following.
+		if(motion == null) {
+			motion = new Motion3D(player, true);
+		} else motion.update(player, true);
+		
+		motion.applyToEntity(this);
+		this.rotationPitch = player.rotationPitch;
+		this.rotationYaw = player.rotationYaw;
 	}
 
 	@Override

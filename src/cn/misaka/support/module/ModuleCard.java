@@ -8,13 +8,40 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.support.block;
+package cn.misaka.support.module;
+
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import cn.misaka.core.proxy.APClientProps;
+import cn.misaka.support.block.IADModuleAttached;
 
 /**
  * @author WeAthFolD
  *
  */
-public interface IADModule {
-	String getModifyAttribute();
-	String getModifyValue();
+public class ModuleCard implements IADModuleAttached {
+
+	public ModuleCard() {
+		
+	}
+
+	@Override
+	public String getModifyAttribute() {
+		return "1";
+	}
+
+	@Override
+	public String getModifyValue() {
+		return "energy";
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void renderAtOrigin() {
+		GL11.glScalef(0.01F, 0.01F, 0.01F);
+		APClientProps.MDL_ELEC_CARD.renderAll();
+	}
+
 }

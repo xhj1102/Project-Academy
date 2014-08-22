@@ -10,11 +10,14 @@
  */
 package cn.misaka.support.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 /**
  * @author WeAthFolD
  *
  */
-public interface IADModule {
-	String getModifyAttribute();
-	String getModifyValue();
+public interface IADModuleAttached extends IADModule {
+	@SideOnly(Side.CLIENT)
+	void renderAtOrigin();
 }
