@@ -17,6 +17,7 @@ import cn.misaka.support.item.ItemCapsule;
 import cn.misaka.support.item.ItemCoin;
 import cn.misaka.support.item.ItemNeedle;
 import cn.misaka.support.item.ItemTablet;
+import cn.misaka.support.item.ItemEnergyCrystal;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
@@ -41,7 +42,8 @@ public class APItems {
 		tabletM,
 		tabletL,
 		needle,
-		enchantedOther;
+		enchantedOther,
+		EnergyCrystal;
 	
 	public static Item
 		enchantedSword[],
@@ -61,6 +63,7 @@ public class APItems {
 		tabletM = new ItemTablet(2).setUnlocalizedName("ability_tablet2");
 		tabletL = new ItemTablet(3).setUnlocalizedName("ability_tablet3");
 		needle = new ItemNeedle();
+		EnergyCrystal = new ItemEnergyCrystal();
 		
 		
 		GameRegistry.registerItem(abilityVoid, "ability_void");
@@ -76,6 +79,7 @@ public class APItems {
 		GameRegistry.registerItem(tabletM, "ability_tablet2");
 		GameRegistry.registerItem(tabletL, "ability_tablet3");
 		GameRegistry.registerItem(needle, "ap_needle");
+		GameRegistry.registerItem(EnergyCrystal, "ap_energycrystal");
 	}
 	
 	public static Item getEnchantedSword(Item.ToolMaterial mat) {

@@ -1,7 +1,7 @@
 package cn.misaka.ability.system.client.gui;
 
 import org.lwjgl.opengl.GL11;
-import cn.liutils.api.clinet.gui.*;
+import cn.liutils.api.client.gui.*;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -18,7 +18,7 @@ public class GuiPresetSetter extends LIGuiScreen {
     private LiGuiButton [] elements = new LiGuiButton [20];
     
     public GuiPresetSetter() {
-        super(xSizeOfTexture, ySizeOfTexture);
+        super(xSizeOfTexture, ySizeOfTexture);	
         
         /*  Add the selected objects to board */
         elements[0] = new LIGuiButton("", 0, 0, 0, 0);

@@ -13,6 +13,7 @@ item.ability_tablet1.name=Mind Induction Tablet
 item.ability_tablet2.name=AIM Activation Tablet
 item.ability_tablet3.name=Personal Reality Enhancing Tablet
 item.ap_needle.name=Needle
+item.ap_energycrystal.name=Energy Crystal
 
 #Blocks
 tile.ability_developer.name=Ability Developer
@@ -30,3 +31,7 @@ aimctrl.curpreset=Current Preset ID: %s
 aimctrl.classinit=Player Ability class uninitialized.
 setting.successful=Setting successful.
 setting.outofbounds=Input out of bounds.
+
+#GUI?
+gui.remaining.energy=Remaining Energy
+gui.energy.unit=Unit
