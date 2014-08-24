@@ -29,7 +29,8 @@ public class ItemModuleAttached extends Item {
 
 	public ItemModuleAttached() {
 		setCreativeTab(AcademyCraft.cct);
-		
+		setUnlocalizedName("ad_card");
+		setTextureName("academy:card");
 	}
 	
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world,

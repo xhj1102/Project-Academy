@@ -10,18 +10,23 @@ import net.minecraft.client.gui.GuiScreen;
  *
  */
 
-public class GuiPresetSetter extends LIGuiScreen {
-    
+public abstract class GuiPresetSetter extends LIGuiScreen {
+
+	//注释掉等待进一步修改
+	public GuiPresetSetter(int xSize, int ySize) {
+		super(xSize, ySize);
+	}
+    /**
     private int skillID, subKeyID, keyID, presetID;
     public final int xSizeOfTexture = 176;
     public final int ySizeOfTexture = 88;
-    private LiGuiButton [] elements = new LiGuiButton [20];
+    private LiGuiButton [] elements = new LiGuiButton[20];
     
     public GuiPresetSetter() {
         super(xSizeOfTexture, ySizeOfTexture);	
         
         /*  Add the selected objects to board */
-        elements[0] = new LIGuiButton("", 0, 0, 0, 0);
+	/*    elements[0] = new LIGuiButton("", 0, 0, 0, 0);
         elements[0] = new LIGuiButton("", 0, 0, 0, 0);
         elements[0] = new LIGuiButton("", 0, 0, 0, 0);  // TODO
         elements[0] = new LIGuiButton("", 0, 0, 0, 0);
@@ -30,7 +35,7 @@ public class GuiPresetSetter extends LIGuiScreen {
         /* There will be loads of code, I promise. */
         
         /* Then we add them to the GuiScreen. */
-        this.drawElements();
+	/*    this.drawElements();
     }
     
     @Override
@@ -48,7 +53,7 @@ public class GuiPresetSetter extends LIGuiScreen {
         String name = butt.name;
         int nameInt = Integer.valueOf(name);
         /* Use different methods to do different things. */
-        if(nameInt >= 1 && nameInt <= 99) onMenuChanged(nameInt);
+	/*    if(nameInt >= 1 && nameInt <= 99) onMenuChanged(nameInt);
         if(nameInt >= 100 && nameInt <= 199) onChildMenuChanged(nameInt - 100);
         if(nameInt >= 200 && nameInt <= 299) onPresetKeyChanged(nameInt - 200);
         if(nameInt >= 300 && nameInt <= 399) {
@@ -65,7 +70,7 @@ public class GuiPresetSetter extends LIGuiScreen {
     /**
      * Here does the implements to the AP Controlling.
      */
-    public void onMenuChanged(int i) {
+	/* public void onMenuChanged(int i) {
         this.skillID = i;
     }
     
@@ -84,13 +89,13 @@ public class GuiPresetSetter extends LIGuiScreen {
     /**
      * The method connects to the AP API correctly.
      */
-    public void confirmPresetKeyChange() {
+	/* public void confirmPresetKeyChange() {
         invokePresetChange(this.skillID, this.subKeyID, this.keyID, this.presetID);
     }
     
     public void invokePresetChange(int par1, int par2, int par3, int par4) {
         // TODO
     }
-    
+    */
     
 }

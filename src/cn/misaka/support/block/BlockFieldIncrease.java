@@ -43,6 +43,8 @@ public class BlockFieldIncrease extends Block implements ITileEntityProvider {
 		this.setHarvestLevel("pickaxe", 2);
 		this.setCreativeTab(AcademyCraft.cct);
 		this.setLightLevel(0.5F);
+		setBlockName("fieldincr");
+		setBlockTextureName("academy:machine");
 	}
 	
 	@Override

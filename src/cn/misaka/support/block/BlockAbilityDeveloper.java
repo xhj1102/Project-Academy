@@ -46,7 +46,7 @@ public class BlockAbilityDeveloper extends BlockContainer {
 		setHardness(2.0F);
 		setCreativeTab(AcademyCraft.cct);
 		setBlockName("ability_developer");
-		setBlockTextureName("academy:ability_developer");
+		setBlockTextureName("academy:bed");
 	}
 	
 	public static ForgeDirection getFacingDirection(int metadata) {

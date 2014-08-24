@@ -15,6 +15,7 @@ import cn.misaka.ability.system.item.*;
 import cn.misaka.support.item.ItemAPRecord;
 import cn.misaka.support.item.ItemCapsule;
 import cn.misaka.support.item.ItemCoin;
+import cn.misaka.support.item.ItemModuleAttached;
 import cn.misaka.support.item.ItemNeedle;
 import cn.misaka.support.item.ItemTablet;
 import cn.misaka.support.item.ItemEnergyCrystal;
@@ -43,7 +44,8 @@ public class APItems {
 		tabletL,
 		needle,
 		enchantedOther,
-		EnergyCrystal;
+		EnergyCrystal,
+		adEnergyCard;
 	
 	public static Item
 		enchantedSword[],
@@ -64,7 +66,7 @@ public class APItems {
 		tabletL = new ItemTablet(3).setUnlocalizedName("ability_tablet3");
 		needle = new ItemNeedle();
 		EnergyCrystal = new ItemEnergyCrystal();
-		
+		adEnergyCard = new ItemModuleAttached();
 		
 		GameRegistry.registerItem(abilityVoid, "ability_void");
 		GameRegistry.registerItem(logo, "ap_logo");
@@ -80,6 +82,7 @@ public class APItems {
 		GameRegistry.registerItem(tabletL, "ability_tablet3");
 		GameRegistry.registerItem(needle, "ap_needle");
 		GameRegistry.registerItem(EnergyCrystal, "ap_energycrystal");
+		GameRegistry.registerItem(adEnergyCard, "ap_card");
 	}
 	
 	public static Item getEnchantedSword(Item.ToolMaterial mat) {

@@ -24,8 +24,7 @@ import net.minecraftforge.common.config.Configuration;
 public class APBlocks {
 
 	public static Block ability_developer,
-		ad_module_magnet,
-		ad_module_card;
+		ad_module_magnet;
 	
 	
 	public static void init(Configuration conf) {
