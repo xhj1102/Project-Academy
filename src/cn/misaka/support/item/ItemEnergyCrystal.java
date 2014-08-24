@@ -67,15 +67,31 @@ public class ItemEnergyCrystal extends Item{
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4){
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		if(this.canShowInformation(par1ItemStack)){
 			par3List.add(StatCollector.translateToLocal("gui.remaining.energy")+ ": " + getItemCharge(par1ItemStack) + "/" + this.maxCharge + " " + StatCollector.translateToLocal("gui.energy.unit"));
-		}
-		
 	}
-
-	protected boolean canShowInformation(ItemStack stack){
-		return true;
+	
+	@Override
+	public boolean isDamaged(ItemStack stack){
+		return getItemCharge(stack) < maxCharge;
 	}
+	
+	@Override
+	public int getDisplayDamage(ItemStack stack){
+		return maxCharge - getItemCharge(stack);
+	}
+	
+	@Override
+	public int getDamage(ItemStack stack){
+		return maxCharge - getItemCharge(stack);
+	}
+	
+	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer entityplayer){
+		int c = getItemCharge(stack);
+		loadCompound(stack).setInteger("charge",c + 1000);
+		return stack;
+	}
+	
 	protected int getItemCharge(ItemStack stack) {
 		return loadCompound(stack).getInteger("charge");
 	}

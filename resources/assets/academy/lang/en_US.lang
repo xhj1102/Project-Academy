@@ -34,4 +34,4 @@ setting.outofbounds=Input out of bounds.
 
 #GUI?
 gui.remaining.energy=Remaining Energy
-gui.energy.unit=Unit
+gui.energy.unit=EU
