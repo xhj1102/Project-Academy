@@ -13,6 +13,7 @@ item.ability_tablet1.name=Mind Induction Tablet
 item.ability_tablet2.name=AIM Activation Tablet
 item.ability_tablet3.name=Personal Reality Enhancing Tablet
 item.ap_needle.name=Needle
+item.ap_energycrystal.name=Energy Crystal
 
 #Blocks
 tile.ability_developer.name=Ability Developer
@@ -20,17 +21,9 @@ tile.ability_developer.name=Ability Developer
 #CreativeTabs
 itemGroup.AcademyCraft=AcademyCraft
 
-#Electro Master
-category.elecmaster=Electro Master
-skill.elec.arcgen=Arc Generation
-skill.elec.attract=Electric Attraction
-skill.elec.attack=Elecric Beam Attack
-skill.elec.itemchg=Item Charging
-skill.elec.mineinf=MagField Detection
-skill.elec.moving=Electric Moving
-skill.elec.railgun=Railgun
-skill.elec.swordgen=Sword Generation
-
+#Abilities
+skill.test1.name=Test Skill 1
+skill.test2.name=Test Skill 2
 
 #Commands
 aimctrl.presetinf=Preset %s : %s
@@ -39,13 +32,6 @@ aimctrl.classinit=Player Ability class uninitialized.
 setting.successful=Setting successful.
 setting.outofbounds=Input out of bounds.
 
-#Guis
-page.adlearning=Ability Learning
-page.adskill=Skill Aquiring
-page.adlevel=Level Upgrading
-admain.undev=Ability not detected
-admain.level=Level
-admain.cp=CP.
-admain.prog=PRG.
-curenergy.name=Current Energy
-transspd.name=Transfer Speed
+#GUI?
+gui.remaining.energy=Remaining Energy
+gui.energy.unit=EU
