@@ -26,7 +26,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class RenderPlayerAP extends RenderPlayer {
 
-	private static final ResourceLocation steveTextures = new ResourceLocation("textures/entity/steve.png");
+	public static final ResourceLocation steveTextures = new ResourceLocation("textures/entity/steve.png");
 	private static final ModelBiped bipedHack = new ModelBipedAP();
 	/**
 	 * 

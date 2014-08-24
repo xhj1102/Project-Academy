@@ -14,9 +14,9 @@ import java.util.Set;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiPage;
-import cn.liutils.api.client.gui.LIGuiPart;
+import cn.liutils.api.client.gui.part.LIGuiButton;
+import cn.liutils.api.client.gui.part.LIGuiPart;
 import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.core.proxy.APClientProps;
@@ -29,8 +29,8 @@ public class PageLearning extends LIGuiPage {
 
 	final float PRT_OFFX = 53F, PRT_OFFY = 49.5F;
 	
-	public PageLearning() {
-		super("ad.learning", GuiAbilityDeveloper.PG_OFFSET_X, GuiAbilityDeveloper.PG_OFFSET_Y);
+	public PageLearning(GuiAbilityDeveloper dev) {
+		super(dev, "page.adlearning", GuiAbilityDeveloper.PG_OFFSET_X, GuiAbilityDeveloper.PG_OFFSET_Y);
 	}
 	
 	private void drawEstimation() {
@@ -52,6 +52,9 @@ public class PageLearning extends LIGuiPage {
 	@Override
 	public void drawPage() {
 		GL11.glPushMatrix(); {
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glColor4f(1F, 1F, 1F, 1F);
 			GL11.glTranslatef(0F, -3F, 0F);
 			RenderUtils.loadTexture(APClientProps.TEX_GUI_AD_LEARNING);
 			HudUtils.setTextureResolution(512, 512);
@@ -68,7 +71,7 @@ public class PageLearning extends LIGuiPage {
 	}
 
 	@Override
-	public void onPartClicked(LIGuiPart part) {
+	public void onPartClicked(LIGuiPart part, float x, float y) {
 		System.out.println("Yahoo!");
 	}
 

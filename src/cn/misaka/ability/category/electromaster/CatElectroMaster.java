@@ -24,7 +24,7 @@ import cn.misaka.core.proxy.APClientProps;
 public class CatElectroMaster extends AbilityCategory {
 
 	public CatElectroMaster(int id) {
-		super("category.railgun", id);
+		super("category.elecmaster", id);
 	}
 	
 	@Override

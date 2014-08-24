@@ -35,6 +35,7 @@ public class APClientProps {
 		TEX_GUI_LOGO_DMASK = src("academy:textures/guis/logo_depth_mask.png"),
 		TEX_GUI_AD_MAIN = src("academy:textures/guis/ad_main.png"),
 		TEX_GUI_AD_LEARNING = src("academy:textures/guis/ad_learning.png"),
+		TEX_GUI_AD_SKILL = src("academy:textures/guis/ad_skill.png"),
 		TEX_DBG_STD = src("academy:textures/debug/11.png"),
 		TEX_DBG_31 = src("academy:textures/debug/31.png");
 	
@@ -44,8 +45,8 @@ public class APClientProps {
 		SKL_TEST_2 = src("academy:textures/abilities/test/skill2.png");
 		
 	//OBJ models
-	public static final
-		IModelCustom MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj")),
+	public static final IModelCustom 
+		MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj")),
 		MDL_ELEC_CARD = AdvancedModelLoader.loadModel(src("academy:models/card.obj")),
 		MDL_MAGNET_MODULE = AdvancedModelLoader.loadModel(src("academy:models/magincr.obj"));
 	

@@ -10,15 +10,21 @@
  */
 package cn.misaka.support.client.gui.ad;
 
-import java.util.HashSet;
+import java.lang.reflect.Field;
 import java.util.Set;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiPage;
-import cn.liutils.api.client.gui.LIGuiPart;
 import cn.liutils.api.client.gui.LIGuiScreen;
+import cn.liutils.api.client.gui.part.LIGuiButton;
+import cn.liutils.api.client.gui.part.LIGuiPart;
 import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.liutils.api.register.IGuiElement;
@@ -27,17 +33,70 @@ import cn.misaka.ability.api.ability.AbilityCategory;
 import cn.misaka.ability.api.data.PlayerData;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.support.block.tile.TileAbilityDeveloper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 /**
  * @author WeAthFolD
  *
  */
 public class GuiAbilityDeveloper extends LIGuiScreen {
+	
+	public static final float PG_OFFSET_X = 3.5F, PG_OFFSET_Y = 37.5F,
+			PG_WIDTH = 136.5F, PG_HEIGHT = 146.5F,
+			TITLE_CENTER_X = 156.5F, TITLE_CENTER_Y = 12F;
+	
+	public static final int REC_FONT_COLOR = 0x3F7E93;
+	
+	public static final int MAX_PAGES = 2;
+	
+	private final LIGuiPage pageMain = new PageMain(this);
+	private final LIGuiPage[] pages = {
+		new PageLearning(this),
+		new PageLearning(this),
+		new PageSkillLearning(this)
+	};
+	
+	TileAbilityDeveloper myTile;
+	boolean isLearned;
+	int pageID;
+	
+	public GuiAbilityDeveloper(TileAbilityDeveloper tile, boolean learned) {
+		super(228, 180);
+		myTile = tile;
+		isLearned = learned;
+	}
+	
+	@Override
+	public void onGuiClosed() {}
+	
+    @Override
+	public void drawScreen(int par1, int par2, float par3)
+    {
+    	HudUtils.setTextureResolution(512, 512);
+    	HudUtils.setZLevel(zLevel);
+    	this.drawDefaultBackground();
+    	
+    	GL11.glDisable(GL11.GL_LIGHTING);
+    	GL11.glEnable(GL11.GL_BLEND);
+    	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    	GL11.glColor4f(1F, 1F, 1F, 1F);
+    	this.drawElements(par1, par2);
+    	
+    	GL11.glEnable(GL11.GL_LIGHTING);
+    }
+
+	@Override
+	public void updateActivatedPages(Set<LIGuiPage> set) {
+		set.add(pageMain);
+		set.add(getCurrentSubpage());
+	}
+	
+	public LIGuiPage getCurrentSubpage() {
+		return pageID == 0 ? (isLearned ? pages[1] : pages[0]) : pages[2];
+	}
+	
+	public FontRenderer getFontRenderer() {
+		return this.fontRendererObj;
+	}
 	
 	public static class Element implements IGuiElement {
 
@@ -56,106 +115,4 @@ public class GuiAbilityDeveloper extends LIGuiScreen {
 		
 	}
 	
-	private LIGuiPage pageMain = new LIGuiPage("main", 0F, 0F) {
-
-		@Override
-		public void drawPage() {
-		}
-
-		@Override
-		public void addElements(Set<LIGuiPart> set) {
-			set.add(new LIGuiButton("pglf", 89, 7, 8.5F, 7.5F).setTextureOverride(APClientProps.TEX_GUI_AD_MAIN));
-			set.add(new LIGuiButton("pgrt", 216, 7, 8.5F, 7.5F).setTextureOverride(APClientProps.TEX_GUI_AD_MAIN));
-		}
-
-		@Override
-		public void onPartClicked(LIGuiPart part) {
-			System.out.println("prcl");
-			if(part.name.equals("pgrt")) {
-				++pageID;
-				if(pageID == MAX_PAGES)
-					pageID = 0;
-			} else if(part.name.equals("pglf")) {
-				--pageID;
-				if(pageID < 0)
-					pageID = MAX_PAGES - 1;
-			}
-		}
-		
-	};
-	
-	public static final float PG_OFFSET_X = 3.5F, PG_OFFSET_Y = 34.5F,
-			PG_WIDTH = 136.5F, PG_HEIGHT = 146.5F;
-	
-	TileAbilityDeveloper myTile;
-	
-	public static final int MAX_PAGES = 2;
-	private final LIGuiPage[] pages = {
-		new PageLearning(),
-		new PageLearning(),
-		new PageSkillLearning()
-	};
-	
-	boolean isLearned;
-	int pageID;
-
-	/**
-	 * @param tile
-	 * @param learned
-	 */
-	public GuiAbilityDeveloper(TileAbilityDeveloper tile, boolean learned) {
-		super(228, 180);
-		myTile = tile;
-		isLearned = learned;
-	}
-	
-	@Override
-	public void onGuiClosed() {
-		System.out.println("onGuiClosed");
-	}
-	
-    @Override
-	public void drawScreen(int par1, int par2, float par3)
-    {
-    	
-    	HudUtils.setTextureResolution(512, 512);
-    	HudUtils.setZLevel(zLevel);
-    	
-    	float x0 = this.width / 2F - 114,
-    			y0 = this.height / 2F - 93;
-    		
-    	this.drawDefaultBackground();
-    	
-    	GL11.glEnable(GL11.GL_BLEND);
-    	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    	GL11.glColor4f(1F, 1F, 1F, 1F);
-    	
-    	this.drawElements(par1, par2);
-    	
-    	PlayerData data = APDataMain.loadPlayerData(Minecraft.getMinecraft().thePlayer);
-    	renderPlayerInf(data, x0, y0);
-    	
-    	RenderUtils.loadTexture(APClientProps.TEX_GUI_AD_MAIN);
-    	HudUtils.drawTexturedModalRect(x0, y0, 0, 0, 228F, 184.5F, 456, 369);
-    }
-    
-    private void renderPlayerInf(PlayerData data, float x0, float y0) {
-    	AbilityCategory cat = data.getAbilityCategory();
-    	if(cat != null) {
-    		
-    		ResourceLocation logo = cat.getLogo();
-    		if(logo != null) {
-    			RenderUtils.loadTexture(logo);
-    			HudUtils.drawTexturedModalRect(x0 + 150, y0 + 133.5F, 18.5F, 18.5F);
-    		}
-    	} else {
-    		
-    	}
-    }
-
-	@Override
-	public void updateActivatedPages(Set<LIGuiPage> set) {
-		set.add(pageMain);
-		set.add(pageID == 0 ? (isLearned ? pages[1] : pages[0]) : pages[2] );
-	}
 }

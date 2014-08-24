@@ -36,16 +36,18 @@ public class TileAbilityDeveloper extends TileEntity {
 	
 	public static final int MAX_SIDES = 4;
 	public Set<IADModule> plainModules = new HashSet();
-	public List<IADModuleAttached> sidedModules = new ArrayList();
+	public IADModuleAttached[] sidedModules = new IADModuleAttached[4];
 	
 	public TileAbilityDeveloper() {
 	}
 	
 	public boolean insertModule(IADModule module) {
 		if(module instanceof IADModuleAttached) {
-			if(sidedModules.size() < MAX_SIDES) {
-				sidedModules.add((IADModuleAttached) module);
-				return true;
+			for(int i = 0; i < 4; i++) {
+				if(sidedModules[i] == null) {
+					sidedModules[i] = (IADModuleAttached) module;
+					return true;
+				}
 			}
 			return false;
 		} else plainModules.add(module);

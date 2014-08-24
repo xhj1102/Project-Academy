@@ -68,6 +68,7 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 		Vec3.createVectorHelper(0D, 0D, 0D),
 		Vec3.createVectorHelper(0D, 0D, 0D)
 	};
+	
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float subtick) {
 		
@@ -86,8 +87,9 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 			GL11.glRotatef(rotations[meta >> 1], 0.0F, 1.0F, 0.0F);
 			for(int i = 0; i < 4; i++) {
 				Vec3 off = offsets[i];
+				IADModuleAttached mod = ad.sidedModules[i];
+				if(mod == null) continue;
 				GL11.glPushMatrix(); {
-					IADModuleAttached mod = ad.sidedModules.get(i);
 					GL11.glTranslated(off.xCoord, off.yCoord, off.zCoord);
 					if(i >= 2)
 						GL11.glRotatef(180F, 0F, 1F, 1F);
