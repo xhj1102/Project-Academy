@@ -13,18 +13,21 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import ic2.api.item.IElectricItemManager;
+import ic2.api.item.ISpecialElectricItem;
+import cn.misaka.core.item.APElectItemManager;
 
 /*
+ * 能量水晶
  * @author Lyt99
- * 估计完坑要很长时间...	
- * 抄代码瞬间完成√
  */
 
-public class ItemEnergyCrystal extends Item{
+public class ItemEnergyCrystal extends Item implements ISpecialElectricItem{
 			
 	protected IIcon[] textures;
-	protected int maxCharge = 10000;
+	protected int maxCharge = 500000, tier = 2, transferLimit = 128;
 
 	public ItemEnergyCrystal(){
 		setUnlocalizedName("ap_energycrystal");
@@ -65,6 +68,16 @@ public class ItemEnergyCrystal extends Item{
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List){
+		ItemStack charged = new ItemStack(this, 1);
+		ItemStack discharged = new ItemStack(this, 1);
+		par3List.add(discharged);
+		setItemCharge(charged,this.maxCharge);
+		par3List.add(charged);
+	}
+	
+	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4){
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
 			par3List.add(StatCollector.translateToLocal("gui.remaining.energy")+ ": " + getItemCharge(par1ItemStack) + "/" + this.maxCharge + " " + StatCollector.translateToLocal("gui.energy.unit"));
@@ -86,11 +99,10 @@ public class ItemEnergyCrystal extends Item{
 	}
 	
 	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer entityplayer){
-		int c = getItemCharge(stack);
-		loadCompound(stack).setInteger("charge",c + 1000);
-		return stack;
+	public void setDamage(ItemStack stack, int damage){
+		setItemCharge(stack, this.maxCharge - damage);
 	}
+
 	
 	protected int getItemCharge(ItemStack stack) {
 		return loadCompound(stack).getInteger("charge");
@@ -100,6 +112,49 @@ public class ItemEnergyCrystal extends Item{
 		if (stack.stackTagCompound == null)
 			stack.stackTagCompound = new NBTTagCompound();
 		return stack.stackTagCompound;
+	}
+
+	protected void setItemCharge(ItemStack stack, int charge){
+		loadCompound(stack).setInteger(
+				"charge",
+				(charge > 0) ? (charge > this.maxCharge ? this.maxCharge
+						: charge) : 0);
+	}
+
+//IC2 API INTERFACE
+	@Override
+	public boolean canProvideEnergy(ItemStack itemStack) {
+		return true;
+	}
+
+	@Override
+	public Item getChargedItem(ItemStack itemStack) {
+		return this;
+	}
+
+	@Override
+	public Item getEmptyItem(ItemStack itemStack) {
+		return this;
+	}
+
+	@Override
+	public int getMaxCharge(ItemStack itemStack) {
+		return this.maxCharge;
+	}
+
+	@Override
+	public int getTier(ItemStack itemStack) {
+		return this.tier;
+	}
+
+	@Override
+	public int getTransferLimit(ItemStack itemStack) {
+		return this.transferLimit;
+	}
+
+	@Override
+	public IElectricItemManager getManager(ItemStack itemStack) {
+		return APElectItemManager.INSTANCE;
 	}
 		
 }
