@@ -34,6 +34,7 @@ import cn.misaka.core.proxy.APGeneralProps;
 import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
 import cn.misaka.support.client.gui.ad.GuiAbilityDeveloper;
+import cn.misaka.support.network.message.MsgDeveloperAttachment;
 import cn.misaka.support.network.message.MsgDeveloperDismount;
 import cn.misaka.support.network.message.MsgDeveloperPlayer;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -134,6 +135,8 @@ public class AcademyCraft {
 		netHandler.registerMessage(MsgSyncToClient.Handler.class, MsgSyncToClient.class, getNextChannelID(), Side.CLIENT);
 		netHandler.registerMessage(MsgSyncToServer.Handler.class, MsgSyncToServer.class, getNextChannelID(), Side.SERVER);
 		netHandler.registerMessage(MsgDeveloperDismount.Handler.class, MsgDeveloperDismount.class, getNextChannelID(), Side.SERVER);
+		netHandler.registerMessage(MsgDeveloperAttachment.Handler.class, MsgDeveloperAttachment.class, getNextChannelID(), Side.CLIENT);
+		
 		proxy.init();
 	}
 	

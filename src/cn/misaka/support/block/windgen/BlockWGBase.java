@@ -8,19 +8,19 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.support.block;
+package cn.misaka.support.block.windgen;
 
-import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
 /**
  * @author WeAthFolD
  *
  */
-public interface IADModuleAttached extends IADModule {
-	@SideOnly(Side.CLIENT)
-	void renderAtOrigin();
-	
-	ItemStack getDrop();
+public class BlockWGBase extends Block {
+
+	public BlockWGBase() {
+		super(Material.iron);
+	}
+
 }

@@ -10,12 +10,17 @@
  */
 package cn.misaka.support.module;
 
+import net.minecraft.item.ItemStack;
+
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cn.liutils.api.client.util.RenderUtils;
 import cn.misaka.core.proxy.APClientProps;
+import cn.misaka.core.register.APItems;
 import cn.misaka.support.block.IADModuleAttached;
+import cn.misaka.support.item.ItemModuleAttached;
 
 /**
  * @author WeAthFolD
@@ -40,8 +45,16 @@ public class ModuleCard implements IADModuleAttached {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderAtOrigin() {
-		GL11.glScalef(0.01F, 0.01F, 0.01F);
+		float scale = 0.0017F;
+		GL11.glScalef(scale, scale, scale);
+		RenderUtils.loadTexture(APClientProps.TEX_MDL_ELEC_CARD);
+		GL11.glRotatef(180F, 1F, 0F, 0F);
 		APClientProps.MDL_ELEC_CARD.renderAll();
+	}
+
+	@Override
+	public ItemStack getDrop() {
+		return new ItemStack(APItems.adEnergyCard);
 	}
 
 }

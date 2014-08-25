@@ -16,18 +16,22 @@ import java.util.List;
 import java.util.Set;
 
 import cn.liutils.api.util.EntityUtils;
+import cn.liutils.api.util.GenericUtils;
 import cn.misaka.core.AcademyCraft;
 import cn.misaka.support.block.BlockAbilityDeveloper;
 import cn.misaka.support.block.IADModule;
 import cn.misaka.support.block.IADModuleAttached;
+import cn.misaka.support.module.ModuleCard;
+import cn.misaka.support.network.message.MsgDeveloperAttachment;
 import cn.misaka.support.network.message.MsgDeveloperPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
 
 /**
- * 
+ * 能力开发机TileEntity。仍然在制作中。
  * @author WeAthFolD
  */
 public class TileAbilityDeveloper extends TileEntity {
@@ -36,28 +40,50 @@ public class TileAbilityDeveloper extends TileEntity {
 	
 	public static final int MAX_SIDES = 4;
 	public Set<IADModule> plainModules = new HashSet();
-	public IADModuleAttached[] sidedModules = new IADModuleAttached[4];
+	public int[] sidedModules = { -1, -1, -1, -1 };
+	
+	public static List<IADModuleAttached> attachedModuleList = new ArrayList();
+	static {
+		attachedModuleList.add(new ModuleCard());
+	}
 	
 	public TileAbilityDeveloper() {
 	}
 	
-	public boolean insertModule(IADModule module) {
-		if(module instanceof IADModuleAttached) {
-			for(int i = 0; i < 4; i++) {
-				if(sidedModules[i] == null) {
-					sidedModules[i] = (IADModuleAttached) module;
-					return true;
-				}
-			}
+	public boolean insertAttachedModule(int a) {
+		if(a < 0 || a >= attachedModuleList.size())
 			return false;
-		} else plainModules.add(module);
-		return true;
+		if(BlockAbilityDeveloper.isTale(worldObj, xCoord, yCoord, zCoord)) {
+			int[] crds = BlockAbilityDeveloper.getOrigin(worldObj, xCoord, yCoord, zCoord);
+			//Maybe dangerous?
+			TileAbilityDeveloper dev = (TileAbilityDeveloper) worldObj.getTileEntity(crds[0], crds[1], crds[2]);
+			return dev.insertAttachedModule(a);
+		}
+		for(int i = 0; i < 4; i++) {
+			if(sidedModules[i] == -1) {
+				sidedModules[i] = a;
+				AcademyCraft.netHandler.sendToDimension(new MsgDeveloperAttachment(this, 0x01), worldObj.provider.dimensionId);
+				return true;
+			}
+		}
+		return false;
 	}
 	
+	public IADModuleAttached getModule(int ind) {
+		return sidedModules[ind] == -1 ? null : GenericUtils.safeFetchFrom(attachedModuleList, sidedModules[ind]);
+	}
+	
+	
+	int ticksAfterUpdate = 0;
 	@Override
 	public void updateEntity() {
 		if(!this.tileEntityInvalid && mountPlayer != null) {
 			setPosition();
+		}
+		
+		if(++ticksAfterUpdate > 40) {
+			ticksAfterUpdate = 0;
+			AcademyCraft.netHandler.sendToDimension(new MsgDeveloperAttachment(this, 0x03), worldObj.provider.dimensionId);
 		}
 	}
 	
@@ -114,4 +140,19 @@ public class TileAbilityDeveloper extends TileEntity {
 		ForgeDirection ndir = BlockAbilityDeveloper.getFacingDirection(getBlockMetadata()).getRotation(ForgeDirection.UP);
 		return worldObj.getWorldVec3Pool().getVecFromPool(xCoord + 0.5 + ndir.offsetX, yCoord + 3.0F, zCoord + 0.5 + ndir.offsetZ);
 	}
+	
+	@Override
+    public void readFromNBT(NBTTagCompound nbt)
+    {
+        super.readFromNBT(nbt);
+        for(int i = 0; i < 4; i++)
+        	sidedModules[i] = nbt.getInteger("sm" + i);
+    }
+
+    public void writeToNBT(NBTTagCompound nbt)
+    {
+        super.writeToNBT(nbt);
+        for(int i = 0; i < 4; i++)
+        	nbt.setInteger("sm" + i, sidedModules[i]);
+    }
 }

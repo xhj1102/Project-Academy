@@ -26,6 +26,7 @@ import net.minecraft.world.World;
  */
 public class ItemModuleAttached extends Item {
 
+	int attachID = 0;
 
 	public ItemModuleAttached() {
 		setCreativeTab(AcademyCraft.cct);
@@ -33,6 +34,7 @@ public class ItemModuleAttached extends Item {
 		setTextureName("academy:card");
 	}
 	
+	@Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world,
     		int x, int y, int z, int meta, float a, float b, float c)
     {
@@ -41,7 +43,7 @@ public class ItemModuleAttached extends Item {
     		return false;
     	if(!player.worldObj.isRemote) {
     		TileAbilityDeveloper dev = (TileAbilityDeveloper) world.getTileEntity(x, y, z);
-    		if(dev.insertModule(new ModuleCard())) {
+    		if(dev.insertAttachedModule(attachID)) {
     			player.inventory.decrStackSize(player.inventory.currentItem, 1);
     			return true;
     		}

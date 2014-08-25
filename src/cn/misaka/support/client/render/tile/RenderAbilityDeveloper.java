@@ -63,10 +63,10 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 	}
 	
 	private final Vec3[] offsets = {
-		Vec3.createVectorHelper(0D, 0D, 0D),
-		Vec3.createVectorHelper(0D, 0D, 0D),
-		Vec3.createVectorHelper(0D, 0D, 0D),
-		Vec3.createVectorHelper(0D, 0D, 0D)
+		Vec3.createVectorHelper(1.136, .44, .7),
+		Vec3.createVectorHelper(-.966, 0.44, .7),
+		Vec3.createVectorHelper(1.136, 0.44, -.7),
+		Vec3.createVectorHelper(-.966, 0.44, -.7)
 	};
 	
 	@Override
@@ -79,25 +79,27 @@ public class RenderAbilityDeveloper extends TileEntitySpecialRenderer {
 		ForgeDirection dir = BlockAbilityDeveloper.getFacingDirection(te.blockMetadata);
 		
 		GL11.glPushMatrix(); {
-			RenderUtils.loadTexture(APClientProps.TEX_MDL_ABILITY_DEVELOPER);
 			
 			GL11.glTranslated(x + 0.5 + dir.offsetX * 0.5, y, z + 0.5 + dir.offsetZ * 0.5);	
 			
-			GL11.glTranslated(.1D, 0.0D, -0.12D);
+			GL11.glTranslated(0D, 0.0D, 0D);
 			GL11.glRotatef(rotations[meta >> 1], 0.0F, 1.0F, 0.0F);
+			
 			for(int i = 0; i < 4; i++) {
-				Vec3 off = offsets[i];
-				IADModuleAttached mod = ad.sidedModules[i];
+				IADModuleAttached mod = ad.getModule(i);
 				if(mod == null) continue;
+				
 				GL11.glPushMatrix(); {
+					Vec3 off = offsets[i];
 					GL11.glTranslated(off.xCoord, off.yCoord, off.zCoord);
-					if(i >= 2)
-						GL11.glRotatef(180F, 0F, 1F, 1F);
+					if(i == 0 || i == 2)
+						GL11.glRotatef(180F, 0F, 1F, 0F);
 					mod.renderAtOrigin();
 				} GL11.glPopMatrix();
 			}
 			
 			GL11.glScalef(scale, scale, scale);
+			RenderUtils.loadTexture(APClientProps.TEX_MDL_ABILITY_DEVELOPER);
 			model.renderAll();
 			
 		} GL11.glPopMatrix();

@@ -37,7 +37,9 @@ public class APClientProps {
 		TEX_GUI_AD_LEARNING = src("academy:textures/guis/ad_learning.png"),
 		TEX_GUI_AD_SKILL = src("academy:textures/guis/ad_skill.png"),
 		TEX_DBG_STD = src("academy:textures/debug/11.png"),
-		TEX_DBG_31 = src("academy:textures/debug/31.png");
+		TEX_DBG_31 = src("academy:textures/debug/31.png"),
+		TEX_MDL_WINDGEN = src("academy:textures/models/windgen.png"),
+		TEX_MDL_WINDGEN_FAN = src("academy:textures/models/windgen_fan.png");
 	
 	//Ability Textures
 	public static final ResourceLocation
@@ -48,7 +50,9 @@ public class APClientProps {
 	public static final IModelCustom 
 		MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj")),
 		MDL_ELEC_CARD = AdvancedModelLoader.loadModel(src("academy:models/card.obj")),
-		MDL_MAGNET_MODULE = AdvancedModelLoader.loadModel(src("academy:models/magincr.obj"));
+		MDL_MAGNET_MODULE = AdvancedModelLoader.loadModel(src("academy:models/magincr.obj")),
+		MDL_WINDGEN = AdvancedModelLoader.loadModel(src("academy:models/windgen.obj")),
+		MDL_WINDGEN_FAN = AdvancedModelLoader.loadModel(src("academy:models/windgen_fan.obj"));
 	
 	//Animations
 	public static final ResourceLocation

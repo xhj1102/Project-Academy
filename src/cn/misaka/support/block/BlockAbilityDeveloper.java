@@ -12,10 +12,12 @@ package cn.misaka.support.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cn.liutils.api.block.LIContainerBase;
 import cn.liutils.core.proxy.LIClientProps;
 import cn.misaka.core.AcademyCraft;
 import cn.misaka.core.proxy.APClientProps;
 import cn.misaka.support.block.tile.TileAbilityDeveloper;
+import cn.misaka.support.item.ItemModuleAttached;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockLiquid;
@@ -37,7 +39,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  * @author WeAthFolD
  *
  */
-public class BlockAbilityDeveloper extends BlockContainer {
+public class BlockAbilityDeveloper extends LIContainerBase {
 	
 	private static final int[] dirMap = { 3, 4, 2, 5 };
 	
@@ -91,8 +93,9 @@ public class BlockAbilityDeveloper extends BlockContainer {
         	world.setBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, this, metadata + 1, 0x03); //set the 'tail' block
         else {
         	world.setBlockToAir(x, y, z);
-        	if(!world.isRemote)
+        	if(!world.isRemote) {
         		this.dropBlockAsItem(world, x, y, z, new ItemStack(this));
+        	}
         }
     }
     
@@ -112,15 +115,17 @@ public class BlockAbilityDeveloper extends BlockContainer {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitx, float hity, float hitz)
     {
-    	{
-    		int meta = world.getBlockMetadata(x, y, z);
-        	if((meta & 0x01) == 1) {
-        		ForgeDirection dir = getFacingDirection(meta).getOpposite();
-        		x += dir.offsetX;
-        		z += dir.offsetZ;
-        	}
+    	//Always switch to the HEAD block
+    	
+    	if(isTale(world, x, y, z)) {
+    		int[] coords = getOrigin(world, x, y, z);
+    		x = coords[0];
+    		y = coords[1];
+    		z = coords[2];
     	}
-    	if(world.getBlock(x, y, z) != this || player.isSneaking()) return false;
+    	ItemStack stack = player.getCurrentEquippedItem();
+    	if(world.getBlock(x, y, z) != this || player.isSneaking() || 
+    			(stack != null && stack.getItem() instanceof ItemModuleAttached)) return false;
     	TileAbilityDeveloper dev = (TileAbilityDeveloper) world.getTileEntity(x, y, z);
     	if(dev.tryMount(player)) {
     		player.openGui(AcademyCraft.INSTANCE, APClientProps.GUI_ID_ABILITY_DEV, world, x, y, z);
@@ -128,9 +133,37 @@ public class BlockAbilityDeveloper extends BlockContainer {
     	return true;
     }
     
+    public static int[] getOrigin(World world, int x, int y, int z) {
+    	int meta = world.getBlockMetadata(x, y, z);
+    	if((meta & 0x01) == 1) {
+    		ForgeDirection dir = getFacingDirection(meta).getOpposite();
+    		x += dir.offsetX;
+    		z += dir.offsetZ;
+    	}
+    	return new int[] {x, y, z};
+    }
+    
+	public static boolean isTale(World world, int x, int y, int z) {
+		return (world.getBlockMetadata(x, y, z) & 0x01) == 1;
+ 	}
+    
 	@Override
 	public TileEntity createNewTileEntity(World var1, int var2) {
 		return new TileAbilityDeveloper();
+	}
+	
+	@Override
+	public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
+		TileAbilityDeveloper dev = (TileAbilityDeveloper) world.getTileEntity(x, y, z);
+		for(int i = 0; i < 4; i++) {
+			IADModuleAttached module = dev.getModule(i);
+			if(module != null) {
+				ItemStack st = module.getDrop();
+				if(st != null)
+					this.dropItem(world, x, y, z, st);
+			}
+		}
+		super.breakBlock(world, x, y, z, par5, par6);
 	}
 	
 }
