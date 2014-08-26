@@ -58,7 +58,7 @@ public class PageMain extends LIGuiPage {
 		PlayerData data = APDataMain.loadPlayerData(Minecraft.getMinecraft().thePlayer);
 
     	FontRenderer font = dev.getFontRenderer();
-    	drawPlayer(182, 25, 32, 20F, 20F);
+    	drawPlayer(182, 100, 32, 20F, 20F);
 		
     	
     	GL11.glColor4f(1F, 1F, 1F, 1F);
@@ -89,7 +89,7 @@ public class PageMain extends LIGuiPage {
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)x, (float)y, 50.0F);
-        GL11.glScalef((float)(-scale), (float)-scale, (float)-scale);
+        GL11.glScalef((float)(-scale), (float)scale, (float)scale);
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
         float f2 = player.renderYawOffset;
         float f3 = player.rotationYaw;
@@ -108,8 +108,8 @@ public class PageMain extends LIGuiPage {
         GL11.glTranslatef(0.0F, player.yOffset, 0.0F);
         RenderManager.instance.playerViewY = 180.0F;
         GL11.glRotatef(Minecraft.getSystemTime() / 100F, 0F, 1F, 0F);
-        GL11.glRotatef(90F, 0F, 0F, -1F);
-        RenderManager.instance.renderEntityWithPosYaw(player, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
+        //GL11.glRotatef(90F, 0F, 0F, -1F);
+        RenderManager.instance.renderEntityWithPosYaw(player, 3.1415926D, 3.1415926D, 3.1415926D, 0.0F, 1.0F);
         player.renderYawOffset = f2;
         player.rotationYaw = f3;
         player.rotationPitch = f4;

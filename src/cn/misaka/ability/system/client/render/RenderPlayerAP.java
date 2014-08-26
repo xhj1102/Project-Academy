@@ -41,10 +41,9 @@ public class RenderPlayerAP extends RenderPlayer {
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
     	EntityPlayer player = (EntityPlayer) par1Entity;
-    	
     	GL11.glPushMatrix(); {
     		//Ability Developer related transformations.
-    		if(player.getEntityData().getBoolean("ac_ondev")) {
+    		if(player.getEntityData().getBoolean("ac_ondev") && !(par2 == 3.1415926D && par4 == 3.1415926D && par6 == 3.1415926D)) {
     			RenderUtils.loadTexture(steveTextures);
             	GL11.glTranslated(par2, par4, par6);
             	GL11.glRotatef(rotations[player.getEntityData().getByte("ac_devdir")], 0F, -1F, 0F);

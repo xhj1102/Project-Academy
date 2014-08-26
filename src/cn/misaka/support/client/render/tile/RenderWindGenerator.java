@@ -27,8 +27,6 @@ import cn.misaka.core.proxy.APClientProps;
  *
  */
 public class RenderWindGenerator extends RenderTileModelSided {
-
-	private ITileEntityModel fan = new TileEntityModelCustom(APClientProps.MDL_WINDGEN_FAN);
 	
 	/**
 	 * @param mdl
@@ -42,22 +40,21 @@ public class RenderWindGenerator extends RenderTileModelSided {
 	protected void renderAtOrigin(TileEntity te) {
 		if(te.getBlockMetadata() >> 2 != 0) return;
 		int meta = te.getBlockMetadata();
-		scale = 0.15F;
+		scale = .107F;
 		GL11.glPushMatrix(); {
 			GL11.glRotatef(rotations[meta], 0F, 1F, 0F);
-			GL11.glScalef(scale, scale, scale);
+			
+			GL11.glTranslated(0D, 10D, .5D);
 			
 			RenderUtils.loadTexture(APClientProps.TEX_MDL_WINDGEN_FAN);
-			GL11.glPushMatrix(); {
-				
-				GL11.glTranslated(-.1D, 71.95D, 4.9D);
-				GL11.glRotatef(Minecraft.getSystemTime() / 100F, 0F, 0F, 1F);
-				fan.render(te, 0D, 0D, 0D, 0F, .9F, 0F);
-				
-			} GL11.glPopMatrix();
+			GL11.glScalef(scale, scale, scale);
 			
+			GL11.glPushMatrix(); {
+				GL11.glRotatef(Minecraft.getSystemTime() / 100F, 0F, 0F, 1F);
+				this.theModel.renderPart(te, "Fan", 0F, 0F);
+			} GL11.glPopMatrix();
 			RenderUtils.loadTexture(APClientProps.TEX_MDL_WINDGEN);
-			theModel.render(te, 0D, 0D, 0D, 1F, 1F, 1F);
+			theModel.renderPart(te, "Main", 0F, 0F);
 		} GL11.glPopMatrix();
 	}
 

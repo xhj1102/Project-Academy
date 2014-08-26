@@ -51,8 +51,7 @@ public class APClientProps {
 		MDL_ABILITY_DEVELOPER = AdvancedModelLoader.loadModel(src("academy:models/ability_developer.obj")),
 		MDL_ELEC_CARD = AdvancedModelLoader.loadModel(src("academy:models/card.obj")),
 		MDL_MAGNET_MODULE = AdvancedModelLoader.loadModel(src("academy:models/magincr.obj")),
-		MDL_WINDGEN = AdvancedModelLoader.loadModel(src("academy:models/windgen.obj")),
-		MDL_WINDGEN_FAN = AdvancedModelLoader.loadModel(src("academy:models/windgen_fan.obj"));
+		MDL_WINDGEN = AdvancedModelLoader.loadModel(src("academy:models/windgen.obj"));
 	
 	//Animations
 	public static final ResourceLocation
@@ -81,7 +80,7 @@ public class APClientProps {
 	}
 	;
 	
-	//Railgun Skill
+	//Railgun
 	public static final ResourceLocation
 		ELEC_LOGO = src("academy:textures/abilities/electromaster/main.png"),
 		ELEC_ATTACK = src("academy:textures/abilities/electromaster/attack_large.png"),
@@ -92,6 +91,16 @@ public class APClientProps {
 		ELEC_RAILGUN = src("academy:textures/abilities/electromaster/railgun.png"),
 		ELEC_SWORD = src("academy:textures/abilities/electromaster/sword.png"),
 		ELEC_ARC = src("academy:textures/abilities/electromaster/arc.png");
+	
+	//Meltdowner
+	public static final ResourceLocation 
+		MD_LOGO = src("academy:textures/abilities/meltdowner/main.png"),
+		MD_GENERATE = src("academy:textures/abilities/meltdowner/generate.png"),
+		MD_SINGLE = src("academy:textures/abilities/meltdowner/single.png"),
+		MD_MULTIPLE = src("academy:textures/abilities/meltdowner/multiple.png"),
+		MD_SHELL = src("academy:textures/abilities/meltdowner/shell.png"),
+		MD_MINING = src("academy:textures/abilities/meltdowner/mining.png"),
+		MD_EXPLOSION = src("academy:textures/abilities/meltdowner/explosion.png");
 	
 	//GUI IDs
 	public static final int

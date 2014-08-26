@@ -34,6 +34,9 @@ skill.elec.moving=Electric Moving
 skill.elec.railgun=Railgun
 skill.elec.swordgen=Sword Generation
 
+#Melt Downer
+category.meltdowner=Melt Downer
+
 #Commands
 aimctrl.presetinf=Preset %s : %s
 aimctrl.curpreset=Current Preset ID: %s
