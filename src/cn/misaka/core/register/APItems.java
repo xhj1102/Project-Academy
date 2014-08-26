@@ -12,6 +12,7 @@ package cn.misaka.core.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cn.misaka.ability.system.item.*;
+import cn.misaka.core.AcademyCraft;
 import cn.misaka.support.item.ItemAPRecord;
 import cn.misaka.support.item.ItemCapsule;
 import cn.misaka.support.item.ItemCoin;
@@ -45,7 +46,12 @@ public class APItems {
 		needle,
 		enchantedOther,
 		EnergyCrystal,
-		adEnergyCard;
+		adEnergyCard,
+		//金属锭
+		AluminumIngot,
+		CopperIngot,
+		SteelIngot,
+		TinIngot;
 	
 	public static Item
 		enchantedSword[],
@@ -67,6 +73,12 @@ public class APItems {
 		needle = new ItemNeedle();
 		EnergyCrystal = new ItemEnergyCrystal();
 		adEnergyCard = new ItemModuleAttached();
+		//金属锭
+		AluminumIngot = new Item().setUnlocalizedName("ap_aluminumingot").setCreativeTab(AcademyCraft.cct).setTextureName("academy:aluminumingot");
+		CopperIngot = new Item().setUnlocalizedName("ap_copperingot").setCreativeTab(AcademyCraft.cct).setTextureName("academy:copperingot");
+		SteelIngot = new Item().setUnlocalizedName("ap_steelingot").setCreativeTab(AcademyCraft.cct).setTextureName("academy:steelingot");
+		TinIngot = new Item().setUnlocalizedName("ap_tiningot").setCreativeTab(AcademyCraft.cct).setTextureName("academy:tiningot");
+		
 		
 		GameRegistry.registerItem(abilityVoid, "ability_void");
 		GameRegistry.registerItem(logo, "ap_logo");
@@ -83,6 +95,11 @@ public class APItems {
 		GameRegistry.registerItem(needle, "ap_needle");
 		GameRegistry.registerItem(EnergyCrystal, "ap_energycrystal");
 		GameRegistry.registerItem(adEnergyCard, "ap_card");
+		//金属锭
+		GameRegistry.registerItem(AluminumIngot,"ap_aluminumingot");
+		GameRegistry.registerItem(CopperIngot,"ap_copperingot");
+		GameRegistry.registerItem(SteelIngot,"ap_steelingot");
+		GameRegistry.registerItem(TinIngot,"ap_tiningot");
 	}
 	
 	public static Item getEnchantedSword(Item.ToolMaterial mat) {

@@ -15,6 +15,11 @@ item.ability_tablet3.name=Personal Reality Enhancing Tablet
 item.ap_needle.name=Needle
 item.ap_energycrystal.name=Energy Crystal
 item.ad_card.name=Ability Developer Electricity Card
+item.ap_aluminumingot=Aluminum Ingot
+item.ap_copperingot.name=Copper Ingot
+item.ap_steelingot.name=Steel Ingot
+item.ap_tiningot.name=Tin Ingot
+
 
 #Blocks
 tile.ability_developer.name=Ability Developer
