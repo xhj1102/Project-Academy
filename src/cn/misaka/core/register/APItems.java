@@ -21,6 +21,7 @@ import cn.misaka.support.item.ItemTablet;
 import cn.misaka.support.item.ItemEnergyCrystal;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * @author WeAthFolD
@@ -83,6 +84,20 @@ public class APItems {
 		GameRegistry.registerItem(needle, "ap_needle");
 		GameRegistry.registerItem(EnergyCrystal, "ap_energycrystal");
 		GameRegistry.registerItem(adEnergyCard, "ap_card");
+<<<<<<< HEAD
+=======
+		//金属锭
+		GameRegistry.registerItem(AluminumIngot,"ap_aluminumingot");
+		GameRegistry.registerItem(CopperIngot,"ap_copperingot");
+		GameRegistry.registerItem(SteelIngot,"ap_steelingot");
+		GameRegistry.registerItem(TinIngot,"ap_tiningot");
+		
+		//矿物词典
+		OreDictionary.registerOre("ingotCopper", CopperIngot);
+		OreDictionary.registerOre("ingotAluminum", AluminumIngot);
+		OreDictionary.registerOre("ingotRefinedIron", SteelIngot);
+		OreDictionary.registerOre("ingotTin", TinIngot);
+>>>>>>> c076a37682b9fe7cf07f649798de51c866f6995e
 	}
 	
 	public static Item getEnchantedSword(Item.ToolMaterial mat) {

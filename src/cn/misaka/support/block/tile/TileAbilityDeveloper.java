@@ -28,15 +28,21 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+
+
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
+import ic2.api.energy.tile.IEnergySink;
 
 /**
  * 能力开发机TileEntity。仍然在制作中。
  * @author WeAthFolD
  */
-public class TileAbilityDeveloper extends TileEntity {
+public class TileAbilityDeveloper extends TileEntity implements IEnergySink{
 	
-	public EntityPlayer mountPlayer;
+	private EntityPlayer mountPlayer;
 	
 	public static final int MAX_SIDES = 4;
 	public Set<IADModule> plainModules = new HashSet();
@@ -47,6 +53,8 @@ public class TileAbilityDeveloper extends TileEntity {
 		attachedModuleList.add(new ModuleCard());
 	}
 	
+	public int tier = 2, output = 512, maxEnergy = 2000000;
+	public double energy = 0.0D;
 	public TileAbilityDeveloper() {
 	}
 	
@@ -85,12 +93,21 @@ public class TileAbilityDeveloper extends TileEntity {
 			ticksAfterUpdate = 0;
 			AcademyCraft.netHandler.sendToDimension(new MsgDeveloperAttachment(this, 0x03), worldObj.provider.dimensionId);
 		}
+		
+		if(!worldObj.isRemote){
+			this.onLoaded();
+		}
+		
 	}
 	
 	@Override
     public void invalidate()
     {
     	disMount();
+    	if(this.loaded){
+    		onUnloaded();
+    	}
+    	
     	super.invalidate();
     }
 	
@@ -147,6 +164,8 @@ public class TileAbilityDeveloper extends TileEntity {
         super.readFromNBT(nbt);
         for(int i = 0; i < 4; i++)
         	sidedModules[i] = nbt.getInteger("sm" + i);
+        
+        this.energy = nbt.getDouble("energy");
     }
 
     public void writeToNBT(NBTTagCompound nbt)
@@ -154,13 +173,64 @@ public class TileAbilityDeveloper extends TileEntity {
         super.writeToNBT(nbt);
         for(int i = 0; i < 4; i++)
         	nbt.setInteger("sm" + i, sidedModules[i]);
+        
+        nbt.setDouble("energy",this.energy);
     }
     
-    public double getActionSuccessProb() {
-    	return 0.7;
+    //莫名其妙的部分
+
+    public void onLoaded(){
+    	//isSimulating到底是啥....
+    	MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
+    	this.addedToEnergyNet = true;
+    	System.out.println(this + "added to Energy Net");
     }
     
-    public double getDUModifier() {
-    	return 0.6;
+    public void onUnloaded(){
+    	if(this.addedToEnergyNet){
+    		MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+    		this.addedToEnergyNet = false;
+    	}
     }
+    
+    public void onChunkUnload(){
+    	if(this.loaded){
+    		onUnloaded();
+    	}
+    	super.onChunkUnload();
+    }
+    
+    //IEnergySink
+    
+	@Override
+	public boolean acceptsEnergyFrom(TileEntity emitter,
+			ForgeDirection direction) {
+		return true;
+	}
+
+	@Override
+	public double demandedEnergyUnits() {
+		return this.maxEnergy - this.energy;
+	}
+
+	@Override
+	public double injectEnergyUnits(ForgeDirection directionFrom, double amount) {
+		if(this.energy >= this.maxEnergy){
+			return amount;
+		}
+		if(this.maxEnergy - this.energy < amount){
+			this.energy += this.maxEnergy - this.energy;
+			return amount - this.maxEnergy + this.energy;
+		}
+		this.energy += amount;
+		return 0.0D;
+	}
+
+	@Override
+	public int getMaxSafeInput() {
+		return this.output;
+	}
+	
+	boolean addedToEnergyNet = false;
+	boolean loaded = false;
 }
