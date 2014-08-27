@@ -8,27 +8,22 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.support.entity.fx;
-
-import cn.misaka.core.proxy.APClientProps;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
+package cn.misaka.support.client.gui.ad;
 
 /**
  * @author WeAthFolD
  *
  */
-public class EntityRailgunFX extends EntityArcFX {
+public class ADActionHandler {
+	
+	public static final int INITIAL_LEARNING_COST = 1200;
 
-	/**
-	 * @param world
-	 * @param player
-	 */
-	public EntityRailgunFX(World world, EntityPlayer player) {
-		super(world, player);
-		lifeTime = 50;
-		this.setTexture(APClientProps.TEX_EFF_RAILGUN);
-		this.setExtensionVelocity(84D);
+	public static double DU2EU(int pu) {
+		return 150 * pu;
+	}
+	
+	public static int DU2EXP(int i) {
+		return (int) (0.017 * i);
 	}
 
 }

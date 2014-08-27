@@ -20,6 +20,7 @@ import cn.liutils.api.register.LIGuiHandler;
 import cn.misaka.ability.api.APCategoryStorage;
 import cn.misaka.ability.api.APControlMain;
 import cn.misaka.ability.category.electromaster.CatElectroMaster;
+import cn.misaka.ability.category.meltdowner.CatMeltdowner;
 import cn.misaka.ability.category.test.CatTest;
 import cn.misaka.ability.system.command.CommandAim;
 import cn.misaka.ability.system.event.APSEventListener;
@@ -34,6 +35,7 @@ import cn.misaka.core.proxy.APGeneralProps;
 import cn.misaka.core.register.APBlocks;
 import cn.misaka.core.register.APItems;
 import cn.misaka.support.client.gui.ad.GuiAbilityDeveloper;
+import cn.misaka.support.entity.EntityMdBall;
 import cn.misaka.support.network.message.MsgDeveloperAttachment;
 import cn.misaka.support.network.message.MsgDeveloperDismount;
 import cn.misaka.support.network.message.MsgDeveloperPlayer;
@@ -49,6 +51,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 /**
@@ -119,6 +122,7 @@ public class AcademyCraft {
 		//能力注册BEGIN
 		APCategoryStorage.registerAbility(new CatTest(1));
 		APCategoryStorage.registerAbility(new CatElectroMaster(2));
+		APCategoryStorage.registerAbility(new CatMeltdowner(3));
 		//能力注册END
 		
 		guiHandler.addGuiElement(APClientProps.GUI_ID_ABILITY_DEV, new GuiAbilityDeveloper.Element());
@@ -136,6 +140,8 @@ public class AcademyCraft {
 		netHandler.registerMessage(MsgSyncToServer.Handler.class, MsgSyncToServer.class, getNextChannelID(), Side.SERVER);
 		netHandler.registerMessage(MsgDeveloperDismount.Handler.class, MsgDeveloperDismount.class, getNextChannelID(), Side.SERVER);
 		netHandler.registerMessage(MsgDeveloperAttachment.Handler.class, MsgDeveloperAttachment.class, getNextChannelID(), Side.CLIENT);
+		
+		EntityRegistry.registerModEntity(EntityMdBall.class, "ac_mdball", 1, INSTANCE, 30, 3, false);
 		
 		proxy.init();
 	}

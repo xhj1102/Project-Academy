@@ -27,7 +27,6 @@ public class GUIRailgun {
 	private static float MAJOR_SCALE = .2F;
 	
 	public static void draw(int w, int h, double m, float progress) {
-		System.out.println("Drawing");
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glPushMatrix(); {

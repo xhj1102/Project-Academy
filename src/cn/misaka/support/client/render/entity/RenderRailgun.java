@@ -10,6 +10,7 @@
  */
 package cn.misaka.support.client.render.entity;
 
+import cn.misaka.support.entity.fx.EntityRailgunFX;
 import net.minecraft.entity.Entity;
 
 /**
@@ -22,16 +23,18 @@ public class RenderRailgun extends RenderArcAnim {
 	 * 
 	 */
 	public RenderRailgun() {
-		setHalfHeight(.1F);
+		setHalfHeight(.09F);
 		setRatio(2F);
+		this.blend = .7F;
 	}
 	
 	@Override
 	public void doRender(Entity var1, double var2, double var4, double var6,
 			float var8, float var9) {
-		setHalfHeight(.09F);
-		setRatio(2F);
-		this.blend = .7F;
+		EntityRailgunFX fx = (EntityRailgunFX) var1;
+		blend = .7F;
+		if(var1.ticksExisted > 40)
+			blend = .07F * (50 - var1.ticksExisted);
 		super.doRender(var1, var2, var4, var6, var8, var9);
 	}
 

@@ -55,12 +55,14 @@ public class GuiAbilityDeveloper extends LIGuiScreen {
 		new PageSkillLearning(this)
 	};
 	
-	TileAbilityDeveloper myTile;
+	public final TileAbilityDeveloper myTile;
+	EntityPlayer player;
 	boolean isLearned;
 	int pageID;
 	
 	public GuiAbilityDeveloper(TileAbilityDeveloper tile, boolean learned) {
 		super(228, 180);
+		player = tile.mountPlayer;
 		myTile = tile;
 		isLearned = learned;
 	}

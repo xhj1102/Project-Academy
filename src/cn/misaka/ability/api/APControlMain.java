@@ -186,6 +186,7 @@ public class APControlMain {
 			return;
 		}
 		AbilitySkill skl = cls.getSkill(skillID);
+		if(skl == null) return;
 		if(data.isDataStateGood()) {
 			ctrl.onKeyStateChange(
 					skillID,

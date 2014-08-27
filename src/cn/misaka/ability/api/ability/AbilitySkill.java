@@ -81,6 +81,13 @@ public abstract class AbilitySkill {
 	public abstract int getSuggestKey(int skillKeyID);
 	
 	/**
+	 * 获取在能力开发机中学习该技能的消耗。
+	 */
+	public int getLearningCost() {
+		return 1500;
+	}
+	
+	/**
 	 * 该技能是否会“打断”其他技能的动作？
 	 * @return
 	 */

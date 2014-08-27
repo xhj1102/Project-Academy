@@ -77,11 +77,11 @@ public class PageMain extends LIGuiPage {
     		drawString(font, data.getAbilityCategory().getCategoryNameForDisplay(), 168F, 130, dev.REC_FONT_COLOR, 0.75F);
     		drawString(font, StatCollector.translateToLocal("admain.level") + (data.getLevelID() + 1), 170, 140, dev.REC_FONT_COLOR, 0.65F);
     	} else {
-    		drawString(font, StatCollector.translateToLocal("admain.undev"), 172, 126, dev.REC_FONT_COLOR, 0.5F);
+    		drawString(font, StatCollector.translateToLocal("admain.undev"), 165, 135, 0xbf2626, 0.6F);
     	}
     	
-    	drawString(font, StatCollector.translateToLocal("admain.cp"), 146, 161, dev.REC_FONT_COLOR, 0.65F);
-    	drawString(font, StatCollector.translateToLocal("admain.prog"), 146, 172, dev.REC_FONT_COLOR, 0.65F);
+    	drawString(font, StatCollector.translateToLocal("admain.cp"), 146, 156, dev.REC_FONT_COLOR, 0.65F);
+    	drawString(font, StatCollector.translateToLocal("admain.prog"), 146, 168, dev.REC_FONT_COLOR, 0.65F);
 	}
 	
 	private void drawPlayer(float x, float y, float scale, float p3, float p4) {

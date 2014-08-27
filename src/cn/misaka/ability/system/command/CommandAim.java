@@ -46,8 +46,8 @@ public class CommandAim extends LICommandBase {
 		try {
 			fldMap.put("catid", new DataType(PlayerData.class.getDeclaredField("catid"), true));
 			fldMap.put("level", new DataType(PlayerData.class.getDeclaredField("level"), true));
-			fldMap.put("cp", new DataType(PlayerData.class.getField("max_cp"), false));
-			fldMap.put("current_cp", new DataType(PlayerData.class.getField("current_cp"), false));
+			fldMap.put("cp", new DataType(PlayerData.class.getField("maxCP"), false));
+			fldMap.put("currentCP", new DataType(PlayerData.class.getField("currentCP"), false));
 		} catch (Exception e) {
 			
 		}
@@ -73,7 +73,7 @@ public class CommandAim extends LICommandBase {
 	 */
 	@Override
 	public String getCommandUsage(ICommandSender var1) {
-		return "/aim [set][status][develop][view]";
+		return "/aim [set][status][develop][view][rl]";
 	}
 
 	/* (non-Javadoc)
@@ -129,9 +129,18 @@ public class CommandAim extends LICommandBase {
 					}
 				} catch(Exception e) {}
 			} else if(args[0].equals("ref")) {
+				
 				PlayerData data = APDataMain.loadPlayerData(player);
 				data.currentCP = data.maxCP;
 				AcademyCraft.netHandler.sendTo(new MsgSyncToClient(data, 0x01), player);
+				
+			} else if(args[0].equals("rl")){ //rl stands for "ReverseLearning", reversing stat of a specific skill.
+				
+				PlayerData data = APDataMain.loadPlayerData(player);
+				int id = Integer.valueOf(args[1]);
+				boolean b = data.setSkillActivated(id, !data.isSkillActivated(id));
+				this.sendChat(ics, b ? "Current Stat : " + data.isSkillActivated(id) : "Failed");
+				
 			} else {
 				
 			}

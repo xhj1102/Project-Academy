@@ -36,7 +36,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class TileAbilityDeveloper extends TileEntity {
 	
-	private EntityPlayer mountPlayer;
+	public EntityPlayer mountPlayer;
 	
 	public static final int MAX_SIDES = 4;
 	public Set<IADModule> plainModules = new HashSet();
@@ -154,5 +154,13 @@ public class TileAbilityDeveloper extends TileEntity {
         super.writeToNBT(nbt);
         for(int i = 0; i < 4; i++)
         	nbt.setInteger("sm" + i, sidedModules[i]);
+    }
+    
+    public double getActionSuccessProb() {
+    	return 0.7;
+    }
+    
+    public double getDUModifier() {
+    	return 0.6;
     }
 }

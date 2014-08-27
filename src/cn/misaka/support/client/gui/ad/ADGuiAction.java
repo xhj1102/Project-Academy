@@ -8,27 +8,19 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  */
-package cn.misaka.support.entity.fx;
-
-import cn.misaka.core.proxy.APClientProps;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
+package cn.misaka.support.client.gui.ad;
 
 /**
  * @author WeAthFolD
  *
  */
-public class EntityRailgunFX extends EntityArcFX {
+public class ADGuiAction {
 
 	/**
-	 * @param world
-	 * @param player
+	 * 
 	 */
-	public EntityRailgunFX(World world, EntityPlayer player) {
-		super(world, player);
-		lifeTime = 50;
-		this.setTexture(APClientProps.TEX_EFF_RAILGUN);
-		this.setExtensionVelocity(84D);
+	public ADGuiAction() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

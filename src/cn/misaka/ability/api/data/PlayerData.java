@@ -137,12 +137,20 @@ public abstract class PlayerData {
 		return skillExp == null || skillExp.length <= id ? 0.0F : skillExp[id];
 	}
 	
+	public boolean setSkillActivated(int id, boolean b) {
+		if(id < 0 || id >= skillOpen.length) return false;
+		skillOpen[id] = b;
+		return true;
+	}
+	
 	/**
 	 * 消耗玩家的计算力值
 	 * @param cp
 	 * @return
 	 */
 	public boolean drainCP(int cp) {
+		if(thePlayer.capabilities.isCreativeMode)
+			return true;
 		if(currentCP >= cp) {
 			currentCP -= cp;
 			System.out.println("Drain CP in " + thePlayer.worldObj.isRemote + ", now cp is " + currentCP);

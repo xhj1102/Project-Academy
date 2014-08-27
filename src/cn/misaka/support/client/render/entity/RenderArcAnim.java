@@ -64,8 +64,8 @@ public class RenderArcAnim extends Render {
 			float var8, float var9) {
 		EntityArcFX arc = (EntityArcFX) var1;
 		int frame = (var1.ticksExisted / rate) % arc.texture.length;
+		long time = Minecraft.getSystemTime();
 		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glColor4f(1F, 1F, 1F, .8F);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		if(disableLight)
@@ -74,7 +74,13 @@ public class RenderArcAnim extends Render {
 			if(disableLight)
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 			RenderUtils.loadTexture(arc.texture[frame]);
-			double len = ((EntityArcFX)var1).length;
+			double len = arc.realLength;
+			long del = time - arc.shootTime;
+			if(del < arc.delay) {
+				len *= del / (double)arc.delay;
+			}
+			System.out.println("Len:" + len);
+			
 			Vec3 v1 = RenderUtils.newV3(-.2, -halfHeight, 0),
 				v2 = RenderUtils.newV3(-.2, halfHeight, 0),
 				v3=	RenderUtils.newV3(len, halfHeight, 0),
@@ -94,6 +100,8 @@ public class RenderArcAnim extends Render {
 					Minecraft.getMinecraft().gameSettings.thirdPersonView == 0)
 				doEyeOffset();
 			else doNormalOffset();
+			GL11.glColor4f(1F, 1F, 1F, this.blend);
+			
 			t.startDrawingQuads();
 			if(disableLight)
 				t.setBrightness(15728880);
@@ -107,6 +115,7 @@ public class RenderArcAnim extends Render {
 			RenderUtils.addVertex(v7, ul, 1);
 			RenderUtils.addVertex(v8, ul, 0);
 			t.draw();
+			
 		} GL11.glPopMatrix();
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_BLEND);

@@ -32,12 +32,14 @@ import cn.misaka.support.block.tile.TileAbilityDeveloper;
 import cn.misaka.support.block.tile.TileFieldIncrease;
 import cn.misaka.support.block.tile.TileWindGenerator;
 import cn.misaka.support.client.render.entity.RenderArcAnim;
+import cn.misaka.support.client.render.entity.RenderMdBall;
 import cn.misaka.support.client.render.entity.RenderRailgun;
 import cn.misaka.support.client.render.entity.RenderSurroundArc;
 import cn.misaka.support.client.render.item.RenderCoin;
 import cn.misaka.support.client.render.tile.RenderAbilityDeveloper;
 import cn.misaka.support.client.render.tile.RenderFieldIncrease;
 import cn.misaka.support.client.render.tile.RenderWindGenerator;
+import cn.misaka.support.entity.EntityMdBall;
 import cn.misaka.support.entity.fx.EntityArcFX;
 import cn.misaka.support.entity.fx.EntityElecArcFX;
 import cn.misaka.support.entity.fx.EntityRailgunFX;
@@ -73,6 +75,7 @@ public class APClientProxy extends APCommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySurroundArcFX.class, new RenderSurroundArc());
 		RenderingRegistry.registerEntityRenderingHandler(EntityRailgunFX.class, new RenderRailgun());
 		RenderingRegistry.registerEntityRenderingHandler(EntityElecArcFX.class, new RenderArcAnim());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMdBall.class, new RenderMdBall());
 	}
 	
 	@Override

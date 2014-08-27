@@ -32,6 +32,16 @@ public abstract class AbilityLevel {
 	 */
 	public abstract boolean isSkillDefaultActivated(int id);
 	
+	
+	protected int[] upgdArray = { 900, 1500, 3000, 7000, 17000 };
+	/**
+	 * 获取升级到本等级
+	 * @return
+	 */
+	public int getUpgradeCost() {
+		return upgdArray[this.levelid];
+	}
+	
 	public void onPlayerUpdate(World world, EntityPlayer player, PlayerControlStat ctrl) {
 		//DO NOTHING BY DEFAULT
 	}

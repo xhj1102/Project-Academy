@@ -41,14 +41,14 @@ public class CatMeltdowner extends AbilityCategory {
 		};
 		
 		this.ability_skills = new AbilitySkill[] {
-				
+				new SkillGenerate(0)
 		};
 	}
 
 	@Override
 	public Pair<ResourceLocation, ResourceLocation> getHudTextureOverride() {
 		//TODO:坐等？
-		return null;
+		return new Pair(null, null);
 	}
 
 	@Override

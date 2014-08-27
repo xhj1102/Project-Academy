@@ -12,6 +12,7 @@ package cn.misaka.support.entity.fx;
 
 import cn.liutils.api.util.Motion3D;
 import cn.misaka.core.proxy.APClientProps;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,16 +32,32 @@ public class EntityArcFX extends Entity {
 	public ResourceLocation[] texture = APClientProps.ANIM_ARC_LONG;
 	protected final EntityPlayer player;
 	private Motion3D motion;
+	protected int lifeTime = Integer.MAX_VALUE;
+	public double realLength;
+	public int delay = 500;
+	public final long shootTime;
 
 	public EntityArcFX(World world, EntityPlayer player, double dist) {
 		super(world);
 		this.player = player;
 		Motion3D mo = new Motion3D(player, true);
 		mo.applyToEntity(this);
-		length = dist;
+		realLength = dist;
 		this.rotationPitch = player.rotationPitch;
 		this.rotationYaw = player.rotationYaw;
 		this.ignoreFrustumCheck = true;
+		shootTime = Minecraft.getSystemTime();
+	}
+	
+	/**
+	 * 设置光束展开的速度。单位为方块/秒
+	 * @param velocity
+	 * @return
+	 */
+	public EntityArcFX setExtensionVelocity(double velocity) {
+		delay = (int) (realLength / velocity * 1000);
+		System.out.println(delay);
+		return this;
 	}
 	
 	public EntityArcFX(World world, EntityPlayer player) {
@@ -49,11 +66,12 @@ public class EntityArcFX extends Entity {
 		MovingObjectPosition res = player.rayTrace(70.0, 1.0F);
 		Motion3D mo = new Motion3D(player, true);
 		mo.applyToEntity(this);
-		length = res == null || res.typeOfHit == MovingObjectType.MISS ? 
+		realLength = res == null || res.typeOfHit == MovingObjectType.MISS ? 
 				70.0D : this.getDistance(res.hitVec.xCoord, res.hitVec.yCoord, res.hitVec.zCoord);
 		this.rotationPitch = player.rotationPitch;
 		this.rotationYaw = player.rotationYaw;
 		this.ignoreFrustumCheck = true;
+		shootTime = Minecraft.getSystemTime();
 	}
 	
 	public boolean isPlayerCreator(EntityPlayer player) {
@@ -71,7 +89,11 @@ public class EntityArcFX extends Entity {
 	
 	@Override
 	public void onUpdate() {
-		++ticksExisted;
+		if(++ticksExisted > lifeTime)
+			this.setDead();
+		if(ticksExisted < delay) {
+			this.length = realLength * ((float)ticksExisted / delay);
+		} else this.length = realLength;
 		//啥也不干萌萌哒;w;
 	}
 	
