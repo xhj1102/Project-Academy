@@ -61,5 +61,7 @@ admain.undev=Ability not detected
 admain.level=Level
 admain.cp=CP.
 admain.prog=PRG.
+admain.estm=Estm. Consumption
+adskill.learned=Already Aquired
 curenergy.name=Current Energy
 transspd.name=Transfer Speed

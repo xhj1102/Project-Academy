@@ -44,7 +44,7 @@ public class APBlocks {
 		copperore = new APBlockOre("copperore", 1);
 		tinore = new APBlockOre("tinore", 1);
 		
-		GameRegistry.registerBlock(ability_developer, "abi lity_developer");
+		GameRegistry.registerBlock(ability_developer, "ability_developer");
 		GameRegistry.registerBlock(ad_module_magnet, "ad_module_fi");
 		GameRegistry.registerBlock(windGen, "ad_windgen");
 		

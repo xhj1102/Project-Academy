@@ -84,8 +84,6 @@ public class APItems {
 		GameRegistry.registerItem(needle, "ap_needle");
 		GameRegistry.registerItem(EnergyCrystal, "ap_energycrystal");
 		GameRegistry.registerItem(adEnergyCard, "ap_card");
-<<<<<<< HEAD
-=======
 		//金属锭
 		GameRegistry.registerItem(AluminumIngot,"ap_aluminumingot");
 		GameRegistry.registerItem(CopperIngot,"ap_copperingot");
@@ -97,7 +95,6 @@ public class APItems {
 		OreDictionary.registerOre("ingotAluminum", AluminumIngot);
 		OreDictionary.registerOre("ingotRefinedIron", SteelIngot);
 		OreDictionary.registerOre("ingotTin", TinIngot);
->>>>>>> c076a37682b9fe7cf07f649798de51c866f6995e
 	}
 	
 	public static Item getEnchantedSword(Item.ToolMaterial mat) {
