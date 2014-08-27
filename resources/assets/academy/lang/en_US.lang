@@ -24,6 +24,8 @@ item.ap_tiningot.name=Tin Ingot
 #Blocks
 tile.ability_developer.name=Ability Developer
 tile.fieldincr.name=Field Increase Module
+tile.copperore.name=Copper Ore
+tile.tinore.name=Tin Ore
 
 #CreativeTabs
 itemGroup.AcademyCraft=AcademyCraft

@@ -22,6 +22,7 @@ import cn.misaka.support.item.ItemTablet;
 import cn.misaka.support.item.ItemEnergyCrystal;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * @author WeAthFolD
@@ -100,6 +101,12 @@ public class APItems {
 		GameRegistry.registerItem(CopperIngot,"ap_copperingot");
 		GameRegistry.registerItem(SteelIngot,"ap_steelingot");
 		GameRegistry.registerItem(TinIngot,"ap_tiningot");
+		
+		//矿物词典
+		OreDictionary.registerOre("ingotCopper", CopperIngot);
+		OreDictionary.registerOre("ingotAluminum", AluminumIngot);
+		OreDictionary.registerOre("ingotRefinedIron", SteelIngot);
+		OreDictionary.registerOre("ingotTin", TinIngot);
 	}
 	
 	public static Item getEnchantedSword(Item.ToolMaterial mat) {
